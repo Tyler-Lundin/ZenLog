@@ -1,0 +1,42 @@
+import useEvents from "../../hooks/useEvents";
+import useTheme from "../../hooks/useTheme";
+import type { ITheme } from "../../types";
+import EventButton from "../dashboard/EventButton";
+
+
+const POSITION = 'absolute right-0 top-0';
+const SIZE = 'h-screen w-1/2';
+const GRID = 'grid place-content-center';
+const BACKGROUND = `${POSITION} ${SIZE} ${GRID} overflow-hidden`;
+
+const HeroBackground = () => {
+  const { theme } = useTheme();
+  return (
+    <div style={{ background: theme.background }} className={BACKGROUND}>
+      <div className="grid rotate-12 -skew-x-12 scale-150 gap-2">
+        <Events theme={theme} />
+      </div>
+      <h6 id="signature" style={{ color: theme.text }} className="absolute bottom-1 right-1 text-sm" >
+        by <a href="https://github.com/Tyler-Lundin" target="_blank" rel="noreferrer" >
+          Tyler Lundin
+        </a>
+      </h6>
+    </div>
+  );
+};
+
+
+  const EVENTS_LIST = 'grid grid-cols-2 gap-6 opacity-50 blur-sm'; 
+const Events = ({ theme }: { theme: ITheme }) => {
+  const { EVENTS } = useEvents();
+
+  return (
+    <div className={EVENTS_LIST}>
+      {EVENTS.map((event, index:number) => (
+        <EventButton key={event.name} name={event.name} icon={event.icon} theme={theme} index={index}/>
+      ))}
+    </div>
+  );
+};
+
+export default HeroBackground;
