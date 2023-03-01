@@ -11,12 +11,11 @@ import { type ITheme } from "../types";
 
 const ThemeContext = createContext({
   theme: themes[0] as ITheme,
-  setThemeByName: () => {null},
   rotateTheme: () => {null},
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState(themes[0] as ITheme);
+  const [theme, setTheme] = useState(themes[0] as ITheme); 
 
   function setThemeByName(name: string) {
     const theme = themes.find((theme) => theme.name === name);
@@ -39,11 +38,11 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       const theme = localStorage.getItem("theme");
       if (theme) setThemeByName(theme);
     };
-    checkLocalStorage();
+    if (!theme) checkLocalStorage();
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setThemeByName, rotateTheme }}>
+    <ThemeContext.Provider value={{ theme, rotateTheme }}>
       {children}
     </ThemeContext.Provider>
   );

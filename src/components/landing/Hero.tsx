@@ -1,40 +1,34 @@
 "use client";
 import Link from "next/link";
 import useTheme from "../../hooks/useTheme";
+import Logo from "../Logo";
 import Smiley from "../Smiley";
 
-const HERO_TITLE = "text-7xl cursor-pointer font-black flex items-center justify-items-center whitespace-nowrap";
-
-const TRANSITION = 'transition duration-500 ease-in-out';
-const SIZE = 'w-fit h-fit p-4'
-const POSITION = 'absolute top-4 left-4'; 
-const GRID = 'grid place-content-center';
-const STYLE = 'rounded-3xl'; 
-const HERO_CONTAINER = `${SIZE} ${POSITION} ${GRID} ${STYLE} backdrop-blur-md `; 
-const SLOGAN = `text-md text-center md:text-left lg:text-left xl:text-left tracking-wide`
-
-const REGISTER = `text-center mt-2 rounded-lg px-6 py-2 text-2xl font-black ${TRANSITION}`;
-const OR_LOGIN = `grid items-center text-center gap-x-2 mt-2`; 
-const OR = `text-sm`;
-const LOGIN = `text-xl  ${TRANSITION} hover:underline px-6 py-1 text-md font-black rounded-md mt-2`; 
 
 const Hero = () => {
-  const { theme, rotateTheme } = useTheme();
+  const { theme } = useTheme();
+
+  const // TAILWIND CLASSES
+  HOVER = 'hover:opacity-70', 
+  TRANSITION = 'transition duration-500 ease-in-out',
+  SIZE = 'w-1/2 h-full p-4',
+  POSITION = 'absolute top-0 left-0', 
+  GRID = 'grid place-content-center',
+  HERO_CONTAINER = `${SIZE} ${POSITION} ${GRID} bg-opacity-50 backdrop-blur-md`, 
+  REGISTER = `text-center mt-2 rounded-lg px-6 py-2 text-2xl font-black ${TRANSITION} ${HOVER}`,
+  OR_LOGIN = `flex items-center text-center mt-2 bg-black w-fit rounded-lg overflow-hidden`, 
+  OR = `bg-black rounded-full w-fit px-2 py-1 text-white text-xl font-black`,
+  LOGIN = `text-xl ${HOVER} ${TRANSITION} hover:underline px-4 w-fit py-1 text-md font-black rounded-r-lg`; 
 
   return (
-    <div className={HERO_CONTAINER} style={{background:'rgba(0,0,0,0.8)'}}>
-      <h1 onClick={rotateTheme as () => void} style={{ color: 'white' }} className={HERO_TITLE} >
-        ZEN L<Smiley bg={'white'} fill={'black'} />G
-      </h1>
-      <p style={{ color: 'white' }} className={SLOGAN}>
-        Track Your Life - Elavate Your Life <br/> Zen Log The App for Mindful Living
-      </p>
-      <Link style={{ background: theme.colors.a, color: 'white' }} className={REGISTER} href="/auth/register" >
+    <div className={HERO_CONTAINER} style={{background:theme.background}}>
+      <Logo />
+      <Link style={{ background: theme.colors.a, color: theme.text }} className={REGISTER} href="/auth/register" >
         REGISTER
       </Link>
       <div className={OR_LOGIN}>
-        <p style={{ color: 'white' }} className={OR}>OR</p>
-        <Link style={{ background:theme.colors.b, color: 'white' }} className={LOGIN} href="/auth/login"> LOGIN </Link>
+        <p style={{ color: 'white' }} className={OR}>or</p>
+        <Link style={{ background:theme.colors.b, color: theme.text, }} className={LOGIN} href="/auth/login"> LOGIN </Link>
       </div>
     </div>
   );

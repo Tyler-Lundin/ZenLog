@@ -1,9 +1,6 @@
-"use client";
-import { useSession } from "next-auth/react";
+'use client';
 import Hero from "../components/landing/Hero";
-import HeroBackground from "../components/landing/HeroBackground";
-import useTheme from "../hooks/useTheme";
-
+import HeroBg from "../components/landing/HeroBg";
 
   const TRANSITION = 'transition-all duration-500 ease-in-out';
   const SIZE = 'h-screen w-screen';
@@ -11,10 +8,8 @@ import useTheme from "../hooks/useTheme";
   const HOME_PAGE  = `${TRANSITION} ${SIZE} ${GRID} overflow-hidden` 
 
 export default function HomePage() {
-  const { theme } = useTheme();
   return (
-    <div style={{background:theme.background}} className={HOME_PAGE}>
-      <HeroBackground />
+    <div className={HOME_PAGE}>
       <Hero />
     </div>
   );

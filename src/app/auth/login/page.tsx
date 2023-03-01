@@ -1,28 +1,22 @@
-"use client";
+'use client';
 import LoginForm from "../../../components/forms/LoginForm";
 import useTheme from "../../../hooks/useTheme";
-import useLoginPage from "../../../hooks/useLoginPage";
-import Link from "next/link";
+import LoginWithProviders from "../../../components/forms/LoginWithProviders";
+import Logo from "../../../components/Logo";
+import BackButton from "../../../components/ui/BackButton";
+import RegisterInstead from "../../../components/auth/RegisterInstead";
+
+  const LOGIN_PAGE = 'grid h-screen w-screen place-content-center';
 
 const LoginPage = () => {
-  const props = useLoginPage();
   const { theme } = useTheme();
-
-  const TITLE = "text-4xl font-bold text-center text-white mb-4";
-
   return (
-    <div
-      style={{ background: theme.background }}
-      className="grid h-screen w-screen place-content-center"
-    >
-      <h1 className={TITLE}>Login</h1>
-
-      <LoginForm {...props} theme={theme} />
-
-      <div className="mt-4 text-center text-white">
-        <p>Don&apos;t have an account?</p>
-        <Link href="/auth/register">Register</Link>
-      </div>
+    <div style={{ background: theme.background }} className={LOGIN_PAGE} >
+      <BackButton />
+      <Logo />
+      <LoginForm />
+      <LoginWithProviders />
+      <RegisterInstead />
     </div>
   );
 };

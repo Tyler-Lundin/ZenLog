@@ -1,7 +1,7 @@
 import React from "react";
 import DateDisplay from "../../components/dashboard/DateDisplay";
-import DashboardMenu from "../../components/dashboard/DashboardMenu";
 import AuthContext from "./AuthContext";
+import DashboardNav from "../../components/dashboard/nav/DashboardNav";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -10,9 +10,11 @@ export default function DashboardLayout({
 }) {
   return (
       <AuthContext>
-        {children}
         <DateDisplay />
-        <DashboardMenu />
+        <DashboardNav />
+        <div>
+          {children}
+        </div>
       </AuthContext>
   )
 }

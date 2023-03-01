@@ -25,7 +25,6 @@ const Smiley = ({fill = '#eee', bg = '#111', scale = 1,}:{fill?:string, bg?: str
         x: e.clientX - window.innerWidth / 2,
         y: e.clientY - window.innerHeight / 2,
       }
-      console.log({offsets})
       setMouth({x: 17.141 + offsets.x / 100, y: 25.951 + offsets.y / 100})
       setLeftEye({x: 34.832 + offsets.x / 100, y: 15.275 + offsets.y / 100})
       setRightEye({x: 32.919 + offsets.x / 100, y: 32.01 + offsets.y / 100})

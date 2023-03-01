@@ -9,13 +9,10 @@ generator client {
 
 model User {
     id        String     @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
     email     String     @unique
-    username  String     @unique
-    password  String
-    years     Year[]
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-    Exercise  Exercise[]
+    image     String 
+    emailVerified Boolean @default(false)
 }
 
 model Year {

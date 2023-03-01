@@ -1,16 +1,56 @@
 import { type ITheme } from "../types";
 
-const OceanBreeze: ITheme = {
-  name: "Ocean Breeze",
+const Dark: ITheme = {
+  name: "Dark",
   colors: {
-    a: "#09b0e8",
-    b: "#7f9fbd",
-    c: "#95a7b8",
-    d: "#b4d2d8",
+    a: "#8c8a9d",
+    b: "#59546c",
+    c: "#38405f",
+    d: "#0e131f",
   },
   text: "white",
   oT: "black",
-  background: "rgb(20,25,30)",
+  background: "#0e131f",
+};
+
+const Light: ITheme = {
+  name: "Light",
+  colors: {
+    a: "#8c8a9d",
+    b: "#999999",
+    c: "#c4c4c4",
+    d: "#e6e6e6",
+  },
+  text: "black",
+  oT: "white",
+  background: "#e6e6e6",
+};
+
+
+const JoJo: ITheme = {
+  name: 'Platinum JoJo',
+  colors: {
+    a: '#d8e2dc',
+    b: '#ffe5d9',
+    c: '#ffcad4',
+    d: '#f4acb7',
+    },
+  text: 'black',
+  oT: 'white',
+  background: '#9d8189' 
+}
+
+const OceanBreeze: ITheme = {
+  name: "Ocean Breeze",
+  colors: {
+    a: "#90e0ef",
+    b: "#08afb5",
+    c: "#00b4d8",
+    d: "#0077b6",
+  },
+  text: "black",
+  oT: "white",
+  background: "#0077b6",
 };
 
 const PastelRainbow: ITheme = {
@@ -23,20 +63,20 @@ const PastelRainbow: ITheme = {
   },
   text: "black",
   oT: "white",
-  background: "gray",
+  background: "#dcedc1",
 };
 
 const TropicalJungle: ITheme = {
   name: "Tropical Jungle",
   colors: {
+    a: "#007f5f",
+    b: "#00b34c",
     c: "#00c64f",
-    a: "#00b34c",
-    b: "#007f5f",
     d: "#cce6cc",
   },
   text: "black",
   oT: "white",
-  background: "gray",
+  background: "#cce6cc",
 };
 
 const MidnightCity: ITheme = {
@@ -78,30 +118,17 @@ const CherryBlossom: ITheme = {
   background: "#efe6f6",
 };
 
-const Cabin: ITheme = {
-  name: "Cabin in the Woods",
+const Treehouse: ITheme = {
+  name: "Treehouse",
   colors: {
     a: "#00bf33",
     b: "#a28573",
     c: "#765948",
-    d: "#765948",
+    d: "#f2e9e1",
   },
-  text: "white",
-  oT: "black",
-  background: "slategrey",
-};
-
-const Blackhole: ITheme = {
-  name: "Blackhole",
-  colors: {
-    a: "#ec6767",
-    b: "rgb(35, 35, 45)",
-    c: "rgb(15, 15, 25)",
-    d: "rgb(5, 5, 15)",
-  },
-  text: "white",
-  oT: "black",
-  background: "black",
+  text: "black",
+  oT: "white",
+  background: "#f2e9e1",
 };
 
 const Retro: ITheme = {
@@ -118,11 +145,13 @@ const Retro: ITheme = {
 }
 
 const Themes = [
-  Blackhole,
+  Light,
+  Dark,
+  JoJo,
+  OceanBreeze,
   PastelRainbow,
   MidnightCity,
-  OceanBreeze,
-  Cabin,
+  Treehouse,
   Sadagonia,
   CherryBlossom,
   TropicalJungle,
