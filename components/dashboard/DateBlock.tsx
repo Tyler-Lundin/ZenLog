@@ -3,17 +3,44 @@ import { useDispatch, useSelector } from "react-redux";
 import DashboardBlock from "./DashboardBlock";
 import { RootState } from "@/store/store";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { decrementDate, incrementDate, resetDate } from "@/store/appSlice";
+import { decrementDate, incrementDate, resetDate, setDateState, } from "@/store/appSlice";
 import { Button } from "../ui/button";
+import useSWR from 'swr';
+import { useEffect } from "react";
+
+const todaysMonth = new Date().getMonth() + 1;
+const todaysDay = new Date().getDate();
+const todaysYear = new Date().getFullYear();
+
+interface IFetchDate {
+  month: number;
+  day: number;
+  year: number;
+}
+
+const fetchDate = ({ month, day, year }: IFetchDate) => fetch('/api/date', {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  method: 'POST',
+  body: JSON.stringify({ month, day, year }),
+}).then((res) => res.json());
+
 
 export default function DateBlock() {
-
-  const todaysMonth = new Date().getMonth() + 1;
-  const todaysDay = new Date().getDate();
-  const todaysYear = new Date().getFullYear();
-  const { month, day, year } = useSelector((state: RootState) => state.app.date)
+  const { month, day, year } = useSelector((state: RootState) => state.app.date);
+  const { data, error, isLoading } = useSWR('/api/date', () => fetchDate({ month, day, year }));
   const isCurrentDate = todaysMonth === month && todaysDay === day && todaysYear === year;
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(data)
+    if (data) dispatch(setDateState(data));
+  }, [day, data, dispatch])
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error</div>
+
 
   return (
     <DashboardBlock>

@@ -3,25 +3,18 @@ import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Exercise, ExerciseEntry } from '@prisma/client';
-import { useEffect, useState } from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import useSwr from 'swr';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { addExerciseEntry } from '@/store/appSlice';
 
+const getExerciseList = (url: string) => fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } }).then(res => res.json())
 
 export default function LogExerciseForm() {
-
-  const [exerciseList, setExerciseList] = useState([])
-
-  const fetchExerciseList = async () => {
-    const res = await fetch('/api/exercises', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-    const data = await res.json()
-    return data
-  }
-
+  const { data, isLoading } = useSwr('/api/exercises', getExerciseList);
+  const { date } = useSelector((state: RootState) => state.app)
+  const dispatch = useDispatch();
   const form = useForm<ExerciseEntry>({
     defaultValues: {
       exerciseId: '',
@@ -30,22 +23,13 @@ export default function LogExerciseForm() {
     },
   })
 
-  const onSubmit = async (data: ExerciseEntry) => {
-    const res = await fetch('/api/log/exercise', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
+  const onSubmit = async (formData: ExerciseEntry) => {
+    const data = { ...formData, date }
+    const res = await fetch('/api/log/exercise', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data), }).then(res => res.json())
+    if (res.status === "ok") {
+      dispatch(addExerciseEntry(res.data.exerciseEntry as ExerciseEntry))
     }
-    )
-    const result = await res.json()
-    console.log(result);
   }
-
-  useEffect(() => {
-    fetchExerciseList().then(setExerciseList)
-  }, [])
 
   return (
     <Form {...form}>
@@ -62,7 +46,7 @@ export default function LogExerciseForm() {
                     <SelectValue placeholder="Select an exercise" />
                   </SelectTrigger>
                   <SelectContent>
-                    {exerciseList.map((exercise: Partial<Exercise>) => (
+                    {isLoading ? null : data.map((exercise: Partial<Exercise>) => (
                       <SelectItem key={exercise.id} value={exercise.id as string}>{exercise.name}</SelectItem>
                     ))}
                   </SelectContent>
