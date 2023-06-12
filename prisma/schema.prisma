@@ -110,7 +110,7 @@ model Date {
   month           Int
   year            Int
   user            User     @relation(fields: [userId], references: [id])
-  userId          String   @unique @map("userId") @db.ObjectId
+  userId          String   @db.ObjectId
   ExerciseEntries String[] @db.ObjectId
   FoodEntries     String[] @db.ObjectId
   WaterEntries    String[] @db.ObjectId
@@ -121,11 +121,21 @@ model Date {
 }
 
 model ExerciseEntry {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String @db.ObjectId
-  exerciseId String @db.ObjectId
-  reps       Int
-  weight     Int
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String        @db.ObjectId
+  exerciseName String        
+  exerciseId   String        @db.ObjectId
+  sets         ExerciseSet[]
+  dateId       String        @db.ObjectId
+}
+
+type ExerciseSet {
+  reps      Int
+  weight    Int
+  intensity Int
+  toFailure Boolean
+  notes     String
+  tags      String[]
 }
 
 model Exercise {
@@ -142,7 +152,6 @@ model Exercise {
   instructions     String[]
   description      String
   tips             String[]
-  createdById      String    @db.ObjectId
 }
 
 model Ingredient {
