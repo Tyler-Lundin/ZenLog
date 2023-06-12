@@ -10,6 +10,7 @@ import { BiPlus, BiStats } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import useSWR from 'swr';
 import { RootState } from "@/store/store";
+import { GoTriangleDown } from "react-icons/go";
 
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -33,7 +34,10 @@ export default function ExercisePage() {
       <div className="grid gap-4">
         <TitleBlock title="Exercise">
           <ul className="flex gap-4 w-full">
-            <Button size="mdSquare" className={isLogExerciseFormOpen ? "opacity-50" : ""} variant="logEvent" onClick={toggleLogExerciseForm}> <BiPlus /> </Button>
+            <Button size="mdSquare" className={`transition-all relative`} variant="logEvent" onClick={toggleLogExerciseForm}>
+              <BiPlus />
+              <span className={`absolute ${isLogExerciseFormOpen ? "bottom-0 opacity-100" : " bottom-1/2 opacity-0"} transition-all left-1/2 transform text-sm -translate-x-1/2 translate-y-full`}><GoTriangleDown className="text-green-500" /></span>
+            </Button>
             <Button size="mdSquare" variant="default" onClick={() => console.log('clack')}> <BiStats /> </Button>
             <Button size="mdSquare" variant="default" onClick={() => console.log('click')}> <BsGearFill /> </Button>
           </ul>

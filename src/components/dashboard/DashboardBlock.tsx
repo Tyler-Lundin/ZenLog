@@ -8,7 +8,7 @@ interface DashboardBlockProps extends React.HTMLAttributes<HTMLDivElement> {
 const DashboardBlock = forwardRef<HTMLDivElement, DashboardBlockProps>(({ children, ...props }, ref) => {
 
   return (
-    <div ref={ref} {...props} className="w-full shadow-gray-400 dark:shadow-none shadow-sm relative rounded-lg grid p-4 bg-zinc-300 dark:bg-black place-items-center" >
+    <div ref={ref} {...props} className="w-full shadow-gray-400 dark:shadow-none shadow-sm relative rounded-lg grid p-4 bg-zinc-300/80 border dark:border-black border-white dark:bg-black/80 place-items-center" >
       {children}
     </div>
   )

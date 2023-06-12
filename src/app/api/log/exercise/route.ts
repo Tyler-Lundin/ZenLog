@@ -4,10 +4,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-
     const session = await getServerSession(
       req as unknown as NextApiRequest,
       {
@@ -22,69 +20,43 @@ export async function POST(req: NextRequest, res: NextResponse) {
     console.log('found session')
 
     const { user: { id } } = session;
-    const { exerciseId, exerciseName, sets, date: { month, day, year } } = await req.json();
+    const { exerciseId, exerciseName, sets, dateId } = await req.json();
 
+    // Basic field validation
+    if (!exerciseId || !exerciseName || !sets || !dateId) return NextResponse.json({ error: "Missing required fields" });
+    if (typeof exerciseId !== 'string') return NextResponse.json({ error: "Invalid exerciseId" });
+    if (typeof exerciseName !== 'string') return NextResponse.json({ error: "Invalid exerciseName" });
 
-    if (!exerciseId) return NextResponse.json({ error: "Missing exercise id" });
-    if (!exerciseName) return NextResponse.json({ error: "Missing exercise name" });
-    if (!month) return NextResponse.json({ error: "Missing month" });
-    if (!day) return NextResponse.json({ error: "Missing day" });
-    if (!year) return NextResponse.json({ error: "Missing year" });
-    if (!sets) return NextResponse.json({ error: "Missing sets" });
-    if (sets.length < 1) return NextResponse.json({ error: "Invalid sets" });
+    // Validate sets
+    if (!Array.isArray(sets) || sets.length < 1 || sets.length > 6) return NextResponse.json({ error: "Invalid sets - must be an array of 1-6 items" });
 
-
-
-    const exerciseEntry = await prisma.exerciseEntry.create({
-      data: {
-        userId: id,
-        exerciseName: exerciseName,
-        exerciseId: exerciseId,
-        sets,
+    for (let i = 0; i < sets.length; i++) {
+      const set = sets[i];
+      if (typeof set.reps !== 'number' || typeof set.weight !== 'number' || typeof set.intensity !== 'number'
+        || typeof set.toFailure !== 'boolean' || typeof set.notes !== 'string' || !Array.isArray(set.tags)) {
+        return NextResponse.json({ error: `Invalid set at index ${i}` });
       }
-    });
-    if (!exerciseEntry) return NextResponse.json({ status: 'error', message: 'Error creating exercise entry' });
 
-
-    const userDate = await prisma.date.findFirst({
-      where: {
-        userId: id,
-        month: +month,
-        day: +day,
-        year: +year,
+      for (let j = 0; j < set.tags.length; j++) {
+        if (typeof set.tags[j] !== 'string') return NextResponse.json({ error: `Invalid tag at index ${j} in set ${i}` });
       }
-    });
-
-    if (!userDate) {
-      const createdDate = await prisma.date.create({
-        data: {
-          userId: id,
-          month: +month,
-          day: +day,
-          year: +year,
-          ExerciseEntries: [exerciseEntry.id]
-        }
-      });
-      if (!createdDate) return NextResponse.json({ status: 'error', message: 'Error creating date' });
-      return NextResponse.json({ status: 'ok', exerciseEntry });
     }
 
-    await prisma.date.update({
-      where: {
-        id: userDate.id
-      },
+    const loggedExercise = await prisma.exerciseEntry.create({
       data: {
-        ExerciseEntries: {
-          push: exerciseEntry.id
-        }
+        exerciseId,
+        exerciseName,
+        sets,
+        dateId,
+        userId: id
       }
     });
 
+    return NextResponse.json({ message: "Exercise entry created successfully", data: loggedExercise });
 
-    return NextResponse.json({ status: "ok", exerciseEntry });
   } catch (error: any) {
-    console.log(error);
-    return NextResponse.json({ error: "Error Logging Exercise !" });
+    console.error(error);
+    return NextResponse.json({ error: "Something went wrong" });
   }
-
 }
+
