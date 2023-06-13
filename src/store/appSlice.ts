@@ -16,7 +16,6 @@ export interface AppState {
     moodEntries: String[]
     meditateEntries: String[]
   },
-  ExerciseEntries: ExerciseEntry[]
 }
 
 const todaysMonth = new Date().getMonth() + 1;
@@ -36,7 +35,6 @@ const initialState: AppState = {
     moodEntries: [],
     meditateEntries: []
   },
-  ExerciseEntries: []
 };
 
 const appSlice = createSlice({
@@ -66,10 +64,10 @@ const appSlice = createSlice({
       state.date.id = id;
     },
     addExerciseEntry: (state, action: PayloadAction<ExerciseEntry>) => {
-      state.ExerciseEntries.push(action.payload);
+      state.date.exerciseEntries.push(action.payload);
     },
     setExerciseEntries: (state, action: PayloadAction<ExerciseEntry[]>) => {
-      state.ExerciseEntries = action.payload;
+      state.date.exerciseEntries = action.payload;
     }
   }
 });

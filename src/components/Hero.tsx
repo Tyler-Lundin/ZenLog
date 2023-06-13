@@ -17,7 +17,7 @@ export default async function Hero() {
         <Link className={buttonVariants({ variant: 'default', })} href={"/learn"}>Learn More</Link>
         <div className="text-xs text-gray-500 dark:text-gray-400">© 2023 <a className="" target="_blank" href="https://tylerlundin.me">Tyler Lundin</a></div>
       </div>
-      <Image priority src={`/images/${randomImg}.jpg`} fill className="absolute top-0 left-0 w-full h-full object-cover" alt="hero background" />
+      <Image priority src={`/images/${randomImg}.jpg`} fill className="absolute opacity-70 top-0 left-0 w-full h-full object-cover" alt="hero background" />
     </>
   )
 }

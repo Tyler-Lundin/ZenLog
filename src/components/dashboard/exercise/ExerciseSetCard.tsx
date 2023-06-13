@@ -13,7 +13,7 @@ interface ExerciseSetProps {
   handleBooleanChange: (index: number, field: keyof ExerciseSet, event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ExerciseSetComponent: React.FC<ExerciseSetProps> = ({ set, setIndex, handleSetChange, setSets, sets, handleBooleanChange }) => {
+const ExerciseSetCard: React.FC<ExerciseSetProps> = ({ set, setIndex, handleSetChange, setSets, sets, handleBooleanChange }) => {
   const [newTag, setNewTag] = useState('');
 
   const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,12 +75,12 @@ const ExerciseSetComponent: React.FC<ExerciseSetProps> = ({ set, setIndex, handl
       </div>
       <div className="flex gap-2">
         <label className="self-center dark:text-white">Tags</label>
-        <div className="grid gap-2">
+        <div className="grid gap-2 w-full">
           <div className="flex flex-wrap gap-2">
             {set.tags.length > 0 && set.tags.map((tag, tagIndex) => {
               if (tag.length === 0) return;
               return (
-                <Button variant="default" type="button" key={tagIndex} className="min-w-max" onClick={() => handleRemoveTag(tagIndex)}>{tag} <AiOutlineClose /></Button>
+                <Button variant="default" type="button" key={tagIndex} className="min-w-min whitespace-nowrap" onClick={() => handleRemoveTag(tagIndex)}>{tag} <AiOutlineClose /></Button>
               )
             })}
           </div>
@@ -91,6 +91,5 @@ const ExerciseSetComponent: React.FC<ExerciseSetProps> = ({ set, setIndex, handl
   );
 };
 
-export default ExerciseSetComponent;
-
+export default ExerciseSetCard;
 

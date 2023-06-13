@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/select";
 import useSwr from 'swr';
 import { Spinner } from '@/components/ui/Spinner';
-import ExerciseEntryForm from './ExerciseEntryForm';
 import { ExerciseSet } from '@prisma/client';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { addExerciseEntry } from '@/store/appSlice';
+import ExerciseSetCard from './ExerciseSetCard';
 
 interface ExerciseEntry {
   reps: number;
@@ -33,15 +36,15 @@ export default function LogExerciseForm() {
     { reps: 0, weight: 0, toFailure: false, intensity: 5, notes: '', tags: [] },
   ]);
   const [newTags, setNewTags] = useState<string[]>(sets.map(() => ''));
-
+  const dispatch = useDispatch();
   const setsLength = sets.length;
+  const { id: dateId } = useSelector((state: RootState) => state.app.date);
+  const { data, isLoading } = useSwr('/api/exercises', fetcher);
+
 
   const handleExerciseNameChange = (name: string) => {
     setExerciseName(name);
   };
-
-
-  const { data, isLoading } = useSwr('/api/exercises', fetcher);
 
   const handleSetChange = (
     index: number,
@@ -68,7 +71,6 @@ export default function LogExerciseForm() {
     setSets(updatedSets);
   };
 
-
   const handleAddSet = () => {
     if (setsLength === 6) return;
     if (setsLength === 0) {
@@ -82,13 +84,42 @@ export default function LogExerciseForm() {
     setNewTags([...newTags, '']);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({ exerciseName, sets });
+    if (!exerciseName) return;
+    const exerciseId = data?.find((exercise: any) => exercise.name === exerciseName)?.id;
+    const exerciseEntry = {
+      userId: '',
+      exerciseId,
+      exerciseName,
+      sets,
+      dateId,
+    }
+    console.log({ exerciseEntry });
+    try {
+
+      const res = await fetch('/api/log/exercise', {
+        method: 'POST',
+        body: JSON.stringify(exerciseEntry),
+      }).then((res) => res.json());
+
+      console.log({ res });
+      if (res.error) return;
+      if (res.success) {
+        setExerciseName('');
+        setSets([{ reps: 0, weight: 0, toFailure: false, intensity: 5, notes: '', tags: [] }]);
+        setNewTags(['']);
+        dispatch(addExerciseEntry(res.data))
+      }
+
+
+    } catch (err: any) {
+      console.log(err);
+    }
 
   };
 
-  if (isLoading) return <Spinner size="xl" />
+  if (isLoading) return <DashboardBlock><Spinner size="xl" /></DashboardBlock>;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -109,22 +140,26 @@ export default function LogExerciseForm() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button disabled={setsLength === 6} variant="default" size="sm" className="min-w-max" onClick={handleAddSet}>Add Set</Button>
+          <Button type="button" disabled={setsLength === 6 || !exerciseName} variant="default" size="sm" className="min-w-max" onClick={handleAddSet}>Add Set {setsLength + 1}</Button>
         </div>
-        <div className={cn("grid gap-2 place-content-center", setsLength > 1 && "lg:grid-cols-2", setsLength > 2 && "xl:grid-cols-3")}>
-          {sets.map((set, setIndex) => (
-            <ExerciseEntryForm
-              key={setIndex}
-              set={set}
-              setIndex={setIndex}
-              handleSetChange={handleSetChange}
-              setSets={setSets}
-              sets={sets}
-              handleBooleanChange={handleBooleanChange}
-            />
-          ))}
-        </div>
-        <Button variant="default" size="2xl" className="mt-4">Log Exercise</Button>
+        {exerciseName && (
+          <>
+            <div className={cn("grid gap-2 place-content-center", setsLength > 1 && "lg:grid-cols-2", setsLength > 2 && "xl:grid-cols-3")}>
+              {sets.map((set, setIndex) => (
+                <ExerciseSetCard
+                  key={setIndex}
+                  set={set}
+                  setIndex={setIndex}
+                  handleSetChange={handleSetChange}
+                  setSets={setSets}
+                  sets={sets}
+                  handleBooleanChange={handleBooleanChange}
+                />
+              ))}
+            </div>
+            <Button type="submit" variant="default" size="2xl" className="mt-4">Log Exercise</Button>
+          </>
+        )}
       </DashboardBlock>
     </form>
   );
