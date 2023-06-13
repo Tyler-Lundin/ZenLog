@@ -127,6 +127,8 @@ model ExerciseEntry {
   exerciseId   String        @db.ObjectId
   sets         ExerciseSet[]
   dateId       String        @db.ObjectId
+  updatedAt    DateTime      @updatedAt
+  createdAt    DateTime      @default(now())
 }
 
 type ExerciseSet {
