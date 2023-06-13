@@ -14,5 +14,5 @@ export const SignInWithGoogle = () => (
 )
 
 export const SignOut = () => (
-  <Button className="flex gap-1 uppercase" variant={'ghost'} onClick={() => signOut({ callbackUrl: '/' })}><GoSignOut /> Sign out</Button>
+  <Button className="w-full uppercase" onClick={() => signOut({ callbackUrl: '/' })}><GoSignOut /> Sign out</Button>
 ) 

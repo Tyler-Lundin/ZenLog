@@ -3,7 +3,8 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger, } from '../ui/navigation-menu';
-import { BsGear, BsPerson, } from 'react-icons/bs';
+import { BsGear, } from 'react-icons/bs';
+import { MdDashboard, } from 'react-icons/md';
 import { SignOut } from '../AuthActions';
 import { buttonVariants } from '../ui/button';
 
@@ -29,7 +30,8 @@ const UserProfile = () => {
 // }
 
 const LINKS = [
-  { href: '/dashboard/users', label: 'USERS', icon: <BsPerson /> },
+  { href: '/dashboard', label: 'DASHBOARD', icon: <MdDashboard /> },
+  // { href: '/dashboard/users', label: 'USERS', icon: <BsPerson /> },
   { href: '/dashboard/settings', label: 'SETTINGS', icon: <BsGear /> },
 ]
 
@@ -44,8 +46,8 @@ export default function NavigationLinks() {
           <NavigationMenuContent>
             <ul className="grid gap-4 bg-white dark:bg-black px-4 py-4">
               {LINKS.map(({ href, label, icon }) => (
-                <li key={href} className="text-black dark:text-white text-xl md:text-md text-center">
-                  <Link href={href} className={`${buttonVariants({ variant: 'ghost' })} flex gap-1 w-full transition-all duration-300`}>{icon}{label} </Link>
+                <li key={href} className="text-black dark:text-white text-center">
+                  <Link href={href} className={`${buttonVariants({ variant: 'default' })} flex gap-1 w-full transition-all duration-300`}>{icon}{label} </Link>
                 </li>
               ))}
               <li className="text-center text-sm">
