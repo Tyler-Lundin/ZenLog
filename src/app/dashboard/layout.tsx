@@ -11,6 +11,7 @@ export default function DashboardLayout({
 
   return (
     <>
+      {/* @ts-expect-error promise element*/}
       <Navigation />
       {children}
     </>
