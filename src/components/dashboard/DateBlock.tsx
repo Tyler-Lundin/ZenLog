@@ -30,13 +30,14 @@ const fetchDate = ({ month, day, year }: IFetchDate) => fetch('/api/date', {
 
 export default function DateBlock() {
   const { month, day, year } = useSelector((state: RootState) => state.app.date);
-  const { data, error, isLoading } = useSWR('/api/date', () => fetchDate({ month, day, year }));
+  const { data, error, mutate } = useSWR('/api/date', () => fetchDate({ month, day, year }), { revalidateOnMount: true });
+  const isLoading = !data && !error;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(data)
-    if (data) dispatch(setDateState(data));
-  }, [day, data, dispatch])
+    mutate();
+    if (data && !isLoading) dispatch(setDateState(data));
+  }, [data, isLoading, mutate, dispatch, day, month, year])
 
   if (isLoading) return (
     <div className="">
@@ -44,7 +45,6 @@ export default function DateBlock() {
     </div>
   )
   if (error) return <div>Error</div>
-
 
   return (
     <div className="relative grid grid-cols-5 grid-flow-row">

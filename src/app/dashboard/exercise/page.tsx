@@ -1,7 +1,7 @@
 'use client';
 import Page from "@/components/Page";
 import TitleBlock from "@/components/dashboard/TitleBlock";
-import LogExerciseForm from "@/components/dashboard/exercise/LogExerciseForm";
+import LogExerciseBlock from "@/components/dashboard/exercise/LogExerciseBlock";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { BsGearFill } from "react-icons/bs";
@@ -29,7 +29,7 @@ export default function ExercisePage() {
             <Button size="mdSquare" variant="default" onClick={() => console.log('click')}> <BsGearFill /> </Button>
           </ul>
         </TitleBlock>
-        {isLogExerciseFormOpen && <LogExerciseForm />}
+        {isLogExerciseFormOpen && <LogExerciseBlock />}
         <ExerciseCards />
       </div>
     </Page>

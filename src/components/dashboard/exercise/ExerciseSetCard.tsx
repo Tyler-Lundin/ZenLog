@@ -55,23 +55,23 @@ const ExerciseSetCard: React.FC<ExerciseSetProps> = ({ set, setIndex, handleSetC
       <Button variant="destructive" size="smSquare" className="p-2 absolute text-md top-2 right-8" onClick={() => setSets(sets.filter((_, i) => i !== setIndex))}> <AiOutlineClose /> </Button>
       <div className="flex gap-2">
         <label className="self-center dark:text-white">Reps</label>
-        <input className="p-2 w-full rounded-md dark:bg-zinc-400" type="number" value={set.reps} onChange={(event) => handleSetChange(setIndex, 'reps', event)} />
+        <input className="p-2 w-full rounded-md dark:bg-zinc-400 dark:text-black" type="number" value={set.reps} onChange={(event) => handleSetChange(setIndex, 'reps', event)} />
       </div>
       <div className="flex gap-2">
         <label className="self-center dark:text-white">Weight</label>
-        <input className="p-2 w-full rounded-md dark:bg-zinc-400" type="number" value={set.weight} onChange={(event) => handleSetChange(setIndex, 'weight', event)} />
+        <input className="p-2 w-full rounded-md dark:bg-zinc-400 dark:text-black" type="number" value={set.weight} onChange={(event) => handleSetChange(setIndex, 'weight', event)} />
       </div>
       <div className="flex gap-2">
         <label className="self-center dark:text-white">To Failure</label>
-        <input className="w-8 dark:bg-zinc-400" type="checkbox" checked={set.toFailure} onChange={(event) => handleBooleanChange(setIndex, 'toFailure', event)} />
+        <input className="w-8 dark:bg-zinc-400 dark:text-black" type="checkbox" checked={set.toFailure} onChange={(event) => handleBooleanChange(setIndex, 'toFailure', event)} />
       </div>
       <div className="flex gap-2">
         <label className="self-center dark:text-white">Intensity</label>
-        <input className="p-2 w-full rounded-md dark:bg-zinc-400" type="number" value={set.intensity} onChange={(event) => handleSetChange(setIndex, 'intensity', event)} />
+        <input className="p-2 w-full rounded-md dark:bg-zinc-400 dark:text-black" type="number" value={set.intensity} onChange={(event) => handleSetChange(setIndex, 'intensity', event)} />
       </div>
       <div className="flex gap-2">
         <label className="self-center dark:text-white">Notes</label>
-        <textarea className="p-2 w-full rounded-md dark:bg-zinc-400" value={set.notes} onChange={(event) => handleSetChange(setIndex, 'notes', event)} />
+        <textarea className="p-2 w-full rounded-md dark:bg-zinc-400 dark:text-black" value={set.notes} onChange={(event) => handleSetChange(setIndex, 'notes', event)} />
       </div>
       <div className="flex gap-2">
         <label className="self-center dark:text-white">Tags</label>

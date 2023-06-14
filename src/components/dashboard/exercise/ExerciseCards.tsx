@@ -9,7 +9,7 @@ import { setExerciseEntries } from "@/store/appSlice";
 import { Spinner } from "@/components/ui/Spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BsArrowDown, BsArrowUp } from "react-icons/bs";
+import { BsArrowDown } from "react-icons/bs";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -27,15 +27,15 @@ const sortEntries = (entries: ExerciseEntry[]): ExerciseEntry[] => {
 };
 
 export default function ExerciseCards() {
-  const { id } = useSelector((state: RootState) => state.app.date);
+  const { id: dateId } = useSelector((state: RootState) => state.app.date);
   const dispatch = useDispatch();
   const [isSorted, setIsSorted] = useState<boolean>(false);
-  const { data, error } = useSWR(`/api/entries/exercise?date=${id}`, fetcher);
+  const { data, error } = useSWR(`/api/entries/exercise?date=${dateId}`, fetcher);
   const isLoading = !data && !error;
 
   useEffect(() => {
     if (data) dispatch(setExerciseEntries(data.exerciseEntries));
-  }, [data, dispatch, id])
+  }, [data, dispatch, dateId])
 
   const exerciseEntries = useSelector((state: RootState) => state.app.date.exerciseEntries);
 
@@ -56,13 +56,13 @@ export default function ExerciseCards() {
       <div className="flex gap-4 w-full items-center mb-4">
         <h2 className="text-2xl font-semibold dark:text-white">Exercises</h2>
         <div className="flex gap-2">
-          <Button size="smSquare" onClick={() => setIsSorted(!isSorted)}>{isSorted ? <BsArrowUp /> : <BsArrowDown />} </Button>
+          <Button size="smSquare" onClick={() => setIsSorted(!isSorted)}><BsArrowDown className={`${isSorted ? 'rotate-180' : 'rotate-0'} transition-all`} /> </Button>
         </div>
       </div>
 
       <ul className="flex flex-wrap w-full gap-4">
         {Array.isArray(exerciseEntries) && (isSorted ? sorted : exerciseEntries).map((exercise: ExerciseEntry) => (
-          <li key={exercise.id} className="dark:bg-gray-200 bg-zinc-700 text-white dark:text-black rounded-md p-4 w-full">
+          <li key={exercise.id} className="dark:bg-gray-700 bg-zinc-300 text-black dark:text-white rounded-md p-4 w-full">
             <div className="flex justify-between items-center">
               <h3 className="text-xl font-semibold">{exercise.exerciseName}</h3>
               <p className="text-sm font-semibold">{dateToString(exercise.createdAt as unknown as string)}</p>
@@ -83,9 +83,9 @@ export default function ExerciseCards() {
             <hr className="my-2 border-gray-500" />
             <div className="grid lg:grid-flow-col gap-2 w-full">
               {exercise.sets.map(({ weight, reps, intensity, toFailure, notes, tags }, i) => (
-                <div key={`${exercise.id}-set-${i}`} className="flex gap-8 border rounded-lg dark:bg-gray-100 border-gray-500 p-4">
+                <div key={`${exercise.id}-set-${i}`} className="flex gap-8 border rounded-lg dark:bg-gray-500 border-gray-500 p-4">
                   <ul className="grid gap-2">
-                    <h3 className="underline underline-offset-2 decoration-1">Set {i + 1}</h3>
+                    <h3 className="underline underline-offset-2 decoration-1 font-bold tracking-wider uppercase">Set {i + 1}</h3>
                     <li className="text-sm font-semibold">{weight ? `${weight} lbs` : 'No Weight'}</li>
                     <li className="text-sm font-semibold">{reps === 1 ? `${reps} rep` : `${reps} reps`}</li>
                     <li className="text-sm font-semibold">{intensity} intensity</li>

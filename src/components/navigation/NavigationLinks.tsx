@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger, } from '../ui/navigation-menu';
-import { BsGear, } from 'react-icons/bs';
+import { BsGear, BsPerson, } from 'react-icons/bs';
 import { MdDashboard, } from 'react-icons/md';
 import { SignOut } from '../AuthActions';
 import { buttonVariants } from '../ui/button';
@@ -13,25 +13,13 @@ const UserProfile = () => {
   const imageSrc = session?.user?.image
   if (!imageSrc) return <div className="w-[45px] h-[45px] animate-pulse rounded-full bg-gray-500 aspect-square" />
   return (
-    <Link href={'/dashboard/profile'} className="border-2 border-black rounded-full">
-      <Image className="rounded-full" alt="user" src={imageSrc} width={45} height={45} />
-    </Link>
+    <Image className="rounded-full" alt="user" src={imageSrc} width={45} height={45} />
   )
 }
 
-// const UserNotifications = () => {
-//   const numNotifications = 2;
-//   return (
-//     <div className="flex flex-row group items-center justify-center relative mr-4 cursor-pointer">
-//       <BsBell className="text-3xl group-hover:opacity-80 transition-all" />
-//       <div className="absolute group-hover:scale-110 transition-all -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-md">{numNotifications}</div>
-//     </div>
-//   )
-// }
-
 const LINKS = [
   { href: '/dashboard', label: 'DASHBOARD', icon: <MdDashboard /> },
-  // { href: '/dashboard/users', label: 'USERS', icon: <BsPerson /> },
+  { href: '/dashboard/profile', label: 'PROFILE', icon: <BsPerson /> },
   { href: '/dashboard/settings', label: 'SETTINGS', icon: <BsGear /> },
 ]
 

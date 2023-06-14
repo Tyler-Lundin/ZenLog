@@ -1,22 +1,8 @@
 
 import { ExerciseEntry } from '@prisma/client';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppState } from '../../types/global';
 
-export interface AppState {
-  date: {
-    id?: String
-    month: number
-    day: number
-    year: number
-    exerciseEntries: ExerciseEntry[]
-    foodEntries: String[]
-    waterEntries: String[]
-    sleepEntries: String[]
-    journalEntries: String[]
-    moodEntries: String[]
-    meditateEntries: String[]
-  },
-}
 
 const todaysMonth = new Date().getMonth() + 1;
 const todaysDay = new Date().getDate();
@@ -35,6 +21,15 @@ const initialState: AppState = {
     moodEntries: [],
     meditateEntries: []
   },
+  settings: {
+    isCookiesEnabled: false,
+    backgroundColors: [
+      '#F94144',
+      '#F3722C',
+      '#F8961E',
+      '#F9844A',
+    ],
+  }
 };
 
 const appSlice = createSlice({
@@ -60,8 +55,8 @@ const appSlice = createSlice({
     },
     setDateState: (state, action: PayloadAction<{ date: AppState["date"], status: string }>) => {
       const { id } = action.payload.date;
-      console.log('SET_DATE_STATE', action.payload);
       state.date.id = id;
+
     },
     addExerciseEntry: (state, action: PayloadAction<ExerciseEntry>) => {
       state.date.exerciseEntries.push(action.payload);

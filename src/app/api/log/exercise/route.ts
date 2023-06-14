@@ -106,6 +106,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
     });
 
+    const updatedDate = await prisma.date.update({
+      where: {
+        id: dateId
+      },
+      data: {
+        ExerciseEntries: {
+          push: loggedExercise.id
+        }
+      }
+    });
+
     return NextResponse.json({ success: "Exercise entry created successfully", data: loggedExercise });
 
   } catch (error: any) {

@@ -30,7 +30,7 @@ interface ExerciseEntry {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function LogExerciseForm() {
+export default function LogExerciseBlock() {
   const [exerciseName, setExerciseName] = useState('');
   const [sets, setSets] = useState<ExerciseEntry[]>([
     { reps: 0, weight: 0, toFailure: false, intensity: 5, notes: '', tags: [] },
