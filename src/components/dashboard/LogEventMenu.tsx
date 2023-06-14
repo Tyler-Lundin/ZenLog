@@ -25,12 +25,12 @@ export default function LogEventMenu() {
   return (
     <div className="w-screen h-screen absolute top-0 left-0 z-50 bg-white/60 dark:bg-black/60 backdrop-blur-md grid place-content-center">
       <Button variant="destructive" size="lgSquare" onClick={() => dispatch(toggleLogEventMenu())} className="top-4 right-4 absolute"><AiOutlineClose /></Button>
-      <ul className="flex flex-wrap place-content-center max-w-2xl gap-4">
+      <ul className="flex flex-wrap place-content-center max-w-2xl gap-4 w-full">
         {EVENTS.map((event, i) => (
           <li key={i} >
             <Link onClick={() => dispatch(toggleLogEventMenu())} className={cn(
               buttonVariants({ variant: 'default' }),
-              'text-4xl', 'p-8'
+              'text-4xl w-full', 'p-8'
             )} href={`/dashboard/${event.name.toLowerCase()}`}> {event.name} {event.icon}</Link>
           </li>
         ))}
