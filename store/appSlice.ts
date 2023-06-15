@@ -88,8 +88,8 @@ const appSlice = createSlice({
     setNewTag: (state, action: PayloadAction<{ index: number, tag: string }>) => {
       state.dashboard.exercise.newTags[action.payload.index] = action.payload.tag;
     },
-    removeSetTag: (state, action: PayloadAction<{ tagIndex: number, tag: string }>) => {
-      state.dashboard.exercise.newExercise.sets[action.payload.tagIndex].tags = state.dashboard.exercise.newExercise.sets[action.payload.tagIndex].tags.filter(tag => tag !== action.payload.tag);
+    removeSetTag: (state, action: PayloadAction<{ tagIndex: number, setIndex: number }>) => {
+      state.dashboard.exercise.newExercise.sets[action.payload.setIndex].tags.splice(action.payload.tagIndex, 1);
     }
   }
 });

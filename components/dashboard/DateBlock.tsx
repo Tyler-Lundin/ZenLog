@@ -1,17 +1,12 @@
 'use client';
 import { useDispatch, useSelector } from "react-redux";
-import DashboardBlock from "./DashboardBlock";
 import { RootState } from "@/store/store";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { decrementDate, incrementDate, resetDate, setDateState, } from "@/store/appSlice";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import useSWR from 'swr';
 import { useEffect } from "react";
 import { Spinner } from "../ui/Spinner";
-
-const todaysMonth = new Date().getMonth() + 1;
-const todaysDay = new Date().getDate();
-const todaysYear = new Date().getFullYear();
 
 interface IFetchDate {
   month: number;

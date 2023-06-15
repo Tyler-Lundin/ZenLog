@@ -2,10 +2,11 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { addSetTag, removeNewSet, removeSetTag, setNewExerciseSets, setNewTag } from '@/store/appSlice';
 import { RootState } from '@/store/store';
-import { ExerciseEntry, ExerciseSet } from '@prisma/client';
-import React, { useState } from 'react';
+import { ExerciseSet } from '@prisma/client';
+import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -57,55 +58,48 @@ export default function ExerciseSetCard({ index }: ExerciseSetProps) {
     const lastChar = tag[tag.length - 1];
     if (lastChar !== ',') return;
     const newTagWithoutLastChar = event.target.value.slice(0, -1).trim();
-    if (newTagWithoutLastChar.length === 0) {
-      dispatch(setNewTag({ index, tag }))
-      return;
-    }
-    const newSets = [...sets];
-    if (newSets[index].tags.length >= 6) {
-      dispatch(setNewTag({ index, tag }))
-      return;
-    }
-    dispatch(addSetTag({ index, tag }))
+    if (newTagWithoutLastChar.length === 0) return;
+
+    dispatch(addSetTag({ index, tag: newTagWithoutLastChar }))
+    dispatch(setNewTag({ index, tag: '' }))
   };
 
 
   return (
-    <div key={index} className="border dark:border-zinc-600 shadow-md bg-gray-200 dark:bg-zinc-900 border-black p-8 rounded-lg relative grid gap-4 pt-14">
-      <h3 className="absolute dark:text-black text-white top-4 uppercase font-black tracking-wider bg-black dark:bg-zinc-400 px-4 rounded-md left-8">Set {index + 1}</h3>
-      <Button variant="destructive" size="smSquare" className="p-2 absolute text-md top-2 right-8" onClick={() => dispatch(removeNewSet(index))}> <AiOutlineClose /> </Button>
+    <div key={index} className="w-full bg-white dark:bg-black relative grid gap-4 pt-14 pb-8 px-8">
+      <h3 className="absolute dark:text-black text-white top-4 uppercase font-black tracking-wider bg-black dark:bg-zinc-400 px-4 rounded-md left-4">Set {index + 1}</h3>
+      <Button variant="destructive" size="smSquare" className="p-2 absolute text-md top-2 right-4" onClick={() => dispatch(removeNewSet(index))}> <AiOutlineClose /> </Button>
       <div className="flex gap-2">
         <Label htmlFor={`set-${index}-reps`}>Reps</Label>
         <Input id={`set-${index}-reps`} type="number" placeholder="Reps" value={sets[index].reps} onChange={(event) => handleSetChange(index, 'reps', event)} />
       </div>
       <div className="flex gap-2">
-        <label className="self-center dark:text-white">Weight</label>
-        <input className="p-2 w-full rounded-md dark:bg-zinc-400 dark:text-black" type="number" value={sets[index].weight} onChange={(event) => handleSetChange(index, 'weight', event)} />
+        <Label htmlFor={`set-${index}-weight`}>Weight</Label> <Input id={`set-${index}-weight`} type="number" placeholder="Weight" value={sets[index].weight} onChange={(event) => handleSetChange(index, 'weight', event)} />
       </div>
       <div className="flex gap-2">
-        <label className="self-center dark:text-white">To Failure</label>
-        <input className="w-8 dark:bg-zinc-400 dark:text-black" type="checkbox" checked={sets[index].toFailure} onChange={(event) => handleBooleanChange(index, 'toFailure', event)} />
+        <Label htmlFor={`set-${index}-to-failure`}>To Failure</Label>
+        <Input id={`set-${index}-to-failure`} type="checkbox" checked={sets[index].toFailure} onChange={(event) => handleBooleanChange(index, 'toFailure', event)} />
       </div>
       <div className="flex gap-2">
-        <label className="self-center dark:text-white">Intensity</label>
-        <input className="p-2 w-full rounded-md dark:bg-zinc-400 dark:text-black" type="number" value={sets[index].intensity} onChange={(event) => handleSetChange(index, 'intensity', event)} />
+        <Label htmlFor={`set-${index}-intensity`}>Intensity</Label>
+        <Input id={`set-${index}-intensity`} type="number" placeholder="Intensity" value={sets[index].intensity} onChange={(event) => handleSetChange(index, 'intensity', event)} />
       </div>
       <div className="flex gap-2">
-        <label className="self-center dark:text-white">Notes</label>
-        <textarea className="p-2 w-full rounded-md dark:bg-zinc-400 dark:text-black" value={sets[index].notes} onChange={(event) => handleSetChange(index, 'notes', event)} />
+        <Label htmlFor={`set-${index}-notes`}>Notes</Label>
+        <Textarea id={`set-${index}-notes`} placeholder="Notes" value={sets[index].notes} onChange={(event) => handleSetChange(index, 'notes', event)} />
       </div>
       <div className="flex gap-2">
-        <label className="self-center dark:text-white">Tags</label>
+        <Label htmlFor={`set-${index}-tags`}>Tags</Label>
         <div className="grid gap-2 w-full">
           <div className="flex flex-wrap gap-2">
             {sets[index].tags.length > 0 && sets[index].tags.map((tag, tagIndex) => {
               if (tag.length === 0) return;
               return (
-                <Button variant="default" type="button" key={tagIndex} className="min-w-min whitespace-nowrap" onClick={() => dispatch(removeSetTag({ tagIndex, tag }))}>{tag} <AiOutlineClose /></Button>
+                <Button variant="default" type="button" key={tagIndex} className="min-w-min whitespace-nowrap" onClick={() => dispatch(removeSetTag({ tagIndex, setIndex: index }))}>{tag} <AiOutlineClose /></Button>
               )
             })}
           </div>
-          <input className="p-2 w-full rounded-md dark:bg-zinc-400" type="text" value={newTag} onChange={handleTagChange} />
+          <Input id={`set-${index}-tags`} type="text" placeholder="Tags" value={newTag} onChange={(event) => handleTagChange(event)} />
         </div>
       </div>
     </div>

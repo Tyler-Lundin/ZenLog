@@ -9,7 +9,7 @@ import { setExerciseEntries } from "@/store/appSlice";
 import { Spinner } from "@/components/ui/Spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BsArrowDown } from "react-icons/bs";
+import { BsArrowDown, BsClock, BsClockFill } from "react-icons/bs";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -18,7 +18,6 @@ const dateToString = (date: string) => {
   return D.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 }
 
-
 const sortEntries = (entries: ExerciseEntry[]): ExerciseEntry[] => {
   const copyEntries = [...entries];
   return copyEntries.sort((a, b) => {
@@ -26,7 +25,13 @@ const sortEntries = (entries: ExerciseEntry[]): ExerciseEntry[] => {
   });
 };
 
-export default function ExerciseCards() {
+const RenderIfDateLoaded = () => {
+  const { id: dateId } = useSelector((state: RootState) => state.app.date);
+  if (!dateId) return null;
+  return <ExerciseCards />
+}
+
+function ExerciseCards() {
   const { id: dateId } = useSelector((state: RootState) => state.app.date);
   const dispatch = useDispatch();
   const [isSorted, setIsSorted] = useState<boolean>(false);
@@ -39,10 +44,8 @@ export default function ExerciseCards() {
 
   const exerciseEntries = useSelector((state: RootState) => state.app.date.exerciseEntries);
 
-
-  console.log({ exerciseEntries })
-
   if (isLoading) return (<DashboardBlock><Spinner size="xl" /></DashboardBlock>)
+
   if (exerciseEntries.length === 0) return (
     <DashboardBlock>
       <p className="text-black dark:text-white">No exercises logged for this date.</p>
@@ -52,17 +55,11 @@ export default function ExerciseCards() {
   const sorted = sortEntries(exerciseEntries);
 
   return (
-    <DashboardBlock>
-      <div className="flex gap-4 w-full items-center mb-4">
-        <h2 className="text-2xl font-semibold dark:text-white">Exercises</h2>
-        <div className="flex gap-2">
-          <Button size="smSquare" onClick={() => setIsSorted(!isSorted)}><BsArrowDown className={`${isSorted ? 'rotate-180' : 'rotate-0'} transition-all`} /> </Button>
-        </div>
-      </div>
+    <>
 
-      <ul className="flex flex-wrap w-full gap-4">
+      <ul className="flex flex-wrap w-full gap-4 ">
         {Array.isArray(exerciseEntries) && (isSorted ? sorted : exerciseEntries).map((exercise: ExerciseEntry) => (
-          <li key={exercise.id} className="dark:bg-gray-700 bg-zinc-300 text-black dark:text-white rounded-md p-4 w-full">
+          <li key={exercise.id} className="dark:bg-black bg-zinc-200 text-black dark:text-white rounded-md p-4 w-full border-2 border-black dark:border-white">
             <div className="flex justify-between items-center">
               <h3 className="text-xl font-semibold">{exercise.exerciseName}</h3>
               <p className="text-sm font-semibold">{dateToString(exercise.createdAt as unknown as string)}</p>
@@ -80,16 +77,18 @@ export default function ExerciseCards() {
               }, 0) / exercise.sets.length).toFixed(2)}</h3>
 
             </div>
+
             <hr className="my-2 border-gray-500" />
-            <div className="grid lg:grid-flow-col gap-2 w-full">
+
+            <div className="grid grid-cols-2 gap-2 w-full dark:text-black">
               {exercise.sets.map(({ weight, reps, intensity, toFailure, notes, tags }, i) => (
-                <div key={`${exercise.id}-set-${i}`} className="flex gap-8 border rounded-lg dark:bg-gray-500 border-gray-500 p-4">
+                <div key={`${exercise.id}-set-${i}`} className="flex gap-8 border rounded-md text-white bg-black border-gray-500 p-4">
                   <ul className="grid gap-2">
                     <h3 className="underline underline-offset-2 decoration-1 font-bold tracking-wider uppercase">Set {i + 1}</h3>
-                    <li className="text-sm font-semibold">{weight ? `${weight} lbs` : 'No Weight'}</li>
-                    <li className="text-sm font-semibold">{reps === 1 ? `${reps} rep` : `${reps} reps`}</li>
-                    <li className="text-sm font-semibold">{intensity} intensity</li>
-                    <li className="text-sm font-semibold">{toFailure ? 'To Failure' : 'Not to Failure'}</li>
+                    <li className="text-sm font-light">{weight ? `${weight} lbs` : 'No Weight'}</li>
+                    <li className="text-sm font-light">{reps === 1 ? `${reps} rep` : `${reps} reps`}</li>
+                    <li className="text-sm font-light">{intensity} intensity</li>
+                    <li className="text-sm font-light">{toFailure ? 'To Failure' : 'Not to Failure'}</li>
                     {notes && <li className="text-sm italic">{notes}</li>}
                     <li className="flex flex-wrap gap-2">
                       <h3 className="text-sm font-semibold">Tags:</h3>
@@ -103,8 +102,9 @@ export default function ExerciseCards() {
             </div>
           </li>
         ))}
-
       </ul>
-    </DashboardBlock>
+    </>
   )
 }
+
+export default RenderIfDateLoaded;
