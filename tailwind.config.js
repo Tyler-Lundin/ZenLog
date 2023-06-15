@@ -3,7 +3,9 @@
 module.exports = {
   darkMode: "media",
   content: [
-    './src/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+
   ],
   theme: {
     container: {

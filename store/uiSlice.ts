@@ -1,10 +1,14 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface UiState {
   isNavigationOpen: boolean;
   dashboard: {
     isWelcomeDialogOpen: boolean;
     isLogEventMenuOpen: boolean;
+    exercise: {
+      isLogExerciseFormOpen: boolean;
+      error: string;
+    }
   }
 }
 
@@ -13,6 +17,10 @@ const initialState: UiState = {
   dashboard: {
     isWelcomeDialogOpen: true,
     isLogEventMenuOpen: false,
+    exercise: {
+      isLogExerciseFormOpen: false,
+      error: ''
+    }
   }
 };
 
@@ -29,9 +37,21 @@ const uiSlice = createSlice({
     toggleLogEventMenu(state) {
       state.dashboard.isLogEventMenuOpen = !state.dashboard.isLogEventMenuOpen;
     },
+    toggleLogExerciseForm(state) {
+      state.dashboard.exercise.isLogExerciseFormOpen = !state.dashboard.exercise.isLogExerciseFormOpen;
+    },
+    setExerciseError(state, action) {
+      state.dashboard.exercise.error = action.payload;
+    }
   }
 });
 
-export const { toggleNavigation, closeWelcomeDialog, toggleLogEventMenu, } = uiSlice.actions;
+export const {
+  toggleNavigation,
+  closeWelcomeDialog,
+  toggleLogEventMenu,
+  toggleLogExerciseForm,
+  setExerciseError,
+} = uiSlice.actions;
 
 export default uiSlice.reducer;

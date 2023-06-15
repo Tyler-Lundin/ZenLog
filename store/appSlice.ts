@@ -1,7 +1,7 @@
 
-import { ExerciseEntry } from '@prisma/client';
+import { ExerciseEntry, ExerciseSet } from '@prisma/client';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppState } from '../../types/global';
+import { AppState } from '@/types/global';
 
 
 const todaysMonth = new Date().getMonth() + 1;
@@ -20,6 +20,16 @@ const initialState: AppState = {
     journalEntries: [],
     moodEntries: [],
     meditateEntries: []
+  },
+  dashboard: {
+    exercise: {
+      newExercise: {
+        exerciseName: '',
+        exerciseId: '',
+        sets: [],
+      },
+      newTags: []
+    }
   },
   settings: {
     isCookiesEnabled: false,
@@ -56,13 +66,30 @@ const appSlice = createSlice({
     setDateState: (state, action: PayloadAction<{ date: AppState["date"], status: string }>) => {
       const { id } = action.payload.date;
       state.date.id = id;
-
     },
     addExerciseEntry: (state, action: PayloadAction<ExerciseEntry>) => {
       state.date.exerciseEntries.push(action.payload);
     },
     setExerciseEntries: (state, action: PayloadAction<ExerciseEntry[]>) => {
       state.date.exerciseEntries = action.payload;
+    },
+    setNewExerciseName: (state, action: PayloadAction<string>) => {
+      state.dashboard.exercise.newExercise.exerciseName = action.payload;
+    },
+    setNewExerciseSets: (state, action: PayloadAction<ExerciseSet[]>) => {
+      state.dashboard.exercise.newExercise.sets = action.payload;
+    },
+    removeNewSet: (state, action: PayloadAction<number>) => {
+      state.dashboard.exercise.newExercise.sets.splice(action.payload, 1);
+    },
+    addSetTag: (state, action: PayloadAction<{ index: number, tag: string }>) => {
+      state.dashboard.exercise.newExercise.sets[action.payload.index].tags.push(action.payload.tag);
+    },
+    setNewTag: (state, action: PayloadAction<{ index: number, tag: string }>) => {
+      state.dashboard.exercise.newTags[action.payload.index] = action.payload.tag;
+    },
+    removeSetTag: (state, action: PayloadAction<{ tagIndex: number, tag: string }>) => {
+      state.dashboard.exercise.newExercise.sets[action.payload.tagIndex].tags = state.dashboard.exercise.newExercise.sets[action.payload.tagIndex].tags.filter(tag => tag !== action.payload.tag);
     }
   }
 });
@@ -73,7 +100,13 @@ export const {
   resetDate,
   setDateState,
   addExerciseEntry,
-  setExerciseEntries
+  setExerciseEntries,
+  setNewExerciseName,
+  setNewExerciseSets,
+  removeNewSet,
+  addSetTag,
+  setNewTag,
+  removeSetTag
 } = appSlice.actions;
 
 export default appSlice.reducer;

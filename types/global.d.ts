@@ -1,3 +1,4 @@
+import { ExerciseEntry, FoodEntry, JournalEntry, MeditateEntry, MoodEntry, SleepEntry, WaterEntry } from "@prisma/client"
 
 
 
@@ -6,17 +7,17 @@ type backgroundColor = [string, string, string, string]
 
 
 export interface Date {
-  id?: String
+  id?: string
   month: number
   day: number
   year: number
   exerciseEntries: ExerciseEntry[]
-  foodEntries: String[]
-  waterEntries: String[]
-  sleepEntries: String[]
-  journalEntries: String[]
-  moodEntries: String[]
-  meditateEntries: String[]
+  foodEntries: FoodEntry[]
+  waterEntries: WaterEntryr[]
+  sleepEntries: SleepEntry[]
+  journalEntries: JournalEntry[]
+  moodEntries: MoodEntryn[]
+  meditateEntries: MeditateEntry[]
 }
 
 export interface Settings {
@@ -26,7 +27,17 @@ export interface Settings {
 
 export interface AppState {
   date: Date,
+  dashboard: Dashboard,
   settings: Settings
+}
+
+export interface Dashboard {
+  exercise: ExerciseAppState
+}
+
+export interface ExerciseAppState {
+  newExercise: Omit<ExerciseEntry, "id" | "userId" | "updatedAt" | "createdAt" | "dateId">
+  newTags: string[]
 }
 
 
