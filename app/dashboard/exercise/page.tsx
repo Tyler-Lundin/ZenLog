@@ -1,5 +1,4 @@
 import Page from "@/components/Page";
-import TitleBlock from "@/components/dashboard/TitleBlock";
 import ExerciseCards from "@/components/dashboard/exercise/ExerciseCards";
 import ExerciseActions from "@/components/dashboard/exercise/ExerciseActions";
 import AddExerciseEntry from "@/components/dashboard/exercise/AddExerciseEntry";
@@ -12,9 +11,7 @@ export default function ExercisePage() {
     <Page>
       <Sheet>
         <div className="grid gap-4">
-          <TitleBlock className="fixed" title="Exercise">
-            <ExerciseActions />
-          </TitleBlock>
+          <ExerciseActions />
           <AddExerciseEntry />
           <ExerciseCards />
         </div>

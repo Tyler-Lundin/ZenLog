@@ -20,6 +20,10 @@ const inputVariants = cva(
         lg: "h-11 px-8 rounded-md text-2xl",
         xl: "h-12 px-10 rounded-md text-3xl",
         "2xl": "h-14 px-12 rounded-md text-4xl",
+        "3xl": "h-16 px-14 rounded-md text-5xl",
+        "4xl": "h-20 px-16 rounded-md text-6xl",
+        "5xl": "h-24 px-20 rounded-md text-7xl",
+
       },
     },
     defaultVariants: {

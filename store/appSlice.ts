@@ -2,6 +2,7 @@
 import { ExerciseEntry, ExerciseSet } from '@prisma/client';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '@/types/global';
+import { EMPTY_SET } from '@/components/dashboard/exercise/AddExerciseEntry';
 
 
 const todaysMonth = new Date().getMonth() + 1;
@@ -26,7 +27,7 @@ const initialState: AppState = {
       newExercise: {
         exerciseName: '',
         exerciseId: '',
-        sets: [],
+        sets: [EMPTY_SET],
       },
       newTags: []
     }
@@ -90,7 +91,12 @@ const appSlice = createSlice({
     },
     removeSetTag: (state, action: PayloadAction<{ tagIndex: number, setIndex: number }>) => {
       state.dashboard.exercise.newExercise.sets[action.payload.setIndex].tags.splice(action.payload.tagIndex, 1);
-    }
+    },
+    addSet: (state) => {
+      if (state.dashboard.exercise.newExercise.sets.length < 6) {
+        state.dashboard.exercise.newExercise.sets.push(EMPTY_SET);
+      }
+    },
   }
 });
 
@@ -106,7 +112,8 @@ export const {
   removeNewSet,
   addSetTag,
   setNewTag,
-  removeSetTag
+  removeSetTag,
+  addSet,
 } = appSlice.actions;
 
 export default appSlice.reducer;

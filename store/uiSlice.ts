@@ -5,8 +5,10 @@ export interface UiState {
   dashboard: {
     isWelcomeDialogOpen: boolean;
     isLogEventMenuOpen: boolean;
+    error: string;
     exercise: {
       isLogExerciseFormOpen: boolean;
+      isSorted: boolean;
       error: string;
     }
   }
@@ -17,8 +19,10 @@ const initialState: UiState = {
   dashboard: {
     isWelcomeDialogOpen: true,
     isLogEventMenuOpen: false,
+    error: '',
     exercise: {
       isLogExerciseFormOpen: false,
+      isSorted: false,
       error: ''
     }
   }
@@ -42,7 +46,10 @@ const uiSlice = createSlice({
     },
     setExerciseError(state, action) {
       state.dashboard.exercise.error = action.payload;
-    }
+    },
+    toggleSortExercise(state) {
+      state.dashboard.exercise.isSorted = !state.dashboard.exercise.isSorted;
+    },
   }
 });
 
@@ -52,6 +59,7 @@ export const {
   toggleLogEventMenu,
   toggleLogExerciseForm,
   setExerciseError,
+  toggleSortExercise
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
