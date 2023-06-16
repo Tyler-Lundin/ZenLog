@@ -5,7 +5,7 @@ import { forwardRef } from "react"
 
 
 const inputVariants = cva(
-  "flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm",
   {
     variants: {
       variant: {
@@ -13,6 +13,7 @@ const inputVariants = cva(
         ghost: "bg-transparent",
         destructive: "bg-red-400 text-destructive-foreground",
         event: "bg-black text-white",
+        glass: "bg-transparent border-0 rounded-none dark:text-white text-black outline-none"
       },
       size: {
         default: "h-10 py-2 px-4 text-md",
@@ -23,6 +24,9 @@ const inputVariants = cva(
         "3xl": "h-16 px-14 rounded-md text-5xl",
         "4xl": "h-20 px-16 rounded-md text-6xl",
         "5xl": "h-24 px-20 rounded-md text-7xl",
+        "6xl": "h-28 px-24 rounded-md text-8xl",
+        "7xl": "h-32 px-28 rounded-md text-9xl",
+        "8xl": "h-36 px-32 rounded-md text-10xl",
 
       },
     },

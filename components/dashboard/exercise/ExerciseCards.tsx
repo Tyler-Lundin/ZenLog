@@ -83,7 +83,7 @@ function ExerciseCards() {
 
             <div className="grid grid-cols-2 gap-2">
               {exercise.sets.map(({ weight, reps, intensity, toFailure, notes, tags }, i) => (
-                <div key={`${exercise.id}-set-${i}`} className={`flex gap-8 px-6 py-2 border rounded-md dark:bg-white/10 bg-white/80  text-white bg-black border-zinc-600`}>
+                <div key={`${exercise.id}-set-${i}`} className={`flex gap-8 px-6 py-2 border rounded-md dark:bg-white/10 bg-white/80  text-black dark:text-white bg-black border-zinc-600`}>
                   <ul className="grid gap-2  ">
                     <h3 className="underline underline-offset-2 decoration-1 font-bold tracking-wider uppercase">Set {i + 1}</h3>
                     <li className="text-sm font-light">{weight ? `${weight} lbs` : 'No Weight'}</li>

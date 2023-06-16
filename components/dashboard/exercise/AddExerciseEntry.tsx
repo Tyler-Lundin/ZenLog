@@ -88,13 +88,14 @@ export default function AddExerciseEntry() {
       title: 'Select an Exercise',
       content: (
         <>
-          <div className="grid items-center z-40 bg-white/80 gap-4 dark:bg-black/80 backdrop-blur-sm  w-full overflow-y-auto h-full">
+          <div className="grid items-center z-40 bg-white/80 dark:bg-black/80 backdrop-blur-sm  w-full overflow-y-auto h-full pb-20">
             {data?.map((exercise: any) => (
-              <Button key={exercise.id} className="whitespace-nowrap" variant="large" size="5xl" onClick={() => {
+              <Button key={exercise.id} className="whitespace-nowrap border-b border-gray-500" variant="ghost" size="4xl" onClick={() => {
                 dispatch(setNewExerciseName(exercise.name))
                 setStep(1)
               }}>{exercise.name}</Button>
             ))}
+            <div className="h-20"></div>
           </div>
         </>
       )

@@ -11,6 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-black flex gap-2 rounded-md transition-all font-thin text-white dark:text-black bg-black hover:text-black dark:bg-white hover:bg-transparent dark:hover:text-white dark:hover:bg-transparent hover:border-black dark:hover:border-white border",
         defaultInverted: "bg-white flex gap-2 rounded-md transition-all font-thin text-black dark:text-white bg-white hover:text-white dark:bg-black hover:bg-transparent dark:hover:bg-transparent hover:border-white dark:hover:border-black border",
+        glass: "bg-white/10 flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border",
         ghost: "bg-transparent text-black hover:bg-black/10 dark:text-white dark:hover:bg-white/10",
         destructive:
           "bg-red-400 text-destructive-foreground hover:bg-red-400/90",
@@ -24,11 +25,10 @@ const buttonVariants = cva(
         sm: "h-9 px-3  text-lg",
         lg: "h-11 px-8  text-2xl",
         xl: "h-12 px-10 text-3xl",
-        "2xl": "h-14 px-12 text-4xl",
-        "3xl": "h-16 px-14 text-5xl",
-        "4xl": "h-20 px-16 text-6xl",
-        "5xl": "h-24 px-20 text-7xl",
-
+        "2xl": "h-14 px-12 text-2xl lg:text-4xl",
+        "3xl": "h-16 px-14 text-3xl lg:text-5xl",
+        "4xl": "h-20 px-16 text-4xl lg:text-6xl",
+        "5xl": "h-24 px-20 text-5xl lg:text-7xl",
         smSquare: "h-9 w-9 text-lg rounded-md aspect-square",
         mdSquare: "h-10 w-10 text-xl rounded-md aspect-square",
         lgSquare: "h-11 w-11 text-2xl rounded-md aspect-square",

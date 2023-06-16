@@ -65,6 +65,7 @@ const appSlice = createSlice({
       state.date.year = todaysYear;
     },
     setDateState: (state, action: PayloadAction<{ date: AppState["date"], status: string }>) => {
+      if (!action.payload.date) return;
       const { id } = action.payload.date;
       state.date.id = id;
     },

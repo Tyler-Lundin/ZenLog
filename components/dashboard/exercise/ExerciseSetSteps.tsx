@@ -73,7 +73,7 @@ export default function ExerciseSetSteps() {
       content: (
         <div className="flex gap-2 self-center">
           <Label size="4xl" htmlFor={`set-${currentSetIndex}-reps`}>Reps</Label>
-          <Input size="5xl" id={`set-${currentSetIndex}-reps`} type="number" placeholder="Reps" value={sets[currentSetIndex].reps} onChange={(event) => handleSetChange(currentSetIndex, 'reps', event)} />
+          <Input variant="glass" size="6xl" id={`set-${currentSetIndex}-reps`} type="number" value={sets[currentSetIndex].reps} onChange={(event) => handleSetChange(currentSetIndex, 'reps', event)} />
         </div>
       )
     },
