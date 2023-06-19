@@ -1,4 +1,4 @@
-import { ExerciseEntry, FoodEntry, JournalEntry, MeditateEntry, MoodEntry, SleepEntry, WaterEntry } from "@prisma/client"
+import { ExerciseEntry, FoodEntry, JournalEntry, MeditateEntry, Mood, MoodEntry, SleepEntry, WaterEntry } from "@prisma/client"
 
 
 
@@ -33,11 +33,24 @@ export interface AppState {
 
 export interface Dashboard {
   exercise: ExerciseAppState
+  dailyCheckIn: DailyCheckInState
 }
 
 export interface ExerciseAppState {
   newExercise: Omit<ExerciseEntry, "id" | "userId" | "updatedAt" | "createdAt" | "dateId">
   newTags: string[]
 }
+
+export interface DailyCheckInState {
+  weight: number
+  mood: Mood
+  sleep: number
+  isDone: boolean
+}
+
+
+
+
+
 
 

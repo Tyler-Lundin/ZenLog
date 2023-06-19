@@ -29,3 +29,11 @@ background: linear-gradient(-45deg, #2b5876, #4e4376, #c94b4b, #ff847c);
         background-position: 0% 50%;
     }
 }
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

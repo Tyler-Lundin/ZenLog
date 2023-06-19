@@ -5,7 +5,7 @@ import { forwardRef } from "react"
 
 
 const inputVariants = cva(
-  "flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm",
+  "flex h-10 rounded-md border border-input px-3 py-2 text-sm",
   {
     variants: {
       variant: {
@@ -17,17 +17,18 @@ const inputVariants = cva(
       },
       size: {
         default: "h-10 py-2 px-4 text-md",
-        sm: "h-9 px-3 rounded-md text-lg",
-        lg: "h-11 px-8 rounded-md text-2xl",
-        xl: "h-12 px-10 rounded-md text-3xl",
-        "2xl": "h-14 px-12 rounded-md text-4xl",
-        "3xl": "h-16 px-14 rounded-md text-5xl",
-        "4xl": "h-20 px-16 rounded-md text-6xl",
-        "5xl": "h-24 px-20 rounded-md text-7xl",
-        "6xl": "h-28 px-24 rounded-md text-8xl",
-        "7xl": "h-32 px-28 rounded-md text-9xl",
-        "8xl": "h-36 px-32 rounded-md text-10xl",
-
+        sm: "h-9 px-3 rounded-md text-sm",
+        md: "h-10 px-4 rounded-md text-md",
+        lg: "h-11 px-8 rounded-md text-lg",
+        xl: "h-12 px-10 rounded-md text-xl",
+        "2xl": "h-14 px-12 rounded-md text-2xl",
+        "3xl": "h-16 px-14 rounded-md text-3xl",
+        "4xl": "h-20 px-16 rounded-md text-4xl",
+        "5xl": "h-24 px-20 rounded-md text-5xl",
+        "6xl": "h-28 px-24 rounded-md text-6xl",
+        "7xl": "h-32 px-28 rounded-md text-7xl",
+        "8xl": "h-36 px-32 rounded-md text-8xl",
+        "8xlFit": "h-36 px-4 rounded-md text-8xl",
       },
     },
     defaultVariants: {

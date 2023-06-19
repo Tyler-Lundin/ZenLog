@@ -1,5 +1,5 @@
 
-import { ExerciseEntry, ExerciseSet } from '@prisma/client';
+import { ExerciseEntry, ExerciseSet, Mood } from '@prisma/client';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '@/types/global';
 import { EMPTY_SET } from '@/components/dashboard/exercise/AddExerciseEntry';
@@ -30,6 +30,12 @@ const initialState: AppState = {
         sets: [EMPTY_SET],
       },
       newTags: []
+    },
+    dailyCheckIn: {
+      weight: 0,
+      mood: 'NEUTRAL',
+      sleep: 0,
+      isDone: false
     }
   },
   settings: {
@@ -98,6 +104,18 @@ const appSlice = createSlice({
         state.dashboard.exercise.newExercise.sets.push(EMPTY_SET);
       }
     },
+    setDailyWeight: (state, action: PayloadAction<number>) => {
+      state.dashboard.dailyCheckIn.weight = action.payload;
+    },
+    setDailyMood: (state, action: PayloadAction<Mood>) => {
+      state.dashboard.dailyCheckIn.mood = action.payload;
+    },
+    setDailySleep: (state, action: PayloadAction<number>) => {
+      state.dashboard.dailyCheckIn.sleep = action.payload;
+    },
+    setDailyCheckIsDone: (state, action: PayloadAction<boolean>) => {
+      state.dashboard.dailyCheckIn.isDone = action.payload;
+    },
   }
 });
 
@@ -115,6 +133,10 @@ export const {
   setNewTag,
   removeSetTag,
   addSet,
+  setDailyWeight,
+  setDailyMood,
+  setDailySleep,
+  setDailyCheckIsDone
 } = appSlice.actions;
 
 export default appSlice.reducer;
