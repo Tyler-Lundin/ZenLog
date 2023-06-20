@@ -37,7 +37,8 @@ export interface Dashboard {
 }
 
 export interface ExerciseAppState {
-  newExercise: Omit<ExerciseEntry, "id" | "userId" | "updatedAt" | "createdAt" | "dateId"> & {
+  newExercise: Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId"> & {
+    step: number
     isDone: boolean
   }
   newTags: string[]

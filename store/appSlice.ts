@@ -1,7 +1,7 @@
 import { ExerciseEntry, ExerciseSet, Mood } from '@prisma/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '@/types/global';
-import { EMPTY_SET } from '@/components/dashboard/exercise/AddExerciseEntry';
+import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry';
 
 const todaysMonth = new Date().getMonth() + 1;
 const todaysDay = new Date().getDate();
@@ -23,6 +23,8 @@ const initialState: AppState = {
   dashboard: {
     exercise: {
       newExercise: {
+        id: '',
+        step: 0,
         exerciseName: '',
         exerciseId: '',
         sets: [EMPTY_SET],
@@ -138,6 +140,17 @@ const appSlice = createSlice({
     setDailyCheckIsDone: (state, action: PayloadAction<boolean>) => {
       state.dashboard.dailyCheckIn.isDone = action.payload;
     },
+    setNextStep: (state, action: PayloadAction<number>) => {
+      state.dashboard.exercise.newExercise.step = action.payload;
+    },
+    nextNewExerciseStep: (state) => {
+      state.dashboard.exercise.newExercise.step++;
+    },
+    previousNewExerciseStep: (state) => {
+      if (state.dashboard.exercise.newExercise.step === 0) return;
+      state.dashboard.exercise.newExercise.step--;
+    },
+
   }
 });
 
@@ -163,7 +176,10 @@ export const {
   setDailyWeight,
   setDailyMood,
   setDailySleep,
-  setDailyCheckIsDone
+  setDailyCheckIsDone,
+  setNextStep,
+  nextNewExerciseStep,
+  previousNewExerciseStep,
 } = appSlice.actions;
 
 export default appSlice.reducer;

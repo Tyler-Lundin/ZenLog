@@ -1,6 +1,6 @@
 'use client';
 import { ExerciseEntry } from "@prisma/client";
-import DashboardBlock from "../DashboardBlock";
+import DashboardBlock from "../dashboard/DashboardBlock";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import useSWR from 'swr';

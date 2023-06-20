@@ -252,6 +252,8 @@ enum Muscle {
   LATS
   NECK
   UPPER_BACK
+  BACK
+  CORE
 }
 
 enum Force {
@@ -272,6 +274,7 @@ enum Mechanic {
 }
 
 enum Equipment {
+  NONE
   BARBELL
   DUMBBELL
   BODY_WEIGHT
@@ -281,6 +284,7 @@ enum Equipment {
   KETTLEBELL
   MEDICINE_BALL
   CARDIO
+  PULL_UP_BAR
   OTHER
 }
 
@@ -298,4 +302,5 @@ enum Category {
   BALANCE
   FLEXIBILITY
   ENDURANCE
+  CALISTHENICS
 }
