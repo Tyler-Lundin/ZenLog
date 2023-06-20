@@ -111,13 +111,13 @@ model Date {
   year            Int
   user            User     @relation(fields: [userId], references: [id])
   userId          String   @db.ObjectId
+  WeightEntry   String
+  SleepEntry    String
+  MoodEntry     String 
   ExerciseEntries String[] @db.ObjectId
-  WeightEntries   String[] @db.ObjectId
   FoodEntries     String[] @db.ObjectId
   WaterEntries    String[] @db.ObjectId
-  SleepEntries    String[] @db.ObjectId
   JournalEntries  String[] @db.ObjectId
-  MoodEntries     String[] @db.ObjectId
   MeditateEntries String[] @db.ObjectId
 }
 

@@ -12,6 +12,7 @@ const textareaVariants = cva(
         ghost: "bg-transparent",
         destructive: "bg-red-400 text-destructive-foreground",
         event: "bg-black text-white",
+        glass: "bg-transparent border-0 rounded-none dark:text-white text-black outline-none"
       },
     },
     defaultVariants: {

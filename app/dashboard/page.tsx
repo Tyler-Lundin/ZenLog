@@ -1,5 +1,5 @@
 import Page from "@/components/Page";
-import DashboardSteps from "@/components/dashboard/DashboardSteps";
+import DailyCheckIn from "@/components/dashboard/DailyCheckIn";
 import LogButton from "@/components/dashboard/LogButton";
 import LogEventMenu from "@/components/dashboard/LogEventMenu";
 import TitleBlock from "@/components/dashboard/TitleBlock";
@@ -13,12 +13,12 @@ export default async function DashboardPage() {
   return (
     <Page>
       <TitleBlock title={`Welcome, ${session.user.name}`} />
-      <DashboardSteps />
+      <DailyCheckIn />
+      <div className="p-4 w-full grid place-content-center">
+        <LogButton />
+        <LogEventMenu />
+      </div>
     </Page>
   )
 }
 
-      // <div className="p-4 w-full grid place-content-center">
-      //   <LogButton />
-      //   <LogEventMenu />
-      // </div>

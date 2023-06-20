@@ -12,7 +12,7 @@ export default function Page({ children, className, ...props }: PageProps) {
     <main
       {...props}
       style={{
-        backgroundImage: ` radial-gradient(rgb(0,0,0) 1px, rgba(0,0,0,0) 1px)`,
+        backgroundImage: ` radial-gradient(rgba(0,0,0,0.6) 1px, rgba(0,0,0,0.6) 1px)`,
         backgroundSize: '45px 45px',
         backgroundPosition: '0 0, 14px 14px',
       }}

@@ -1,8 +1,12 @@
+import { setDailyMood } from "@/store/appSlice";
+import { AppDispatch, RootState } from "@/store/store"
 import { Mood } from "@prisma/client"
-import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 export default function MoodStep() {
-  const [mood, setMood] = useState<Mood>("HAPPY")
+  console.log("rendering mood step")
+  const { mood } = useSelector((state: RootState) => state.app.dashboard.dailyCheckIn);
+  const dispatch = useDispatch<AppDispatch>();
 
   const MOODS = [
     { name: "Happy", icon: "😀", value: "HAPPY" },
@@ -20,8 +24,12 @@ export default function MoodStep() {
       <label className="text-center  text-2xl font-thin">How are you feeling today?</label>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 py-4 justify-items-center">
         {MOODS.map(mood => (
-          <button className={`w-32 h-32 transition-all rounded-full ${isMoodSelected(mood.value as Mood) && 'dark:border-white border-2 border-black'}`} key={mood.value} onClick={() => setMood(mood.value as Mood)}>
-            <p className={`text-4xl ${isMoodSelected(mood.value as Mood) && 'animate-bounce'}`}>{mood.icon}</p>
+          <button
+            className={`w-32 h-32 transition-all rounded-full group ${isMoodSelected(mood.value as Mood) && 'dark:border-white border-2 border-black'}`}
+            key={mood.value}
+            onClick={() => dispatch(setDailyMood(mood.value as Mood))}
+          >
+            <p className={`text-4xl group-hover:animate-bounce ${isMoodSelected(mood.value as Mood) && 'animate-bounce'}`}>{mood.icon}</p>
             <p className="text-xl text-black dark:text-white font-black uppercase">{mood.name}</p>
           </button>
         ))}

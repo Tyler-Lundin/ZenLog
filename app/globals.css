@@ -37,3 +37,8 @@ background: linear-gradient(-45deg, #2b5876, #4e4376, #c94b4b, #ff847c);
     margin: 0;
   }
 }
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}

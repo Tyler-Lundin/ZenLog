@@ -1,9 +1,7 @@
-
 import { ExerciseEntry, ExerciseSet, Mood } from '@prisma/client';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '@/types/global';
 import { EMPTY_SET } from '@/components/dashboard/exercise/AddExerciseEntry';
-
 
 const todaysMonth = new Date().getMonth() + 1;
 const todaysDay = new Date().getDate();
@@ -28,15 +26,16 @@ const initialState: AppState = {
         exerciseName: '',
         exerciseId: '',
         sets: [EMPTY_SET],
+        isDone: false
       },
-      newTags: []
+      newTags: [],
     },
     dailyCheckIn: {
-      weight: 0,
-      mood: 'NEUTRAL',
-      sleep: 0,
+      weight: 180,
+      mood: 'HAPPY',
+      sleep: 8,
       isDone: false
-    }
+    },
   },
   settings: {
     isCookiesEnabled: false,
@@ -90,11 +89,34 @@ const appSlice = createSlice({
     removeNewSet: (state, action: PayloadAction<number>) => {
       state.dashboard.exercise.newExercise.sets.splice(action.payload, 1);
     },
-    addSetTag: (state, action: PayloadAction<{ index: number, tag: string }>) => {
-      state.dashboard.exercise.newExercise.sets[action.payload.index].tags.push(action.payload.tag);
+    setNewReps: (state, action: PayloadAction<{ setIndex: number, reps: number }>) => {
+      const { setIndex, reps } = action.payload;
+      console.log('setIndex', setIndex);
+      console.log('reps', reps);
+      state.dashboard.exercise.newExercise.sets[setIndex].reps = reps;
     },
-    setNewTag: (state, action: PayloadAction<{ index: number, tag: string }>) => {
-      state.dashboard.exercise.newTags[action.payload.index] = action.payload.tag;
+    setNewWeight: (state, action: PayloadAction<{ setIndex: number, weight: number }>) => {
+      const { setIndex, weight } = action.payload;
+      state.dashboard.exercise.newExercise.sets[setIndex].weight = weight;
+    },
+    setNewToFailure: (state, action: PayloadAction<{ setIndex: number, toFailure: boolean }>) => {
+      const { setIndex, toFailure } = action.payload;
+      state.dashboard.exercise.newExercise.sets[setIndex].toFailure = toFailure;
+    },
+    setNewIntensity: (state, action: PayloadAction<{ setIndex: number, intensity: number }>) => {
+      const { setIndex, intensity } = action.payload;
+      state.dashboard.exercise.newExercise.sets[setIndex].intensity = intensity;
+    },
+    setNewNotes: (state, action: PayloadAction<{ setIndex: number, notes: string }>) => {
+      const { setIndex, notes } = action.payload;
+      state.dashboard.exercise.newExercise.sets[setIndex].notes = notes;
+    },
+    addSetTag: (state, action: PayloadAction<{ setIndex: number, tag: string }>) => {
+      state.dashboard.exercise.newExercise.sets[action.payload.setIndex].tags.push(action.payload.tag);
+    },
+    setNewTag: (state, action: PayloadAction<{ tagIndex: number, tag: string, setIndex: number }>) => {
+      const { tagIndex, tag, setIndex } = action.payload;
+      state.dashboard.exercise.newExercise.sets[setIndex].tags[tagIndex] = tag;
     },
     removeSetTag: (state, action: PayloadAction<{ tagIndex: number, setIndex: number }>) => {
       state.dashboard.exercise.newExercise.sets[action.payload.setIndex].tags.splice(action.payload.tagIndex, 1);
@@ -129,6 +151,11 @@ export const {
   setNewExerciseName,
   setNewExerciseSets,
   removeNewSet,
+  setNewReps,
+  setNewWeight,
+  setNewToFailure,
+  setNewIntensity,
+  setNewNotes,
   addSetTag,
   setNewTag,
   removeSetTag,

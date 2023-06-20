@@ -1,17 +1,20 @@
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { setDailyWeight } from "@/store/appSlice"
+import { AppDispatch, RootState } from "@/store/store"
 import { IoScaleOutline } from "react-icons/io5"
+import { useDispatch, useSelector } from "react-redux"
 
 
 export default function BodyweightStep() {
 
-  const [weight, setWeight] = useState(0)
+  const { weight } = useSelector((state: RootState) => state.app.dashboard.dailyCheckIn)
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSetWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     const weight = parseInt(e.target.value)
     if (weight > 999 || weight < 0) return
-    setWeight(weight)
+    dispatch(setDailyWeight(weight));
   }
 
   return (
