@@ -6,7 +6,6 @@ import { toggleLogExerciseForm } from '@/store/uiSlice';
 import { SheetContent } from '@/components/ui/sheet';
 import ExerciseSetSteps from './ExerciseSetSteps';
 import ListExercisesStep from './steps/ListExercisesStep';
-import LogExerciseStep from './steps/LogExerciseStep';
 
 export const EMPTY_SET = { reps: 0, weight: 0, toFailure: false, intensity: 5, notes: '', tags: [] }
 
@@ -25,7 +24,6 @@ export default function AddExerciseEntry() {
   const STEPS = [
     <ListExercisesStep key={`exercise-${exerciseName || ''}-list`} />,
     <ExerciseSetSteps key={`exercise-${exerciseName || ''}-set`} />,
-    <LogExerciseStep key={`exercise-${exerciseName || ''}-log`} />
   ]
 
   const currentStep = STEPS[step]
@@ -33,7 +31,9 @@ export default function AddExerciseEntry() {
   return (
     <SheetContent onClose={() => dispatch(toggleLogExerciseForm())} position="top" size={'full'}>
       <div className="grid items-center z-40 bg-white/80 dark:bg-black/80 backdrop-blur-sm  w-full overflow-y-auto h-full pb-20">
-        {currentStep}
+        <div className="grid items-center ">
+          {currentStep}
+        </div>
         <div className="h-20"></div>
       </div>
     </SheetContent>

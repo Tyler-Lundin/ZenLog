@@ -2,6 +2,7 @@ import { ExerciseEntry, ExerciseSet, Mood } from '@prisma/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '@/types/global';
 import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry';
+import logExerciseThunk from './thunks/logExerciseThunk';
 
 const todaysMonth = new Date().getMonth() + 1;
 const todaysDay = new Date().getDate();
@@ -150,7 +151,12 @@ const appSlice = createSlice({
       if (state.dashboard.exercise.newExercise.step === 0) return;
       state.dashboard.exercise.newExercise.step--;
     },
-
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logExerciseThunk.fulfilled, (state, action) => {
+      state.date.exerciseEntries.push(action.payload);
+      state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise;
+    });
   }
 });
 

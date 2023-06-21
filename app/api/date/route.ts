@@ -12,7 +12,6 @@ export async function POST(req: Request, res: Response) {
     return NextResponse.json({ status: 'error', message: 'Missing date' });
   }
 
-
   const session = await getServerSession(
     req as unknown as NextApiRequest,
     {
@@ -25,7 +24,8 @@ export async function POST(req: Request, res: Response) {
 
   if (!session) return NextResponse.json({ error: "Not Authorized" });
 
-  const { user: { id } } = session;
+  const { user: { id, email } } = session;
+  if (!id || !email) return NextResponse.json({ error: "Not Authorized" });
 
   const userDate = await prisma.date.findFirst({
     where: {
@@ -36,21 +36,24 @@ export async function POST(req: Request, res: Response) {
     }
   });
 
+
   if (!userDate) {
     const createdDate = await prisma.date.create({
       data: {
         month: +month,
         day: +day,
         year: +year,
-        userId: id,
+        user: {
+          connect: {
+            id: id
+          }
+        }
       }
     });
 
-    return NextResponse.json({ status: 'ok', date: createdDate });
+    return NextResponse.json({ date: createdDate }, { status: 201 });
   }
 
-
-
-  return NextResponse.json({ status: 'ok', date: userDate });
+  return NextResponse.json({ date: userDate }, { status: 200 });
 
 }

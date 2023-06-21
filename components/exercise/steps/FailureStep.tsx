@@ -27,8 +27,8 @@ export default function WeightStep() {
           <Button size="lgSquare" disabled={!toFailure} className="p-2" onClick={() => handleChange(false)}>No</Button>
           <Button size="lgSquare" disabled={toFailure} onClick={() => handleChange(true)}>Yes</Button>
         </div>
-        <span className="text-2xl absolute right-0 bottom-0">😎</span>
-        <span className="text-2xl absolute left-0 bottom-0">🥱</span>
+        <span className={`${toFailure && "animate-bounce"} text-2xl absolute right-0 bottom-0`}>😎</span>
+        <span className={`${!toFailure && "animate-bounce"} text-2xl absolute left-0 bottom-0`}>🥱</span>
       </div>
     </>
   )
