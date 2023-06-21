@@ -11,13 +11,14 @@ export interface Date {
   month: number
   day: number
   year: number
-  exerciseEntries: ExerciseEntry[]
-  foodEntries: FoodEntry[]
-  waterEntries: WaterEntryr[]
-  sleepEntries: SleepEntry[]
-  journalEntries: JournalEntry[]
-  moodEntries: MoodEntryn[]
-  meditateEntries: MeditateEntry[]
+  ExerciseEntries: ExerciseEntry[]
+  FoodEntries: FoodEntry[]
+  JournalEntries: JournalEntry[]
+  MeditateEntries: MeditateEntry[]
+  MoodEntries: MoodEntry[]
+  SleepEntries: SleepEntry[]
+  WeightEntries: WeightEntry[]
+  WaterEntries: WaterEntry[]
 }
 
 export interface Settings {
@@ -33,7 +34,7 @@ export interface AppState {
 
 export interface Dashboard {
   exercise: ExerciseAppState
-  dailyCheckIn: DailyCheckInState
+  dailyCheck: DailyCheckState
 }
 
 export interface ExerciseAppState {
@@ -44,11 +45,15 @@ export interface ExerciseAppState {
   newTags: string[]
 }
 
-export interface DailyCheckInState {
+export interface DailyCheckState {
   weight: number
   mood: Mood
   sleep: number
-  isDone: boolean
+  isDone: {
+    weight: boolean
+    mood: boolean
+    sleep: boolean
+  }
 }
 
 

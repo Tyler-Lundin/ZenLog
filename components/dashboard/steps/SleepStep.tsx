@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 export default function SleepStep() {
-  const { sleep } = useSelector((state: RootState) => state.app.dashboard.dailyCheckIn)
+  const { sleep } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
   const dispatch = useDispatch<AppDispatch>();
 
 

@@ -1,5 +1,5 @@
 import Page from "@/components/Page";
-import DailyCheckIn from "@/components/dashboard/DailyCheckIn";
+import DailyCheck from "@/components/dashboard/DailyCheck";
 import LogButton from "@/components/dashboard/LogButton";
 import LogEventMenu from "@/components/dashboard/LogEventMenu";
 import TitleBlock from "@/components/dashboard/TitleBlock";
@@ -13,11 +13,11 @@ export default async function DashboardPage() {
   return (
     <Page>
       <TitleBlock title={`Welcome, ${session.user.name}`} />
-      <DailyCheckIn />
+      <DailyCheck />
       <div className="p-4 w-full grid place-content-center">
-        <LogButton />
-        <LogEventMenu />
       </div>
+      <LogButton />
+      <LogEventMenu />
     </Page>
   )
 }

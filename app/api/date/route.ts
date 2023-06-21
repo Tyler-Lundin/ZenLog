@@ -36,7 +36,6 @@ export async function POST(req: Request, res: Response) {
     }
   });
 
-
   if (!userDate) {
     const createdDate = await prisma.date.create({
       data: {
@@ -51,9 +50,25 @@ export async function POST(req: Request, res: Response) {
       }
     });
 
-    return NextResponse.json({ date: createdDate }, { status: 201 });
+    return NextResponse.json({
+      date: createdDate, dailyCheckIsDone: {
+        weight: false,
+        mood: false,
+        sleep: false,
+      }
+    }, { status: 201 });
   }
 
-  return NextResponse.json({ date: userDate }, { status: 200 });
+  const isWeightDone = Array.isArray(userDate.WeightEntries) && userDate.WeightEntries.length > 0;
+  const isMoodDone = Array.isArray(userDate.MoodEntries) && userDate.MoodEntries.length > 0;
+  const isSleepDone = Array.isArray(userDate.SleepEntries) && userDate.SleepEntries.length > 0;
+
+  const isDone = {
+    weight: isWeightDone,
+    mood: isMoodDone,
+    sleep: isSleepDone,
+  }
+
+  return NextResponse.json({ date: userDate, dailyCheckIsDone: isDone }, { status: 200 });
 
 }

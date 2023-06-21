@@ -1,6 +1,6 @@
-import DailyCheckIn from "./DailyCheckIn";
+import DailyCheck from "./DailyCheck";
 
 export default function DashboardSteps() {
 
-  return <DailyCheckIn />
+  return <DailyCheck />
 }

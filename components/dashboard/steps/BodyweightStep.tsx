@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 export default function BodyweightStep() {
 
-  const { weight } = useSelector((state: RootState) => state.app.dashboard.dailyCheckIn)
+  const { weight } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSetWeight = (e: React.ChangeEvent<HTMLInputElement>) => {

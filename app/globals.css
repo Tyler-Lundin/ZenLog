@@ -7,29 +7,6 @@
   /* border: 1px solid red; */
 }
  
-body {
-    /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
-/* background: linear-gradient(-45deg, #9dbebb, #282828, #ff578c, #ffaa00); */
-background: linear-gradient(-45deg, #2b5876, #4e4376, #c94b4b, #ff847c);
-    /* background: linear-gradient(-45deg, #222222, #ff9800, #ff5722, #673ab7); */
-    /* background: linear-gradient(-45deg, #1f262a, #136a8a, #0f8554, #205b34); */
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-}
-
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

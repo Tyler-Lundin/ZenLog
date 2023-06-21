@@ -106,7 +106,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
     });
 
-    const updatedDate = await prisma.date.update({
+    await prisma.date.update({
       where: {
         id: dateId
       },
@@ -117,7 +117,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
     });
 
-    return NextResponse.json({ success: "Exercise entry created successfully", data: loggedExercise });
+    return NextResponse.json({ exerciseEntry: loggedExercise }, { status: 201 });
 
   } catch (error: any) {
     console.error(error);

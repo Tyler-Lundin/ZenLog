@@ -40,7 +40,7 @@ function ExerciseCards() {
     if (data) dispatch(setExerciseEntries(data.exerciseEntries));
   }, [data, dispatch, dateId])
 
-  const exerciseEntries = useSelector((state: RootState) => state.app.date.exerciseEntries);
+  const exerciseEntries = useSelector((state: RootState) => state.app.date.ExerciseEntries);
 
   if (isLoading) return (<DashboardBlock><Spinner size="xl" /></DashboardBlock>)
 
