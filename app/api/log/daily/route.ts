@@ -2,6 +2,7 @@
 
 import { authOptions } from "@/server/authOptions";
 import { prisma } from "@/server/db";
+import { MoodEntry, SleepEntry, WeightEntry } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -26,56 +27,57 @@ export async function POST(req: Request, res: Response) {
 
     const { weight, mood, sleep, dateId } = await req.json();
 
-    if (!weight || !mood || !sleep || !dateId) {
-      return NextResponse.json({ status: 'error', message: 'Missing weight, mood, or sleep' });
+
+    let weightEntry: WeightEntry | undefined = undefined
+    let moodEntry: MoodEntry | undefined = undefined
+    let sleepEntry: SleepEntry | undefined = undefined
+
+    if (weight !== undefined || weight > 0 || weight < 999) {
+      weightEntry = await prisma.weightEntry.create({
+        data: {
+          weight,
+          dateId,
+          userId,
+        }
+      });
     }
 
-    const dailyCheck = {
-      weight,
-      mood,
-      sleep,
-      dateId
+    if (mood !== undefined || mood !== '') {
+      moodEntry = await prisma.moodEntry.create({
+        data: {
+          mood,
+          dateId,
+          userId,
+        }
+      });
     }
 
-    const weightEntry = await prisma.weightEntry.create({
-      data: {
-        weight,
-        dateId,
-        userId,
-      }
-    });
+    if (sleep !== undefined || sleep > 0) {
+      sleepEntry = await prisma.sleepEntry.create({
+        data: {
+          hours: sleep,
+          dateId,
+          userId,
+        }
+      });
+    }
 
-    const moodEntry = await prisma.moodEntry.create({
-      data: {
-        mood,
-        dateId,
-        userId,
-      }
-    });
+    if (!weightEntry && !moodEntry && !sleepEntry) return NextResponse.json({ status: 'error', message: 'Could not create entry' });
 
-    const sleepEntry = await prisma.sleepEntry.create({
-      data: {
-        hours: sleep,
-        dateId,
-        userId,
-      }
-    });
+    const formatData = () => {
+      let D = {} as { [key: string]: any };
+      if (weightEntry) D.WeightEntries = { push: weightEntry.id };
+      if (moodEntry) D.MoodEntries = { push: moodEntry.id };
+      if (sleepEntry) D.SleepEntries = { push: sleepEntry.id };
+      return D;
+    }
+    let data = formatData();
 
     const date = await prisma.date.update({
       where: {
         id: dateId
       },
-      data: {
-        WeightEntries: {
-          push: moodEntry.id
-        },
-        MoodEntries: {
-          push: weightEntry.id
-        },
-        SleepEntries: {
-          push: sleepEntry.id
-        }
-      }
+      data
     });
 
     if (!date) return NextResponse.json({ status: 'error', message: 'Could not update date' });

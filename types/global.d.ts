@@ -6,8 +6,8 @@ import { ExerciseEntry, ExerciseSet, FoodEntry, JournalEntry, MeditateEntry, Moo
 type backgroundColor = [string, string, string, string]
 
 
-export interface Date {
-  id?: string
+export interface DateState {
+  id: string
   month: number
   day: number
   year: number
@@ -19,6 +19,16 @@ export interface Date {
   SleepEntries: SleepEntry[]
   WeightEntries: WeightEntry[]
   WaterEntries: WaterEntry[]
+  ids: {
+    ExerciseEntries: string[]
+    FoodEntries: string[]
+    JournalEntries: string[]
+    MeditateEntries: string[]
+    MoodEntries: string[]
+    SleepEntries: string[]
+    WeightEntries: string[]
+    WaterEntries: string[]
+  }
 }
 
 export interface Settings {
@@ -27,7 +37,7 @@ export interface Settings {
 }
 
 export interface AppState {
-  date: Date,
+  date: DateState,
   dashboard: Dashboard,
   settings: Settings
 }
