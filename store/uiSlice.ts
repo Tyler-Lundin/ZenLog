@@ -41,8 +41,17 @@ const uiSlice = createSlice({
     toggleLogEventMenu(state) {
       state.dashboard.isLogEventMenuOpen = !state.dashboard.isLogEventMenuOpen;
     },
-    toggleLogExerciseForm(state) {
-      state.dashboard.exercise.isLogExerciseFormOpen = !state.dashboard.exercise.isLogExerciseFormOpen;
+    openLogExerciseForm(state) {
+      if (state.dashboard.exercise.isLogExerciseFormOpen === true) // this is just in case, but it should never happen 
+        state.dashboard.exercise.isLogExerciseFormOpen = false;
+      else
+        state.dashboard.exercise.isLogExerciseFormOpen = true;
+    },
+    closeLogExerciseForm(state) {
+      if (state.dashboard.exercise.isLogExerciseFormOpen === false) // this is just in case, but it should never happen 
+        state.dashboard.exercise.isLogExerciseFormOpen = true;
+      else
+        state.dashboard.exercise.isLogExerciseFormOpen = false;
     },
     setExerciseError(state, action) {
       state.dashboard.exercise.error = action.payload;
@@ -57,7 +66,8 @@ export const {
   toggleNavigation,
   closeWelcomeDialog,
   toggleLogEventMenu,
-  toggleLogExerciseForm,
+  openLogExerciseForm,
+  closeLogExerciseForm,
   setExerciseError,
   toggleSortExercise
 } = uiSlice.actions;

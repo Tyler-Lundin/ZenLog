@@ -15,14 +15,14 @@ export default function ExerciseOverviewStep() {
       {sets.map((set, i) => (
         <>
           {set.tags.length > 0 && (
-            <div className="gap-1 flex">
+            <div key={`${i}-tags`} className="gap-1 flex">
               {set.tags.map((tag, i) => (
                 <Badge variant={"default"} key={i}>{tag}</Badge>
               ))}
             </div>
 
           )}
-          <div key={i} className="flex flex-col gap-2">
+          <div key={`${i}-details`} className="flex flex-col gap-2">
             <h2 className="text-2xl font-thin dark:text-white">{set.reps} x {set.weight} lbs</h2>
             {set.notes && <q className="text-2xl italic font-thin dark:text-white">{set.notes}</q>}
             <h2 className="text-2xl font-thin dark:text-white">{set.intensity} RPE</h2>

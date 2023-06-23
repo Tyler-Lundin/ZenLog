@@ -37,7 +37,7 @@ export default function DailyCheck() {
   }
 
   const handleBack = () => {
-    if (isFirstStep) return console.log("first step")
+    if (isFirstStep) return dispatch(setDailyCheckIsDone()); // closes but reopens on next reload 
     setStep(step - 1)
   }
 
@@ -50,7 +50,7 @@ export default function DailyCheck() {
     <div className="absolute top-0 left-0 w-screen h-screen dark:bg-black backdrop-blur-md grid place-content-center dark:text-white bg-white z-50">
       {!currentStep.isDone && currentStep.component}
       <div className="flex justify-between absolute top-0 left-0 w-full p-8">
-        <Button variant="ghost" onClick={handleBack} disabled={isFirstStep}>Back</Button>
+        <Button variant="ghost" onClick={handleBack} >Back</Button>
         <Button variant="ghost" onClick={isLastStep ? handleDone : handleNext}>{isLastStep ? "Done" : "Next"}</Button>
       </div>
     </div>

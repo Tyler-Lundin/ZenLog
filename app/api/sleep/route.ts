@@ -2,7 +2,7 @@ import { prisma } from "@/server/db";
 import { NextResponse } from "next/server";
 
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
 
   try {
     console.log("GET /api/sleep/route.ts ~~~~~ ~~ ~ ~  ~ ~~  ~ ~ ~~  ~");
@@ -14,14 +14,13 @@ export async function GET(req: Request) {
         id: { in: SleepEntries }
       }
     })
-    console.log(sleepEntries);
 
-    if (!SleepEntries) return NextResponse.error();
+    if (!SleepEntries) return NextResponse.json({ message: "No sleep entries found" });
 
-    if (sleepEntries.length === 0) return NextResponse.json({ sleepEntries: [] });
+    if (sleepEntries.length === 0) return NextResponse.json({ message: "No Sleep Entries", sleepEntries: [] });
 
-    return NextResponse.json({ sleepEntries });
+    return NextResponse.json({ message: "Sleep Entries Found!", sleepEntries });
   } catch (error: any) {
-    return NextResponse.error()
+    return NextResponse.json({ error: error.message, sleepEntries: [] });
   }
 }

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { setNewIntensity } from "@/store/appSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { IoSpeedometerOutline } from "react-icons/io5";
@@ -24,7 +23,7 @@ export default function IntensityStep() {
       <div className="relative border-b dark:border-white border-black grid justify-center mx-auto">
         <div className="grid grid-cols-5 lg:grid-cols-10 justify-center gap-2 mb-10">
           {INTENSITY.map((rpe) => (
-            <Button key={rpe} variant="default" disabled={intensity === rpe} size="lgSquare" className="p-2" onClick={() => dispatch(setNewIntensity({ setIndex, intensity: rpe }))}>{rpe}</Button>
+            <Button key={rpe} variant="default" disabled={intensity === rpe} size="xlSquare" className="p-2" onClick={() => dispatch(setNewIntensity({ setIndex, intensity: rpe }))}>{rpe}</Button>
           ))}
         </div>
         <span className="text-2xl absolute right-0 bottom-0 dark:text-white">RPE</span>

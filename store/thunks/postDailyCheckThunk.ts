@@ -41,3 +41,4 @@ const postDailyCheck = createAsyncThunk(
 )
 
 export default postDailyCheck;
+

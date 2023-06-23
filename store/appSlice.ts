@@ -1,4 +1,4 @@
-import { Date as IDate, ExerciseEntry, ExerciseSet, Mood } from '@prisma/client';
+import { Date as IDate, ExerciseEntry, ExerciseSet, Mood, Exercise } from '@prisma/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState, DailyCheckState } from '@/types/global';
 import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry';
@@ -129,6 +129,10 @@ const appSlice = createSlice({
     setNewExerciseName: (state, action: PayloadAction<string>) => {
       state.dashboard.exercise.newExercise.exerciseName = action.payload;
     },
+    setNewExercise: (state, action: PayloadAction<Exercise>) => {
+      state.dashboard.exercise.newExercise.exerciseId = action.payload.id;
+      state.dashboard.exercise.newExercise.exerciseName = action.payload.name;
+    },
     setNewExerciseSets: (state, action: PayloadAction<ExerciseSet[]>) => {
       state.dashboard.exercise.newExercise.sets = action.payload;
     },
@@ -184,6 +188,9 @@ const appSlice = createSlice({
     setNextStep: (state, action: PayloadAction<number>) => {
       state.dashboard.exercise.newExercise.step = action.payload;
     },
+    resetNewExercise: (state) => {
+      state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise;
+    },
     nextNewExerciseStep: (state) => {
       state.dashboard.exercise.newExercise.step++;
     },
@@ -223,6 +230,7 @@ export const {
   addExerciseEntry,
   setExerciseEntries,
   setNewExerciseName,
+  setNewExercise,
   setNewExerciseSets,
   removeNewSet,
   setNewReps,
@@ -239,6 +247,7 @@ export const {
   setDailySleep,
   setNextStep,
   nextNewExerciseStep,
+  resetNewExercise,
   previousNewExerciseStep,
   setDailyCheckIsDone
 } = appSlice.actions;

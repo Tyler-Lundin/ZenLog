@@ -26,10 +26,10 @@ const sortEntries = (entries: ExerciseEntry[]): ExerciseEntry[] => {
 const RenderIfDateLoaded = () => {
   const { id: dateId } = useSelector((state: RootState) => state.app.date);
   if (!dateId) return null;
-  return <ExerciseCards />
+  return <ExerciseEntries />
 }
 
-function ExerciseCards() {
+function ExerciseEntries() {
   const { id: dateId } = useSelector((state: RootState) => state.app.date);
   const dispatch = useDispatch();
   const { isSorted } = useSelector((state: RootState) => state.ui.dashboard.exercise)
@@ -51,6 +51,21 @@ function ExerciseCards() {
   )
 
   const sorted = sortEntries(exerciseEntries);
+  const getVolume = (sets: { weight: number, reps: number }[]) => {
+    return sets.reduce((total, { weight = 0, reps = 0 }) => {
+      return total + (weight * reps);
+    }, 0)
+  }
+  const getTotalReps = (sets: { reps: number }[]) => {
+    return sets.reduce((total, { reps = 0 }) => {
+      return total + reps;
+    }, 0)
+  }
+  const getAverageIntensity = (sets: { intensity: number }[]) => {
+    return sets.reduce((total, { intensity = 0 }) => {
+      return total + intensity;
+    }, 0) / sets.length;
+  }
 
 
   return (
@@ -66,16 +81,10 @@ function ExerciseCards() {
                 <p className="text-sm font-semibold">{dateToString(exercise.createdAt as unknown as string)}</p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <h3 className="text-sm font-semibold">Total Volume: {exercise.sets.reduce((total, { weight, reps }) => {
-                  return total + (weight * reps);
-                }, 0)}</h3>
+                <h3 className="text-sm font-semibold">Total Volume: {getVolume(exercise.sets)} lbs</h3>
                 <h3 className="text-sm font-semibold">Total Sets: {exercise.sets.length}</h3>
-                <h3 className="text-sm font-semibold">Total Reps: {exercise.sets.reduce((total, { reps }) => {
-                  return total + reps;
-                }, 0)}</h3>
-                <h3 className="text-sm font-semibold">Average Intensity: {(exercise.sets.reduce((total, { intensity }) => {
-                  return total + intensity;
-                }, 0) / exercise.sets.length).toFixed(2)}</h3>
+                <h3 className="text-sm font-semibold">Total Reps: {getTotalReps(exercise.sets)}</h3>
+                <h3 className="text-sm font-semibold">Average Intensity: {getAverageIntensity(exercise.sets)}</h3>
               </div>
             </div>
 
@@ -83,7 +92,7 @@ function ExerciseCards() {
 
             <div className="grid grid-cols-2 gap-2">
               {exercise.sets.map(({ weight, reps, intensity, toFailure, notes, tags }, i) => (
-                <div key={`${exercise.id}-set-${i}`} className={`flex gap-8 px-6 py-2 border rounded-md dark:bg-white/10 bg-white/80  text-black dark:text-white bg-black border-zinc-600`}>
+                <div key={`${exercise.id}-set-${i}`} className={`flex gap-8 px-6 py-2 text-black dark:text-white `}>
                   <ul className="grid gap-2  ">
                     <h3 className="underline underline-offset-2 decoration-1 font-bold tracking-wider uppercase">Set {i + 1}</h3>
                     <li className="text-sm font-light">{weight ? `${weight} lbs` : 'No Weight'}</li>

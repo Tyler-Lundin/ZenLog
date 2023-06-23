@@ -82,7 +82,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     console.log('found session')
 
     const { user: { id } } = session;
-    const { exerciseId, exerciseName, sets, dateId } = await req.json();
+    const { newExercise, dateId } = await req.json();
+    const { exerciseId, exerciseName, sets } = newExercise as Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId">;
 
     validateRequestData({ userId: id, exerciseId, exerciseName, sets, dateId });
 
