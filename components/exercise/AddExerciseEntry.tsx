@@ -2,8 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { closeLogExerciseForm, toggleLogExerciseForm } from '@/store/uiSlice';
-import { SheetContent } from '@/components/ui/sheet';
+import { closeLogExerciseForm } from '@/store/uiSlice';
 import ExerciseSetSteps from './ExerciseSetSteps';
 import ListExercisesStep from './steps/ListExercisesStep';
 import BackButton from '../ui/BackButton';

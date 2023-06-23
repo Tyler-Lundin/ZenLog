@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const dateToString = (date: string) => {
+const dateToTime = (date: string) => {
   const D = new Date(date)
   return D.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 }
@@ -78,7 +78,7 @@ function ExerciseEntries() {
             <div className="">
               <div className="flex justify-between items-center">
                 <h3 className="text-xl font-semibold">{exercise.exerciseName}</h3>
-                <p className="text-sm font-semibold">{dateToString(exercise.createdAt as unknown as string)}</p>
+                <p className="text-sm font-semibold">{dateToTime(exercise.createdAt as unknown as string)}</p>
               </div>
               <div className="flex flex-wrap gap-2">
                 <h3 className="text-sm font-semibold">Total Volume: {getVolume(exercise.sets)} lbs</h3>
@@ -93,20 +93,21 @@ function ExerciseEntries() {
             <div className="grid grid-cols-2 gap-2">
               {exercise.sets.map(({ weight, reps, intensity, toFailure, notes, tags }, i) => (
                 <div key={`${exercise.id}-set-${i}`} className={`flex gap-8 px-6 py-2 text-black dark:text-white `}>
-                  <ul className="grid gap-2  ">
-                    <h3 className="underline underline-offset-2 decoration-1 font-bold tracking-wider uppercase">Set {i + 1}</h3>
-                    <li className="text-sm font-light">{weight ? `${weight} lbs` : 'No Weight'}</li>
-                    <li className="text-sm font-light">{reps === 1 ? `${reps} rep` : `${reps} reps`}</li>
-                    <li className="text-sm font-light">{intensity} intensity</li>
-                    <li className="text-sm font-light">{toFailure ? 'To Failure' : 'Not to Failure'}</li>
-                    {notes && <li className="text-sm italic">{notes}</li>}
-                    <li className="flex flex-wrap gap-2">
-                      <h3 className="text-sm font-semibold">Tags:</h3>
-                      {tags.map((tag, i) => (
-                        <Badge key={`${exercise.id}-set-${i}-tag-${tag}`}> {tag} </Badge>
-                      ))}
-                    </li>
-                  </ul>
+                  <div className="grid gap-2">
+                    <h3 className="font-bold border dark:border-white border-black rounded-md px-2  uppercase">Set {i + 1}</h3>
+                    <div className="px-2">
+                      <h5 className="text-sm font-light">{weight && reps ? `${weight} lbs X ${reps} reps` : weight ? `${weight} lbs` : reps ? `${reps} reps` : ''}</h5>
+                      <h5 className="text-sm font-light">{intensity} RPE</h5>
+                      <h5 className="text-sm font-light">{toFailure ? 'To Failure' : ''}</h5>
+                      {notes && <p className="text-sm italic">{notes}</p>}
+                      {tags.length > 0 && <div className="flex flex-wrap gap-2">
+                        <h5 className="text-sm font-semibold">Tags:</h5>
+                        {tags.map((tag, i) => (
+                          <Badge key={`${exercise.id}-set-${i}-tag-${tag}`}> {tag} </Badge>
+                        ))}
+                      </div>}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

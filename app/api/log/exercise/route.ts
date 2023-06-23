@@ -1,4 +1,5 @@
 // import { ExerciseSet } from "@prisma/client";
+import { ExerciseEntry } from "@prisma/client";
 import { authOptions } from "@server/authOptions";
 import { prisma } from "@server/db";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -15,13 +16,6 @@ export type ExerciseSet = {
   tags: string[];
 }
 
-interface ExerciseEntry {
-  userId: string;
-  exerciseId: string;
-  exerciseName: string;
-  sets: ExerciseSet[];
-  dateId: string;
-}
 
 type ExerciseNumericField = 'reps' | 'weight' | 'intensity';
 
@@ -38,7 +32,7 @@ const convertToNumber = (set: ExerciseSet, field: ExerciseNumericField) => {
   }
 }
 
-const validateRequestData = (data: ExerciseEntry) => {
+const validateRequestData = (data: Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "id">) => {
   const { exerciseId, exerciseName, sets, dateId } = data;
 
   // Basic field validation
@@ -79,13 +73,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
 
     if (!session) return NextResponse.json({ error: "Not Authorized" });
-    console.log('found session')
 
     const { user: { id } } = session;
     const { newExercise, dateId } = await req.json();
     const { exerciseId, exerciseName, sets } = newExercise as Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId">;
+    console.log({ exerciseId, exerciseName, sets, dateId });
 
-    validateRequestData({ userId: id, exerciseId, exerciseName, sets, dateId });
+    validateRequestData({ exerciseId, exerciseName, sets, dateId });
 
     const validateDate = await prisma.date.findUnique({
       where: {

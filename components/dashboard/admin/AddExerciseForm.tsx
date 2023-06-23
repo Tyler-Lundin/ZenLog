@@ -7,12 +7,6 @@ import { Textarea } from '@/components/ui/textarea';
 import MultiSelect from '@/components/ui/Multiselect';
 
 
-
-const forceOptions: Force[] = ["PULL", "PUSH", "STATIC"];
-const levelOptions: Level[] = ["BEGINNER", "INTERMEDIATE", "EXPERT"];
-const mechanicOptions: Mechanic[] = ["COMPOUND", "ISOLATION"];
-const equipmentOptions: Equipment[] = ["MACHINE", "DUMBBELL", "BARBELL", "BODY_WEIGHT"];
-const categoryOptions: Category[] = ["STRENGTH", "FLEXIBILITY", "BALANCE", "ENDURANCE"];
 const muscleOptions: Muscle[] = ["ABS", "BICEPS", "CALVES", "CHEST", "FOREARMS", "GLUTES", "HAMSTRINGS", "LATS", "LOWER_BACK", "MIDDLE_BACK", "NECK", "QUADRICEPS", "SHOULDERS", "TRAPS", "TRICEPS", "UPPER_BACK"];
 
 export default function AddExerciseForm() {
@@ -26,8 +20,8 @@ export default function AddExerciseForm() {
       force: 'PULL',
       level: 'EXPERT',
       mechanic: 'COMPOUND',
-      equipment: 'MACHINE',
-      category: 'STRENGTH',
+      equipment: ['MACHINE'],
+      category: ['STRENGTH'],
       description: '',
       tips: [],
     }
