@@ -133,45 +133,32 @@ const appSlice = createSlice({
       state.dashboard.exercise.newExercise.exerciseId = action.payload.id;
       state.dashboard.exercise.newExercise.exerciseName = action.payload.name;
     },
-    removeNewSet: (state, action: PayloadAction<number>) => {
-      state.dashboard.exercise.newExercise.sets.splice(action.payload, 1);
+    setNewReps: (state, action: PayloadAction<number>) => {
+      state.dashboard.exercise.newExercise.set.reps = action.payload;
     },
-    setNewReps: (state, action: PayloadAction<{ setIndex: number, reps: number }>) => {
-      const { setIndex, reps } = action.payload;
-      console.log('setIndex', setIndex);
-      console.log('reps', reps);
-      state.dashboard.exercise.newExercise.sets[setIndex].reps = reps;
+    setNewWeight: (state, action: PayloadAction<number>) => {
+      state.dashboard.exercise.newExercise.set.weight = action.payload;
     },
-    setNewWeight: (state, action: PayloadAction<{ setIndex: number, weight: number }>) => {
-      const { setIndex, weight } = action.payload;
-      state.dashboard.exercise.newExercise.sets[setIndex].weight = weight;
+    setNewToFailure: (state, action: PayloadAction<boolean>) => {
+      state.dashboard.exercise.newExercise.set.toFailure = action.payload;
     },
-    setNewToFailure: (state, action: PayloadAction<{ setIndex: number, toFailure: boolean }>) => {
-      const { setIndex, toFailure } = action.payload;
-      state.dashboard.exercise.newExercise.sets[setIndex].toFailure = toFailure;
+    setNewIntensity: (state, action: PayloadAction<number>) => {
+      if (action.payload > 10) action.payload = 10;
+      else if (action.payload < 1) action.payload = 1;
+      state.dashboard.exercise.newExercise.set.intensity = action.payload;
     },
-    setNewIntensity: (state, action: PayloadAction<{ setIndex: number, intensity: number }>) => {
-      const { setIndex, intensity } = action.payload;
-      state.dashboard.exercise.newExercise.sets[setIndex].intensity = intensity;
+    setNewNotes: (state, action: PayloadAction<string>) => {
+      state.dashboard.exercise.newExercise.set.notes = action.payload;
     },
-    setNewNotes: (state, action: PayloadAction<{ setIndex: number, notes: string }>) => {
-      const { setIndex, notes } = action.payload;
-      state.dashboard.exercise.newExercise.sets[setIndex].notes = notes;
-    },
-    addSetTag: (state, action: PayloadAction<{ setIndex: number, tag: string }>) => {
-      state.dashboard.exercise.newExercise.sets[action.payload.setIndex].tags.push(action.payload.tag);
+    addSetTag: (state, action: PayloadAction<string>) => {
+      state.dashboard.exercise.newExercise.set.tags.push(action.payload);
     },
     setNewTag: (state, action: PayloadAction<{ tagIndex: number, tag: string, setIndex: number }>) => {
-      const { tagIndex, tag, setIndex } = action.payload;
-      state.dashboard.exercise.newExercise.sets[setIndex].tags[tagIndex] = tag;
+      const { tagIndex, tag } = action.payload;
+      state.dashboard.exercise.newExercise.set.tags[tagIndex] = tag;
     },
-    removeSetTag: (state, action: PayloadAction<{ tagIndex: number, setIndex: number }>) => {
-      state.dashboard.exercise.newExercise.sets[action.payload.setIndex].tags.splice(action.payload.tagIndex, 1);
-    },
-    addSet: (state) => {
-      if (state.dashboard.exercise.newExercise.sets.length < 6) {
-        state.dashboard.exercise.newExercise.sets.push(EMPTY_SET);
-      }
+    removeSetTag: (state, action: PayloadAction<number>) => {
+      state.dashboard.exercise.newExercise.set.tags.splice(action.payload, 1);
     },
     setDailyWeight: (state, action: PayloadAction<number>) => {
       state.dashboard.dailyCheck.weight = action.payload;
@@ -184,6 +171,9 @@ const appSlice = createSlice({
     },
     setNextStep: (state, action: PayloadAction<number>) => {
       state.dashboard.exercise.newExercise.step = action.payload;
+    },
+    skipDailyStep: (state, action: PayloadAction<string>) => {
+      state.dashboard.dailyCheck.isDone[action.payload as keyof typeof state.dashboard.dailyCheck.isDone] = true;
     },
     resetNewExercise: (state) => {
       state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise;
@@ -236,7 +226,6 @@ export const {
   setExerciseEntries,
   setNewExerciseName,
   setNewExercise,
-  removeNewSet,
   setNewReps,
   setNewWeight,
   setNewToFailure,
@@ -245,11 +234,11 @@ export const {
   addSetTag,
   setNewTag,
   removeSetTag,
-  addSet,
   setDailyWeight,
   setDailyMood,
   setDailySleep,
   setNextStep,
+  skipDailyStep,
   nextNewExerciseStep,
   resetNewExercise,
   previousNewExerciseStep,

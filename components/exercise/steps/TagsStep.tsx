@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function TagsStep() {
 
-  const { sets } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { tags } = set;
   const dispatch = useDispatch<AppDispatch>();
 
   const [tagInput, setTagInput] = useState('')
 
-  const setIndex = sets.length - 1
-  const { tags } = sets[setIndex]
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tag = event.target.value;
@@ -25,7 +24,7 @@ export default function TagsStep() {
     if (lastChar !== ',') return;
     const newTagWithoutLastChar = event.target.value.slice(0, -1).trim();
     if (newTagWithoutLastChar.length === 0) return;
-    dispatch(addSetTag({ setIndex, tag: newTagWithoutLastChar }));
+    dispatch(addSetTag(newTagWithoutLastChar));
     setTagInput('');
   };
 
@@ -38,7 +37,7 @@ export default function TagsStep() {
         <div className="gap-1 flex">
           {tags.length > 0 && (
             tags.map((tag, i) => (
-              <Badge variant={"default"} key={i} onClick={() => dispatch(removeSetTag({ setIndex, tagIndex: i }))}>{tag}</Badge>
+              <Badge variant={"default"} key={i} onClick={() => dispatch(removeSetTag(i))}>{tag}</Badge>
             ))
           )}
         </div>

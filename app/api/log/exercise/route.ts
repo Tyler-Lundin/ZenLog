@@ -33,29 +33,25 @@ const convertToNumber = (set: ExerciseSet, field: ExerciseNumericField) => {
 }
 
 const validateRequestData = (data: Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "id">) => {
-  const { exerciseId, exerciseName, sets, dateId } = data;
+  const { exerciseId, exerciseName, set, dateId } = data;
 
   // Basic field validation
-  if (!exerciseId || !exerciseName || !sets || !dateId) throw new Error("Missing required fields");
+  if (!exerciseId || !exerciseName || !set || !dateId) throw new Error("Missing required fields");
   if (typeof exerciseId !== 'string') throw new Error("Invalid exerciseId");
   if (typeof exerciseName !== 'string') throw new Error("Invalid exerciseName");
 
-  // Validate sets
-  if (!Array.isArray(sets) || sets.length < 1 || sets.length > 6) throw new Error("Invalid sets - must be an array of 1-6 items");
+  // Validate set
 
-  sets.forEach((set, i) => {
-    // Check if reps, weight and intensity are numeric strings and convert them to numbers
-    ['reps', 'weight', 'intensity'].forEach(field => {
-      convertToNumber(set, field as ExerciseNumericField);
-    });
+  ['reps', 'weight', 'intensity'].forEach(field => {
+    convertToNumber(set, field as ExerciseNumericField);
+  });
 
-    if (typeof set.toFailure !== 'boolean' || (set.notes && typeof set.notes !== 'string') || !Array.isArray(set.tags)) {
-      throw new Error(`Invalid set at index ${i}`);
-    }
+  if (typeof set.toFailure !== 'boolean' || (set.notes && typeof set.notes !== 'string') || !Array.isArray(set.tags)) {
+    throw new Error(`Invalid set`);
+  }
 
-    set.tags.forEach((tag, j) => {
-      if (tag && typeof tag !== 'string') throw new Error(`Invalid tag at index ${j} in set ${i}`);
-    });
+  set.tags.forEach((tag, j) => {
+    if (tag && typeof tag !== 'string') throw new Error(`Invalid tag at index ${j} in set`);
   });
 }
 
@@ -76,10 +72,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const { user: { id } } = session;
     const { newExercise, dateId } = await req.json();
-    const { exerciseId, exerciseName, sets } = newExercise as Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId">;
-    console.log({ exerciseId, exerciseName, sets, dateId });
+    const { exerciseId, exerciseName, set } = newExercise as Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId">;
+    console.log({ exerciseId, exerciseName, set, dateId });
 
-    validateRequestData({ exerciseId, exerciseName, sets, dateId });
+    validateRequestData({ exerciseId, exerciseName, set, dateId });
 
     const validateDate = await prisma.date.findUnique({
       where: {
@@ -95,7 +91,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       data: {
         exerciseId,
         exerciseName,
-        sets,
+        set,
         dateId,
         userId: id
       }

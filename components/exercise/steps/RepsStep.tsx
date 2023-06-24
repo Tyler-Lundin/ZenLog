@@ -7,17 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function RepsStep() {
 
-  const { sets } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { reps } = set
   const dispatch = useDispatch<AppDispatch>();
-
-  const setIndex = sets.length - 1
-  const { reps } = sets[setIndex]
-  console.log({ reps, sets, setIndex });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newReps = parseInt(e.target.value);
     if (newReps > 999 || newReps < 0) return
-    dispatch(setNewReps({ setIndex, reps: newReps }));
+    dispatch(setNewReps(newReps));
   }
 
   return (

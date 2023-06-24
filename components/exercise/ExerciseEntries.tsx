@@ -51,26 +51,24 @@ function ExerciseEntries() {
   )
 
   const sorted = sortEntries(exerciseEntries);
-  const getVolume = (sets: { weight: number, reps: number }[]) => {
-    return sets.reduce((total, { weight = 0, reps = 0 }) => {
-      return total + (weight * reps);
-    }, 0)
+  const getVolume = (set: { weight: number, reps: number }) => {
+    return set.weight * set.reps;
   }
-  const getTotalReps = (sets: { reps: number }[]) => {
-    return sets.reduce((total, { reps = 0 }) => {
-      return total + reps;
-    }, 0)
-  }
-  const getAverageIntensity = (sets: { intensity: number }[]) => {
-    return sets.reduce((total, { intensity = 0 }) => {
-      return total + intensity;
-    }, 0) / sets.length;
-  }
+  // const getTotalReps = (sets: { reps: number }[]) => {
+  //   return sets.reduce((total, { reps = 0 }) => {
+  //     return total + reps;
+  //   }, 0)
+  // }
+  // const getAverageIntensity = (sets: { intensity: number }[]) => {
+  //   return sets.reduce((total, { intensity = 0 }) => {
+  //     return total + intensity;
+  //   }, 0) / sets.length;
+  // }
+
 
 
   return (
     <>
-
       <ul className="flex flex-wrap w-full gap-4 ">
         {Array.isArray(exerciseEntries) && (isSorted ? sorted : exerciseEntries).map((exercise: ExerciseEntry) => (
           <li key={exercise.id} className="dark:bg-black bg-zinc-200 text-black dark:text-white rounded-md p-4 w-full border border-black dark:border-white">
@@ -81,35 +79,29 @@ function ExerciseEntries() {
                 <p className="text-sm font-semibold">{dateToTime(exercise.createdAt as unknown as string)}</p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <h3 className="text-sm font-semibold">Total Volume: {getVolume(exercise.sets)} lbs</h3>
-                <h3 className="text-sm font-semibold">Total Sets: {exercise.sets.length}</h3>
-                <h3 className="text-sm font-semibold">Total Reps: {getTotalReps(exercise.sets)}</h3>
-                <h3 className="text-sm font-semibold">Average Intensity: {getAverageIntensity(exercise.sets)}</h3>
+                <h3 className="text-sm font-semibold">Total Volume: {getVolume(exercise.set)} lbs</h3>
               </div>
             </div>
 
             <hr className="my-2 border-zinc-600" />
 
             <div className="grid grid-cols-2 gap-2">
-              {exercise.sets.map(({ weight, reps, intensity, toFailure, notes, tags }, i) => (
-                <div key={`${exercise.id}-set-${i}`} className={`flex gap-8 px-6 py-2 text-black dark:text-white `}>
-                  <div className="grid gap-2">
-                    <h3 className="font-bold border dark:border-white border-black rounded-md px-2  uppercase">Set {i + 1}</h3>
-                    <div className="px-2">
-                      <h5 className="text-sm font-light">{weight && reps ? `${weight} lbs X ${reps} reps` : weight ? `${weight} lbs` : reps ? `${reps} reps` : ''}</h5>
-                      <h5 className="text-sm font-light">{intensity} RPE</h5>
-                      <h5 className="text-sm font-light">{toFailure ? 'To Failure' : ''}</h5>
-                      {notes && <p className="text-sm italic">{notes}</p>}
-                      {tags.length > 0 && <div className="flex flex-wrap gap-2">
-                        <h5 className="text-sm font-semibold">Tags:</h5>
-                        {tags.map((tag, i) => (
-                          <Badge key={`${exercise.id}-set-${i}-tag-${tag}`}> {tag} </Badge>
-                        ))}
-                      </div>}
-                    </div>
+              <div className={`flex gap-8 px-6 py-2 text-black dark:text-white `}>
+                <div className="grid gap-2">
+                  <div className="px-2">
+                    <h5 className="text-sm font-light">{exercise.set.weight && exercise.set.reps ? `${exercise.set.weight} lbs X ${exercise.set.reps} reps` : exercise.set.weight ? `${exercise.set.weight} lbs` : exercise.set.reps ? `${exercise.set.reps} reps` : ''}</h5>
+                    <h5 className="text-sm font-light">{exercise.set.intensity} RPE</h5>
+                    <h5 className="text-sm font-light">{exercise.set.toFailure ? 'To Failure' : ''}</h5>
+                    {exercise.set.notes && <p className="text-sm italic">{exercise.set.notes}</p>}
+                    {exercise.set.tags.length > 0 && <div className="flex flex-wrap gap-2">
+                      <h5 className="text-sm font-semibold">Tags:</h5>
+                      {exercise.set.tags.map((tag, i) => (
+                        <Badge key={`${exercise.id}-set-${i}-tag-${tag}`}> {tag} </Badge>
+                      ))}
+                    </div>}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </li>
         ))}

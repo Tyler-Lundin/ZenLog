@@ -1,4 +1,5 @@
-import { setDailyMood } from "@/store/appSlice";
+import { Button } from "@/components/ui/button";
+import { setDailyMood, skipDailyStep } from "@/store/appSlice";
 import { AppDispatch, RootState } from "@/store/store"
 import { Mood } from "@prisma/client"
 import { useDispatch, useSelector } from "react-redux"
@@ -33,6 +34,9 @@ export default function MoodStep() {
             <p className="text-xl text-black dark:text-white font-black uppercase">{mood.name}</p>
           </button>
         ))}
+      </div>
+      <div className="flex justify-center gap-4 mt-20">
+        <Button onClick={() => dispatch(skipDailyStep('mood'))} variant="red" className="text-3xl font-thin">skip</Button>
       </div>
     </>
   )

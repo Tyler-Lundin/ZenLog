@@ -8,16 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function WeightStep() {
 
-  const { sets } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { weight } = set
   const dispatch = useDispatch<AppDispatch>();
-
-  const setIndex = sets.length - 1
-  const { weight } = sets[setIndex]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newWeight = parseInt(e.target.value);
     if (newWeight > 999 || newWeight < -999) return
-    dispatch(setNewWeight({ setIndex, weight: newWeight }));
+    dispatch(setNewWeight(newWeight));
   }
 
   return (

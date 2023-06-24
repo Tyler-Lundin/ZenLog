@@ -1,22 +1,21 @@
 import { Textarea } from "@/components/ui/textarea";
 import { setNewNotes } from "@/store/appSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import { IoJournal, IoJournalOutline, IoPencil } from "react-icons/io5";
+import { IoPencil } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
 
 export default function NotesStep() {
 
-  const { sets } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { notes } = set
   const dispatch = useDispatch<AppDispatch>();
 
-  const setIndex = sets.length - 1
-  const { notes } = sets[setIndex]
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newNotes = String(e.target.value);
     if (newNotes.length > 150) return
-    dispatch(setNewNotes({ setIndex, notes: newNotes || "" }));
+    dispatch(setNewNotes(newNotes));
   }
 
   return (
@@ -32,13 +31,3 @@ export default function NotesStep() {
   )
 }
 
-// {
-//   title: 'Notes?',
-//     setIndex: 4,
-//       content: (
-//         <div className="flex gap-2">
-//           <Label htmlFor={`set-${setIndex}-notes`}>Notes</Label>
-//           <Textarea id={`set-${setIndex}-notes`} placeholder="Notes" value={sets[setIndex].notes} onChange={(event) => handleSetChange(setIndex, 'notes', event)} />
-//         </div>
-//       )
-// },

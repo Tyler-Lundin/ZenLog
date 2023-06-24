@@ -1,20 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { setNewToFailure, setNewWeight } from "@/store/appSlice";
+import { setNewToFailure, } from "@/store/appSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import { MdIncompleteCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 
 
 export default function WeightStep() {
 
-  const { sets } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
+  const { toFailure } = set
   const dispatch = useDispatch<AppDispatch>();
 
-  const setIndex = sets.length - 1
-  const { toFailure } = sets[setIndex]
 
   const handleChange = (b: boolean) => {
-    dispatch(setNewToFailure({ setIndex, toFailure: b }));
+    dispatch(setNewToFailure(b));
   }
 
   return (
