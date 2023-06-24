@@ -31,16 +31,3 @@ export default function IntensityStep() {
     </>
   )
 }
-
-  //   {
-  //     title: 'Intensity?',
-  //     setIndex: 3,
-  //     content: (
-  //       <div className="flex gap-2">
-  //         <Label htmlFor={`set-${setIndex}-intensity`}>Intensity</Label>
-  //         {INTENSITY.map((intensity) => (
-  //           <Button key={intensity} variant="default" size="lgSquare" className="p-2" onClick={() => handleSetChange(setIndex, 'intensity', { target: { value: intensity } } as any)}>{intensity}</Button>
-  //         ))}
-  //       </div>
-  //     )
-  //   },

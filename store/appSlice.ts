@@ -191,7 +191,6 @@ const appSlice = createSlice({
       state.dashboard.dailyCheck.isDone.weight = true;
     },
     nextNewSetStep: (state) => {
-      if (state.dashboard.exercise.newExercise.set.step === 2) return;
       state.dashboard.exercise.newExercise.set.step++;
     },
     previousNewSetStep: (state) => {
