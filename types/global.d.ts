@@ -47,11 +47,15 @@ export interface Dashboard {
   dailyCheck: DailyCheckState
 }
 
+interface StepsState { isDone: boolean, step: number };
+
+export type NewExerciseSetState =
+  ExerciseSet & StepsState;
+
 export interface ExerciseAppState {
   newExercise: Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId"> & {
-    step: number
-    isDone: boolean
-  }
+    set: NewExerciseSetState
+  } & StepsState
   newTags: string[]
 }
 

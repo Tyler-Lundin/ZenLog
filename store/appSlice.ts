@@ -52,7 +52,7 @@ const initialState: AppState = {
         step: 0,
         exerciseName: '',
         exerciseId: '',
-        sets: [EMPTY_SET],
+        set: EMPTY_SET,
         isDone: false
       },
       newTags: [],
@@ -133,9 +133,6 @@ const appSlice = createSlice({
       state.dashboard.exercise.newExercise.exerciseId = action.payload.id;
       state.dashboard.exercise.newExercise.exerciseName = action.payload.name;
     },
-    setNewExerciseSets: (state, action: PayloadAction<ExerciseSet[]>) => {
-      state.dashboard.exercise.newExercise.sets = action.payload;
-    },
     removeNewSet: (state, action: PayloadAction<number>) => {
       state.dashboard.exercise.newExercise.sets.splice(action.payload, 1);
     },
@@ -203,6 +200,14 @@ const appSlice = createSlice({
       state.dashboard.dailyCheck.isDone.sleep = true;
       state.dashboard.dailyCheck.isDone.weight = true;
     },
+    nextNewSetStep: (state) => {
+      if (state.dashboard.exercise.newExercise.set.step === 2) return;
+      state.dashboard.exercise.newExercise.set.step++;
+    },
+    previousNewSetStep: (state) => {
+      if (state.dashboard.exercise.newExercise.set.step === 0) return;
+      state.dashboard.exercise.newExercise.set.step--;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(logExerciseThunk.fulfilled, (state, action: PayloadAction<ExerciseEntry>) => {
@@ -231,7 +236,6 @@ export const {
   setExerciseEntries,
   setNewExerciseName,
   setNewExercise,
-  setNewExerciseSets,
   removeNewSet,
   setNewReps,
   setNewWeight,
@@ -249,7 +253,9 @@ export const {
   nextNewExerciseStep,
   resetNewExercise,
   previousNewExerciseStep,
-  setDailyCheckIsDone
+  setDailyCheckIsDone,
+  nextNewSetStep,
+  previousNewSetStep,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -14,6 +14,7 @@ const buttonVariants = cva(
         glass: "flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border",
         glassGreen: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-green-400",
         ghost: "bg-transparent text-black hover:bg-black/10 dark:text-white dark:hover:bg-white/10",
+        red: "text-red-600 hover:text-red-800 border-none bg-transparent",
         destructive:
           "bg-red-400 text-destructive-foreground hover:bg-red-400/90",
         event: "font-bold bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase",

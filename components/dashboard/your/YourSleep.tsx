@@ -22,7 +22,14 @@ export default function YourSleep() {
   const sleepEntries = data?.sleepEntries || [];
   console.log({ SleepEntries, sleepEntries, data })
 
-  if (sleepEntries === undefined || sleepEntries.length === 0 || error) return <h2 className="text-2xl font-bold dark:text-white flex">Sleep: <div className="h-full py-1 rounded-md w-6 animate-pulse bg-black dark:bg-white" /> hrs</h2>
+  if (sleepEntries === undefined || sleepEntries.length === 0 || error)
+    return (
+      <h2 className="text-2xl font-bold dark:text-white flex">
+        Sleep:
+        <div className="h-full py-1 rounded-md w-6 animate-pulse bg-black dark:bg-white" />
+        hrs
+      </h2>
+    )
   if (sleepEntries.length === 1) return <h2 className="text-2xl font-bold dark:text-white">Sleep: {sleepEntries[0].hours} hrs</h2>
   if (sleepEntries.length > 1) return (
     <h2 className="text-2xl font-bold dark:text-white">Sleep: {sleepEntries.reduce((total: number, { hours }: SleepEntry) => {

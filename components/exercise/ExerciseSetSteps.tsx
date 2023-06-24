@@ -12,36 +12,30 @@ import NotesStep from './steps/NotesStep';
 import TagsStep from './steps/TagsStep';
 import ExerciseOverviewStep from './steps/ExerciseOverviewStep';
 import logExerciseThunk from '@/store/thunks/logExerciseThunk';
+import { nextNewSetStep, previousNewSetStep } from '@/store/appSlice';
 
 
 export default function ExerciseSetSteps() {
 
-  const { sets } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
-  const [step, setStep] = useState(0);
-  const setIndex = sets.length - 1;
+  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise);
+  const { step, isDone } = set;
 
   const dispatch = useDispatch<AppDispatch>();
 
   const SET_STEPS = [
-    <RepsStep key={`reps_set_${setIndex}`} />,
-    <WeightStep key={`weight_set_${setIndex}`} />,
-    <IntensityStep key={`intensity_set_${setIndex}`} />,
-    <FailureStep key={`failure_set_${setIndex}`} />,
-    <NotesStep key={`notes_set_${setIndex}`} />,
-    <TagsStep key={`tags_set_${setIndex}`} />,
-    <ExerciseOverviewStep key={`overview_set_${setIndex}`} />,
+    <RepsStep key={`reps_set`} />,
+    <WeightStep key={`weight_set`} />,
+    <IntensityStep key={`intensity_set`} />,
+    <FailureStep key={`failure_set`} />,
+    <NotesStep key={`notes_set`} />,
+    <TagsStep key={`tags_set`} />,
+    <ExerciseOverviewStep key={`overview_set`} />,
   ]
 
   const currentStep = SET_STEPS[step];
   const isLastStep = step === SET_STEPS.length - 1;
   const isFirstStep = step === 0;
-  const isReadyToLog = sets[setIndex].reps > 0 && sets[setIndex].weight > 0 && sets[setIndex].intensity > 0 && isLastStep;
-
-
-  const handleSubmit = async (event: React.ChangeEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    dispatch(logExerciseThunk());
-  };
+  const isReadyToLog = set.reps > 0 && set.weight > 0 && set.intensity > 0 && isLastStep;
 
   return (
     <>
@@ -49,10 +43,36 @@ export default function ExerciseSetSteps() {
         {currentStep}
       </div>
       <div className="flex justify-between p-16 w-screen h-24 items-center gap-4">
-        {!isFirstStep ? (<Button type="button" variant="default" size="lgSquare" className="p-2" onClick={() => setStep(step - 1)} disabled={step === 0}><BsChevronLeft /></Button>) : (<span />)}
-        {isLastStep && (<Button disabled={!isReadyToLog} type="button" variant="logEvent" size="4xl" className="p-2 font-black rounded-lg" onClick={() => dispatch(logExerciseThunk())}> Log Exercise</Button>)}
-        {!isLastStep ? (<Button type="button" variant="default" size="lgSquare" className="p-2" onClick={() => setStep(step + 1)} disabled={step === SET_STEPS.length - 1}><BsChevronRight /></Button>) : <span />}
 
+        {!isFirstStep ? (
+          <Button
+            type="button"
+            variant="default"
+            size="lgSquare"
+            className="p-2"
+            onClick={() => dispatch(previousNewSetStep())}
+            disabled={step === 0}
+          > <BsChevronLeft /> </Button>) : (<span className="I am a placeholder" />)}
+
+        {isLastStep && (
+          <Button
+            disabled={!isReadyToLog}
+            type="button"
+            variant="logEvent"
+            size="4xl"
+            className="p-2 font-black rounded-lg"
+            onClick={() => dispatch(logExerciseThunk())}
+          > Log Exercise </Button>)}
+
+        {!isLastStep ? (
+          <Button
+            type="button"
+            variant="default"
+            size="lgSquare"
+            className="p-2"
+            onClick={() => dispatch(nextNewSetStep())}
+            disabled={step === SET_STEPS.length - 1}
+          > <BsChevronRight /> </Button>) : <span className="me too!" />}
       </div>
     </>
 

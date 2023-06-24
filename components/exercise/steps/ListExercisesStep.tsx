@@ -43,10 +43,10 @@ export default function ListExercisesStep() {
         {(data && filteredData ? filteredData : data)?.map((exercise: Exercise, index: number) => (
           <div
             key={exercise.id}
-            className={`dark:text-white text-black  whitespace-nowrap overflow-hidden h-fit shadow grid grid-flow-col px-4 justify-start relative border-b border-t border-gray-500`}
+            className={`dark:text-white text-black  whitespace-nowrap w-full overflow-hidden h-fit shadow grid grid-flow-col justify-start relative border-b border-t border-gray-500`}
           >
 
-            <div className="grid gap-2 w-96 h-full items-start p-2 text-left">
+            <div className="grid gap-2 w-full h-full items-start p-2 text-left">
               {detailedIndex !== index && (
 
                 <Button
@@ -59,19 +59,19 @@ export default function ListExercisesStep() {
                     `flex gap-8 items-center ${detailedIndex === index ? 'border-b border-gray-400' : 'border-none'} w-max h-20`
                   }
                 >
-                  <h2 className={`${detailedIndex === index ? 'text-2xl' : 'text-5xl'} font-bold`}>{exercise.name}</h2>
+                  <h2 className={`${detailedIndex === index ? 'text-xl lg:text-2xl' : 'text-3xl lg:text-5xl'} font-bold`}>{exercise.name}</h2>
                 </Button>
               )}
               <Button className="absolute right-0 top-1/2 -translate-y-1/2" variant="ghost" onClick={() => setDetailedIndex(index === detailedIndex ? -1 : index)}> {index === detailedIndex ? <AiOutlineClose /> : <BsQuestionCircle />} </Button>
 
-              <div className={`${detailedIndex === index ? 'max-h-full opacity-100' : 'max-h-0 opacity-0'} transition-all`}>
+              <div className={`${detailedIndex === index ? 'max-h-full opacity-100' : 'max-h-0 opacity-0'} transition-all w-full`}>
                 <div className={`flex gap-8`}>
                   <h2 className="text-3xl font-bold">{exercise.name}</h2>
                   <Badge className={`text-xs h-fit self-center`}>{exercise.level}</Badge>
                 </div>
                 <hr className="border-gray-300  my-4 border" />
 
-                <div className="flex gap-8 flex-col h-full">
+                <div className="flex gap-8 flex-col h-full w-full">
 
                   <div className="grid grid-cols-2 gap-2 items-start text-left">
                     <div className="flex flex-col gap-2 items-start text-left">
