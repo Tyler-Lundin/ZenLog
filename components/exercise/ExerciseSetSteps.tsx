@@ -35,44 +35,44 @@ export default function ExerciseSetSteps() {
   const currentStep = SET_STEPS[step];
   const isLastStep = step === SET_STEPS.length - 1;
   const isFirstStep = step === 0;
-  const isReadyToLog = set.reps > 0 && set.weight > 0 && set.intensity > 0 && isLastStep;
+  const isReadyToLog = set.reps > 0 && !isNaN(set.weight) && set.intensity > 0 && isLastStep;
+  console.log({ isReadyToLog })
 
   return (
     <>
       <div className="absolute place-content-center w-screen max-w-md grid top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
         {currentStep}
       </div>
-      <div className="flex justify-between p-16 w-screen h-24 items-center gap-4">
+      <div className="grid grid-cols-5 justify-items-center p-2 lg:p-16 w-screen h-24 items-center gap-2">
 
         {!isFirstStep ? (
           <Button
             type="button"
             variant="default"
             size="lgSquare"
-            className="p-2"
+            className="p-2 col-span-1"
             onClick={() => dispatch(previousNewSetStep())}
             disabled={step === 0}
-          > <BsChevronLeft /> </Button>) : (<span className="I am a placeholder" />)}
+          > <BsChevronLeft /> </Button>) : (<span className="I am a placeholder col-span-1" />)}
 
-        {isLastStep && (
+        {isLastStep ? (
           <Button
             disabled={!isReadyToLog}
             type="button"
             variant="logEvent"
-            size="4xl"
-            className="p-2 font-black rounded-lg"
+            className="p-2 text-xl lg:text-4xl font-black rounded-lg col-span-3"
             onClick={() => dispatch(logExerciseThunk())}
-          > Log Exercise </Button>)}
+          > Log Exercise </Button>) : (<span className="I am a placeholder col-span-3" />)}
 
         {!isLastStep ? (
           <Button
             type="button"
             variant="default"
             size="lgSquare"
-            className="p-2"
+            className="p-2 col-span-1"
             onClick={() => dispatch(nextNewSetStep())}
             disabled={step === SET_STEPS.length - 1}
-          > <BsChevronRight /> </Button>) : <span className="me too!" />}
+          > <BsChevronRight /> </Button>) : <span className="me too! col-span-1" />}
       </div>
     </>
 

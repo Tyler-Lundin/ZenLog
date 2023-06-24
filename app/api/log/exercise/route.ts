@@ -91,7 +91,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
       data: {
         exerciseId,
         exerciseName,
-        set,
+        set: {
+          reps: set.reps,
+          weight: set.weight,
+          intensity: set.intensity,
+          toFailure: set.toFailure,
+          notes: set.notes || "",
+          tags: set.tags || [],
+        },
         dateId,
         userId: id
       }
