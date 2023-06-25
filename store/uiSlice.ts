@@ -22,7 +22,7 @@ const initialState: UiState = {
     error: '',
     exercise: {
       isLogExerciseFormOpen: false,
-      isSorted: false,
+      isSorted: true,
       error: ''
     }
   }

@@ -60,7 +60,7 @@ export default function ExerciseSetSteps() {
             disabled={!isReadyToLog}
             type="button"
             variant="logEvent"
-            className="p-2 text-xl lg:text-4xl font-black rounded-lg col-span-3"
+            className="p-6 text-xl lg:text-4xl font-black rounded-lg col-span-3"
             onClick={() => dispatch(logExerciseThunk())}
           > Log Exercise </Button>) : (<span className="I am a placeholder col-span-3" />)}
 
