@@ -18,7 +18,7 @@ const buttonVariants = cva(
         destructive:
           "bg-red-400 text-destructive-foreground hover:bg-red-400/90",
         event: "font-bold bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase",
-        logEvent: "font-bold bg-green-500 text-white hover:bg-black/90 uppercase",
+        logEvent: "font-bold bg-green-500 disabled:bg-red-500 text-white hover:bg-black/90 uppercase",
         large: "bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase font-bold tracking-wider rounded-none",
 
       },

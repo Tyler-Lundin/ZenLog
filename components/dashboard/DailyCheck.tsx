@@ -44,7 +44,7 @@ export default function DailyCheck() {
   const currentStep = steps[step]
   const allDone = steps.every(step => step.isDone)
   if (allDone) return null;
-  if (currentStep.isDone) handleNext();
+  if (currentStep?.isDone) handleNext();
 
   return (
     <div className="absolute top-0 left-0 w-screen h-screen dark:bg-black backdrop-blur-md grid place-content-center dark:text-white bg-white z-50">

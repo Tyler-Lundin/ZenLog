@@ -62,12 +62,15 @@ export default function ListExercisesStep() {
                   <h2 className={`${detailedIndex === index ? 'text-xl lg:text-2xl' : 'text-3xl lg:text-5xl'} font-bold`}>{exercise.name}</h2>
                 </Button>
               )}
-              <Button className={`absolute right-2 ${index === detailedIndex ? 'top-2' : 'top-1/2 -translate-y-1/2'} rounded-md`} variant={index === detailedIndex ? 'destructive' : 'ghost'} onClick={() => setDetailedIndex(index === detailedIndex ? -1 : index)}> {index === detailedIndex ? <AiOutlineClose /> : <BsQuestionCircle />} </Button>
+              <Button size="sm" className={` right-2 ${index === detailedIndex ? 'top-2 hidden' : 'absolute top-1/2 -translate-y-1/2'} rounded-md`} variant={index === detailedIndex ? 'destructive' : 'ghost'} onClick={() => setDetailedIndex(index === detailedIndex ? -1 : index)}>  <BsQuestionCircle />  </Button>
 
-              {index === detailedIndex && <div className={`w-full p-4`}>
-                <div className={`flex gap-8 p-4`}>
-                  <h2 className="text-3xl font-bold">{exercise.name}</h2>
-                  <Badge className={`text-xs h-fit self-center`}>{exercise.level}</Badge>
+              {index === detailedIndex && <div className={`w-full px-4`}>
+                <div className={`grid grid-flow-col gap-2 w-full  relative`}>
+                  <div className="grid">
+                    <h2 className="text-2xl font-bold">{exercise.name}</h2>
+                    <Badge className={`text-xs h-fit self-center`}>{exercise.level}</Badge>
+                  </div>
+                  <Button size="smSquare" className={` right-2 ${index === detailedIndex ? 'top-2 absolute' : 'hidden top-1/2 -translate-y-1/2'} rounded-md`} variant={index === detailedIndex ? 'destructive' : 'ghost'} onClick={() => setDetailedIndex(index === detailedIndex ? -1 : index)}> <AiOutlineClose /> </Button>
                 </div>
                 <hr className="border-gray-300  my-4 border" />
 
