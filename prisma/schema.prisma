@@ -91,11 +91,12 @@ model UserActivity {
 }
 
 model WeightEntry {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String   @db.ObjectId
-  userActivityId String   @db.ObjectId
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String     @db.ObjectId
+  userActivityId String     @db.ObjectId
   weight         Int
-  createdAt      DateTime @default(now())
+  weightUnit     WeightUnit
+  createdAt      DateTime   @default(now())
 }
 
 model ExerciseEntry {
@@ -110,12 +111,13 @@ model ExerciseEntry {
 }
 
 type ExerciseSet {
-  reps      Int
-  weight    Int
-  intensity Int
-  toFailure Boolean
-  notes     String
-  tags      String[]
+  reps       Int
+  weight     Int
+  weightUnit WeightUnit
+  intensity  Int
+  toFailure  Boolean
+  notes      String
+  tags       String[]
 }
 
 model Exercise {
@@ -183,9 +185,9 @@ model MoodEntry {
 }
 
 model WaterEntry {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  id     String     @id @default(auto()) @map("_id") @db.ObjectId
   amount Int
-  unit   Unit
+  unit   VolumeUnit
 }
 
 model MeditateEntry {
@@ -203,40 +205,91 @@ enum Mood {
   // Add more moods as necessary
 }
 
-enum Unit {
-  ML
-  L
-  OZ
-  // Add more units as necessary
+enum WeightUnit {
+  GRAM
+  KILOGRAM
+  POUND
+  OUNCE
+}
+
+enum LengthUnit {
+  METER
+  CENTIMETER
+  INCH
+  FOOT
+}
+
+enum VolumeUnit {
+  MILLILITER
+  LITER
+  FLUID_OUNCE
+  CUP
+  GALLON
+}
+
+enum TimeUnit {
+  SECOND
+  MINUTE
+  HOUR
 }
 
 enum Muscle {
   ABS
-  HAMSTRINGS
-  CALVES
-  SHOULDERS
-  ADDUCTORS
-  GLUTES
-  QUADRICEPS
-  BICEPS
-  FOREARMS
-  ABDUCTORS
-  TRICEPS
-  CHEST
-  TRAPS
-  LATS
-  NECK
-  LOWER_BACK
-  MIDDLE_BACK
-  UPPER_BACK
   BACK
+  BICEPS
+  BRACHIALIS
+  BRACHIORADIALIS
+  CALF_MUSCLES
+  CALVES
+  CHEST
   CORE
+  DELTOIDS
+  FOREARMS
+  FRONT_DELTOIDS
+  FULL_BODY
+  GLUTES
+  HAMSTRINGS
+  HIP_ABDUCTORS
+  HIP_FLEXORS
+  HIP_ROTATORS
+  INNER_THIGHS
+  INNER_THIGH_ADDUCTORS
+  INNER_CHEST
+  LATS
+  LOWER_BACK
+  LOWER_BACK_SPINAL_ERECTORS
+  LOWER_CHEST
+  MIDDLE_BACK
+  NECK
+  OBLIQUES
+  OUTER_THIGHS
+  PECTORALS
+  PERONEALS
+  PIRIFORMIS
+  PRONATOR_TERES
+  QUADRICEPS
+  REAR_DELTOIDS
+  RECTUS_ABDOMINIS
+  SARTORIUS
+  SHOULDERS
+  SIDE_HIP_GLUTES
+  SERRATUS_ANTERIOR
+  SOLEUS
+  SUPINATOR
+  TENSOR_FASCIAE_LATAE
+  TRAPS
+  TRICEPS
+  TRANSVERSE_ABDOMINIS
+  UPPER_BACK
+  UPPER_BACK_RHOMBOIDS
+  UPPER_CHEST
 }
 
 enum Force {
   PULL
   PUSH
   STATIC
+  ROTATION
 }
 
 enum Level {
@@ -251,33 +304,83 @@ enum Mechanic {
 }
 
 enum Equipment {
-  NONE
+  AB_WHEEL
   BARBELL
-  DUMBBELL
-  BODYWEIGHT
-  MACHINE
-  CABLE
+  BARBELL_COLLARS
+  BENCH
   BAND
-  KETTLEBELL
-  MEDICINE_BALL
+  BOSU_BALL
+  BOX
+  BODYWEIGHT
+  CABLE
   CARDIO
-  PULL_UP_BAR
+  CHEST_PRESS_MACHINE
+  DECLINE_BENCH
+  DUMBBELL
+  ELLIPTICAL
+  EZ_BAR
+  FOAM_ROLLER
+  GLUTE_MACHINE
+  GRIP_STRENGTHENER
+  HYPEREXTENSION_BENCH
+  INCLINE_BENCH
+  JUMP_ROPE
+  KETTLEBELL
+  LAT_PULLDOWN_MACHINE
+  LEG_ADDUCTION_MACHINE
+  LEG_ABDUCTION_MACHINE
+  LEG_CURL_MACHINE
+  LEG_EXTENSION_MACHINE
+  LEG_PRESS_MACHINE
+  MACHINE
+  MEDICINE_BALL
+  NONE
   OTHER
+  PILATES_RING
+  PULL_UP_BAR
+  RESISTANCE_BANDS
+  RESISTANCE_MACHINE
+  RESISTANCE_TUBE
+  ROWING_MACHINE
+  SAND_BAG
+  SEATED_ROW_MACHINE
+  SHOULDER_PRESS_MACHINE
+  SLIDING_DISCS
+  SMITH_MACHINE
+  SPEED_AGILITY_LADDER
+  STABILITY_BALL
+  STAIR_CLIMBER
+  STATIONARY_BIKE
+  STEP
+  TRX_SUSPENSION_TRAINER
+  TREADMILL
+  WEIGHT_PLATE
+  YOGA_MAT
 }
 
 enum Category {
-  STRENGTH
-  STRETCHING
-  PLYOMETRICS
-  STRONGMAN
-  POWERLIFTING
-  CARDIO
-  OLYMPIC_WEIGHTLIFTING
-  CROSSFIT
-  WEIGHTED_BODYWEIGHT
   ASSISTED_BODYWEIGHT
   BALANCE
-  FLEXIBILITY
-  ENDURANCE
   CALISTHENICS
+  CARDIO
+  CORE
+  CROSSFIT
+  ENDURANCE
+  FLEXIBILITY
+  FULL_BODY
+  FUNCTIONAL_TRAINING
+  MOBILITY
+  OLYMPIC_WEIGHTLIFTING
+  OTHER
+  PILATES
+  PLYOMETRICS
+  POWER
+  POWERLIFTING
+  REHABILITATION
+  STABILITY
+  STRENGTH
+  STRETCHING
+  STRONGMAN
+  WEIGHTED_BODYWEIGHT
+  YOGA
 }
