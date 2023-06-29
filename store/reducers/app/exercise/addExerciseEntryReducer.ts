@@ -4,5 +4,5 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 
 export const addExerciseEntryReducer = (state: AppState, action: PayloadAction<ExerciseEntry>) => {
-  state.date.ExerciseEntries.push(action.payload);
+  state.userActivity.ExerciseEntries.push(action.payload);
 }

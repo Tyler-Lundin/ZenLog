@@ -5,7 +5,7 @@ const todaysDay = new Date().getDate();
 const todaysYear = new Date().getFullYear();
 
 export const resetDateReducer = (state: AppState) => {
-  state.date.month = todaysMonth;
-  state.date.day = todaysDay;
-  state.date.year = todaysYear;
+  state.userActivity.month = todaysMonth;
+  state.userActivity.day = todaysDay;
+  state.userActivity.year = todaysYear;
 }
