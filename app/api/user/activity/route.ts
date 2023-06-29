@@ -27,7 +27,7 @@ export async function POST(req: Request, res: Response) {
   const { user: { id, email } } = session;
   if (!id || !email) return NextResponse.json({ error: "Not Authorized" });
 
-  const userDate = await prisma.date.findFirst({
+  const userDate = await prisma.userActivity.findFirst({
     where: {
       userId: id,
       month: +month,
@@ -37,7 +37,7 @@ export async function POST(req: Request, res: Response) {
   });
 
   if (!userDate) {
-    const createdDate = await prisma.date.create({
+    const createdDate = await prisma.userActivity.create({
       data: {
         month: +month,
         day: +day,

@@ -1,9 +1,37 @@
-import { Date as IDate, ExerciseEntry, ExerciseSet, Mood, Exercise } from '@prisma/client';
+import { ExerciseEntry, } from '@prisma/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppState, DailyCheckState } from '@/types/global';
-import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry';
+import { AppState, DailyCheckState } from '@/types/global'; import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry';
 import logExerciseThunk from './thunks/logExerciseThunk';
 import postDailyCheck from './thunks/postDailyCheckThunk';
+import {
+  incrementDateReducer,
+  decrementDateReducer,
+  resetDateReducer,
+  setUserActivityReducer,
+  addExerciseEntryReducer,
+  setExerciseEntriesReducer,
+  setNewExerciseReducer,
+  setNewRepsReducer,
+  nextNewExerciseStepReducer,
+  setNewWeightReducer,
+  setNewToFailureReducer,
+  setNewIntensityReducer,
+  setNewNotesReducer,
+  addSetTagReducer,
+  setNewTagReducer,
+  removeSetTagReducer,
+  setDailyWeightReducer,
+  setDailyMoodReducer,
+  setDailySleepReducer,
+  skipDailyStepReducer,
+  resetNewExerciseReducer,
+  previousNewExerciseStepReducer,
+  setDailyCheckIsDoneReducer,
+  nextNewSetStepReducer,
+  previousNewSetStepReducer,
+  setNewExerciseNameReducer,
+
+} from './reducers/app'
 
 const todaysMonth = new Date().getMonth() + 1;
 const todaysDay = new Date().getDate();
@@ -21,7 +49,7 @@ const DEFAULT_DAILY_CHECK: DailyCheckState = {
 }
 
 const initialState: AppState = {
-  date: {
+  userActivity: {
     id: '',
     month: todaysMonth,
     day: todaysDay,
@@ -69,138 +97,53 @@ const initialState: AppState = {
     ],
   }
 };
+export { initialState as AppInitialState }
 
 const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    incrementDate: state => {
-      let newDate = new Date(state.date.year, state.date.month - 1, state.date.day + 1);
-      state.date.month = newDate.getMonth() + 1;
-      state.date.day = newDate.getDate();
-      state.date.year = newDate.getFullYear();
-    },
-    decrementDate: state => {
-      let newDate = new Date(state.date.year, state.date.month - 1, state.date.day - 1);
-      state.date.month = newDate.getMonth() + 1;
-      state.date.day = newDate.getDate();
-      state.date.year = newDate.getFullYear();
-    },
-    resetDate: state => {
-      state.date.month = todaysMonth;
-      state.date.day = todaysDay;
-      state.date.year = todaysYear;
-    },
-    setDateState: (state, action: PayloadAction<{ date: IDate, status: string }>) => {
-      if (!action.payload.date) return;
-      const { id, MoodEntries, WeightEntries, SleepEntries, ExerciseEntries, FoodEntries, WaterEntries, JournalEntries, MeditateEntries } = action.payload.date;
-      state.date.id = id;
-      if (MoodEntries.length > 0) {
-        state.dashboard.dailyCheck.isDone.mood = true;
-        state.date.ids.MoodEntries = MoodEntries;
-      }
-      else state.dashboard.dailyCheck.isDone.mood = false;
+    // Date related reducers
+    incrementDate: incrementDateReducer,
+    decrementDate: decrementDateReducer,
+    resetDate: resetDateReducer,
 
-      if (WeightEntries.length > 0) {
-        state.dashboard.dailyCheck.isDone.weight = true;
-        state.date.ids.WeightEntries = WeightEntries;
-      }
-      else state.dashboard.dailyCheck.isDone.weight = false;
+    // User activity related reducers
+    setUserActivity: setUserActivityReducer,
 
-      if (SleepEntries.length > 0) {
-        state.dashboard.dailyCheck.isDone.sleep = true;
-        state.date.ids.SleepEntries = SleepEntries;
-      }
-      else state.dashboard.dailyCheck.isDone.sleep = false;
+    // Exercise entries related reducers
+    addExerciseEntry: addExerciseEntryReducer,
+    setExerciseEntries: setExerciseEntriesReducer,
 
-      if (ExerciseEntries.length > 0) state.date.ids.ExerciseEntries = ExerciseEntries;
-      if (FoodEntries.length > 0) state.date.ids.FoodEntries = FoodEntries;
-      if (WaterEntries.length > 0) state.date.ids.WaterEntries = WaterEntries;
-      if (JournalEntries.length > 0) state.date.ids.JournalEntries = JournalEntries;
-      if (MeditateEntries.length > 0) state.date.ids.MeditateEntries = MeditateEntries;
+    // New exercise related reducers
+    setNewExerciseName: setNewExerciseNameReducer,
+    setNewExercise: setNewExerciseReducer,
+    resetNewExercise: resetNewExerciseReducer,
+    nextNewExerciseStep: nextNewExerciseStepReducer,
+    previousNewExerciseStep: previousNewExerciseStepReducer,
 
-    },
-    addExerciseEntry: (state, action: PayloadAction<ExerciseEntry>) => {
-      state.date.ExerciseEntries.push(action.payload);
-    },
-    setExerciseEntries: (state, action: PayloadAction<ExerciseEntry[]>) => {
-      state.date.ExerciseEntries = action.payload;
-    },
-    setNewExerciseName: (state, action: PayloadAction<string>) => {
-      state.dashboard.exercise.newExercise.exerciseName = action.payload;
-    },
-    setNewExercise: (state, action: PayloadAction<Exercise>) => {
-      state.dashboard.exercise.newExercise.exerciseId = action.payload.id;
-      state.dashboard.exercise.newExercise.exerciseName = action.payload.name;
-    },
-    setNewReps: (state, action: PayloadAction<number>) => {
-      state.dashboard.exercise.newExercise.set.reps = action.payload;
-    },
-    setNewWeight: (state, action: PayloadAction<number>) => {
-      state.dashboard.exercise.newExercise.set.weight = action.payload;
-    },
-    setNewToFailure: (state, action: PayloadAction<boolean>) => {
-      state.dashboard.exercise.newExercise.set.toFailure = action.payload;
-    },
-    setNewIntensity: (state, action: PayloadAction<number>) => {
-      if (action.payload > 10) action.payload = 10;
-      else if (action.payload < 1) action.payload = 1;
-      state.dashboard.exercise.newExercise.set.intensity = action.payload;
-    },
-    setNewNotes: (state, action: PayloadAction<string>) => {
-      state.dashboard.exercise.newExercise.set.notes = action.payload;
-    },
-    addSetTag: (state, action: PayloadAction<string>) => {
-      state.dashboard.exercise.newExercise.set.tags.push(action.payload);
-    },
-    setNewTag: (state, action: PayloadAction<{ tagIndex: number, tag: string, setIndex: number }>) => {
-      const { tagIndex, tag } = action.payload;
-      state.dashboard.exercise.newExercise.set.tags[tagIndex] = tag;
-    },
-    removeSetTag: (state, action: PayloadAction<number>) => {
-      state.dashboard.exercise.newExercise.set.tags.splice(action.payload, 1);
-    },
-    setDailyWeight: (state, action: PayloadAction<number>) => {
-      state.dashboard.dailyCheck.weight = action.payload;
-    },
-    setDailyMood: (state, action: PayloadAction<Mood>) => {
-      state.dashboard.dailyCheck.mood = action.payload;
-    },
-    setDailySleep: (state, action: PayloadAction<number>) => {
-      state.dashboard.dailyCheck.sleep = action.payload;
-    },
-    setNextStep: (state, action: PayloadAction<number>) => {
-      state.dashboard.exercise.newExercise.step = action.payload;
-    },
-    skipDailyStep: (state, action: PayloadAction<string>) => {
-      state.dashboard.dailyCheck.isDone[action.payload as keyof typeof state.dashboard.dailyCheck.isDone] = true;
-    },
-    resetNewExercise: (state) => {
-      state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise;
-    },
-    nextNewExerciseStep: (state) => {
-      state.dashboard.exercise.newExercise.step++;
-    },
-    previousNewExerciseStep: (state) => {
-      if (state.dashboard.exercise.newExercise.step === 0) return;
-      state.dashboard.exercise.newExercise.step--;
-    },
-    setDailyCheckIsDone: (state) => {
-      state.dashboard.dailyCheck.isDone.mood = true;
-      state.dashboard.dailyCheck.isDone.sleep = true;
-      state.dashboard.dailyCheck.isDone.weight = true;
-    },
-    nextNewSetStep: (state) => {
-      state.dashboard.exercise.newExercise.set.step++;
-    },
-    previousNewSetStep: (state) => {
-      if (state.dashboard.exercise.newExercise.set.step === 0) return;
-      state.dashboard.exercise.newExercise.set.step--;
-    }
+    // Exercise set related reducers
+    setNewReps: setNewRepsReducer,
+    setNewWeight: setNewWeightReducer,
+    setNewToFailure: setNewToFailureReducer,
+    setNewIntensity: setNewIntensityReducer,
+    setNewNotes: setNewNotesReducer,
+    addSetTag: addSetTagReducer,
+    setNewTag: setNewTagReducer,
+    removeSetTag: removeSetTagReducer,
+    nextNewSetStep: nextNewSetStepReducer,
+    previousNewSetStep: previousNewSetStepReducer,
+
+    // Daily check related reducers
+    setDailyWeight: setDailyWeightReducer,
+    setDailyMood: setDailyMoodReducer,
+    setDailySleep: setDailySleepReducer,
+    skipDailyStep: skipDailyStepReducer,
+    setDailyCheckIsDone: setDailyCheckIsDoneReducer,
   },
   extraReducers: (builder) => {
     builder.addCase(logExerciseThunk.fulfilled, (state, action: PayloadAction<ExerciseEntry>) => {
-      state.date.ExerciseEntries.push(action.payload);
+      state.userActivity.ExerciseEntries.push(action.payload);
       state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise;
     });
     builder.addCase(postDailyCheck.fulfilled, (state, action: PayloadAction<{
@@ -220,7 +163,7 @@ export const {
   incrementDate,
   decrementDate,
   resetDate,
-  setDateState,
+  setUserActivity,
   addExerciseEntry,
   setExerciseEntries,
   setNewExerciseName,
@@ -236,7 +179,6 @@ export const {
   setDailyWeight,
   setDailyMood,
   setDailySleep,
-  setNextStep,
   skipDailyStep,
   nextNewExerciseStep,
   resetNewExercise,

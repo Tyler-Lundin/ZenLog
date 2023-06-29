@@ -33,10 +33,10 @@ const convertToNumber = (set: ExerciseSet, field: ExerciseNumericField) => {
 }
 
 const validateRequestData = (data: Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "id">) => {
-  const { exerciseId, exerciseName, set, dateId } = data;
+  const { exerciseId, exerciseName, set, userActivityId } = data;
 
   // Basic field validation
-  if (!exerciseId || !exerciseName || !set || !dateId) throw new Error("Missing required fields");
+  if (!exerciseId || !exerciseName || !set || !userActivityId) throw new Error("Missing required fields");
   if (typeof exerciseId !== 'string') throw new Error("Invalid exerciseId");
   if (typeof exerciseName !== 'string') throw new Error("Invalid exerciseName");
 
@@ -71,19 +71,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if (!session) return NextResponse.json({ error: "Not Authorized" });
 
     const { user: { id } } = session;
-    const { newExercise, dateId } = await req.json();
-    const { exerciseId, exerciseName, set } = newExercise as Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId">;
-    console.log({ exerciseId, exerciseName, set, dateId });
+    const { newExercise, userActivityId } = await req.json();
+    const { exerciseId, exerciseName, set } = newExercise as Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "userActivityId">;
+    console.log({ exerciseId, exerciseName, set, userActivityId });
 
-    validateRequestData({ exerciseId, exerciseName, set, dateId });
+    validateRequestData({ exerciseId, exerciseName, set, userActivityId });
 
     const validateDate = await prisma.date.findUnique({
       where: {
-        id: dateId
+        id: userActivityId
       }
     });
 
-    if (!validateDate) throw new Error("Invalid dateId");
+    if (!validateDate) throw new Error("Invalid userActivityId");
 
     if (validateDate.userId !== id) throw new Error("Not authorized");
 
@@ -99,14 +99,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
           notes: set.notes || "",
           tags: set.tags || [],
         },
-        dateId,
+        userActivityId,
         userId: id
       }
     });
 
     await prisma.date.update({
       where: {
-        id: dateId
+        id: userActivityId
       },
       data: {
         ExerciseEntries: {

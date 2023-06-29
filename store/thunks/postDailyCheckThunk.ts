@@ -8,8 +8,8 @@ const postDailyCheck = createAsyncThunk(
       console.log("posting daily check")
       const state = thunkAPI.getState() as RootState;
       const { weight, sleep, mood } = state.app.dashboard.dailyCheck
-      const dateId = state.app.date.id
-      if (!dateId) return thunkAPI.rejectWithValue({ error: 'missing date id' })
+      const userActivityId = state.app.userActivity.id
+      if (!userActivityId) return thunkAPI.rejectWithValue({ error: 'missing date id' })
       const response = await fetch('/api/log/daily', {
         method: "POST",
         headers: {
@@ -19,7 +19,7 @@ const postDailyCheck = createAsyncThunk(
           weight,
           sleep,
           mood,
-          dateId,
+          userActivityId,
         }),
       });
       const result = await response.json();

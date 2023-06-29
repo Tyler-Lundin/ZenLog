@@ -3,6 +3,9 @@
 import { KeyboardEvent, useState } from "react";
 import DashboardBlock from "../dashboard/DashboardBlock";
 import { Slider } from "../ui/slider";
+import { BsQuestionCircle } from "react-icons/bs";
+import { Button } from "../ui/button";
+import { AiOutlineClose } from "react-icons/ai";
 
 
 type ToggleSetting = { title: string, description: string, on: boolean }
@@ -52,7 +55,7 @@ export default function Settings() {
 
   return (
     <DashboardBlock>
-      <div className="grid gap-4">
+      <div className="flex flex-wrap gap-4">
         {TOGGLE_SETTINGS.map((setting, i) => (
           <ToggleSetting
             key={i}
@@ -70,16 +73,17 @@ export default function Settings() {
 export function ToggleSetting(props: ToggleSettingProps) {
   const { setting, onKeyUp, onClick, i } = props;
   const { on } = setting;
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   return (
     <div
-      className="w-full text-black dark:text-white flex border bg-gray-800 border-gray-200 dark:border-gray-800 rounded-xl p-4"
+      className="w-full lg:w-72 relative text-black dark:text-white grid place-content-center border border-black dark:border-white rounded-xl p-4 py-8"
     >
-      <div className="grid gap-4 w-1/2">
-        <h1 className="tracking-wider font-black underline underline-offset-4 decoration-1">{setting.title}</h1>
-        <p className="text-xs">{setting.description}</p>
-      </div>
-      <div className="grid place-content-center w-1/2">
+      <Button size="sm" className={` right-2 absolute top-2 rounded-md`} variant={isDetailsOpen ? "destructive" : "ghost"} onClick={() => setIsDetailsOpen((p) => !p)}>  {isDetailsOpen ? <AiOutlineClose /> : <BsQuestionCircle />}  </Button>
+      <h1 className="tracking-wider font-black text-2xl">{setting.title}</h1>
+      {isDetailsOpen && (<p className="text-xs">{setting.description}</p>)}
+
+      <div className="grid place-content-center ">
         <Slider
           onClick={onClick}
           onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => onKeyUp(e, 0)}
@@ -87,11 +91,11 @@ export function ToggleSetting(props: ToggleSettingProps) {
           max={1}
           min={0}
           step={1}
-          className="w-[100px]"
+          className="w-20"
           value={[on ? 1 : 0]}
-          thumbClass="h-10 w-10 border border-gray-200"
-          thumbColor={on ? "bg-green-500" : "bg-red-500"}
-          trackClass="bg-gray-500 h-6 my-6"
+          thumbClass="h-12 w-12 border border-gray-200"
+          thumbColor={on ? "bg-green-400" : "bg-green-800"}
+          trackClass="bg-gray-500 h-8 my-6 border-black dark:border-white border"
         />
       </div>
     </div>

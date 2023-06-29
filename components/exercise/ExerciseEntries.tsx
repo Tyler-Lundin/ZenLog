@@ -7,7 +7,6 @@ import useSWR from 'swr';
 import { useEffect } from "react";
 import { setExerciseEntries } from "@/store/appSlice";
 import { Spinner } from "@/components/ui/Spinner";
-import { Badge } from "@/components/ui/badge";
 import ExerciseEntry from "./ExerciseEntry";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -17,7 +16,7 @@ const dateToTime = (date: string) => {
   return D.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 }
 
-const sortEntries = (entries: ExerciseEntry[]): ExerciseEntry[] => {
+const sortEntries = (entries: IExerciseEntry[]): IExerciseEntry[] => {
   const copyEntries = [...entries];
   return copyEntries.sort((a, b) => {
     return new Date(b.createdAt as unknown as string).getTime() - new Date(a.createdAt as unknown as string).getTime();
@@ -25,23 +24,23 @@ const sortEntries = (entries: ExerciseEntry[]): ExerciseEntry[] => {
 };
 
 const RenderIfDateLoaded = () => {
-  const { id: dateId } = useSelector((state: RootState) => state.app.date);
-  if (!dateId) return null;
+  const { id: userActivityId } = useSelector((state: RootState) => state.app.userActivity);
+  if (!userActivityId) return null;
   return <ExerciseEntries />
 }
 
 function ExerciseEntries() {
-  const { id: dateId } = useSelector((state: RootState) => state.app.date);
+  const { id: userActivityId } = useSelector((state: RootState) => state.app.userActivity);
   const dispatch = useDispatch();
   const { isSorted } = useSelector((state: RootState) => state.ui.dashboard.exercise)
-  const { data, error, mutate } = useSWR(`/api/entries/exercise?date=${dateId}`, fetcher);
+  const { data, error, mutate } = useSWR(`/api/entries/exercise?userActivityId=${userActivityId}`, fetcher);
   const isLoading = !data && !error;
-  const exerciseEntries = useSelector((state: RootState) => state.app.date.ExerciseEntries);
+  const exerciseEntries = useSelector((state: RootState) => state.app.userActivity.ExerciseEntries);
 
   useEffect(() => {
     if (data) dispatch(setExerciseEntries(data.exerciseEntries));
     if (!data) dispatch(setExerciseEntries([]))
-  }, [data, dispatch, dateId])
+  }, [data, dispatch, userActivityId])
 
 
   useEffect(() => {

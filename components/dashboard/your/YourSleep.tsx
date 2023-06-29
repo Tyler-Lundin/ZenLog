@@ -11,7 +11,7 @@ const fetcher = ({ url, SleepEntries }: { url: string, SleepEntries: SleepEntry[
 }).then((res) => res.json());
 
 export default function YourSleep() {
-  const { SleepEntries } = useSelector((state: RootState) => state.app.date.ids)
+  const { SleepEntries } = useSelector((state: RootState) => state.app.userActivity.ids)
   const { data, error } = useSwr({ url: `/api/sleep`, SleepEntries }, fetcher);
   const isLoading = !data && !error;
 

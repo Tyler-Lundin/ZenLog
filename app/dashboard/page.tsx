@@ -15,7 +15,6 @@ export default async function DashboardPage() {
   return (
     <Page>
       <TitleBlock title={`Welcome, ${session.user.name}`} />
-
       <DailyCheck />
       <div className="p-4 w-full grid place-content-center">
         {/* @ts-expect-error */}

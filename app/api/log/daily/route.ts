@@ -25,7 +25,7 @@ export async function POST(req: Request, res: Response) {
 
     const { user: { id: userId } } = session;
 
-    const { weight, mood, sleep, dateId } = await req.json();
+    const { weight, mood, sleep, userActivityId } = await req.json();
 
 
     let weightEntry: WeightEntry | undefined = undefined
@@ -36,7 +36,7 @@ export async function POST(req: Request, res: Response) {
       weightEntry = await prisma.weightEntry.create({
         data: {
           weight,
-          dateId,
+          userActivityId,
           userId,
         }
       });
@@ -46,7 +46,7 @@ export async function POST(req: Request, res: Response) {
       moodEntry = await prisma.moodEntry.create({
         data: {
           mood,
-          dateId,
+          userActivityId,
           userId,
         }
       });
@@ -56,7 +56,7 @@ export async function POST(req: Request, res: Response) {
       sleepEntry = await prisma.sleepEntry.create({
         data: {
           hours: sleep,
-          dateId,
+          userActivityId,
           userId,
         }
       });
@@ -73,9 +73,9 @@ export async function POST(req: Request, res: Response) {
     }
     let data = formatData();
 
-    const date = await prisma.date.update({
+    const date = await prisma.userActivity.update({
       where: {
-        id: dateId
+        id: userActivityId
       },
       data
     });

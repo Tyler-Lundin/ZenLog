@@ -1,4 +1,4 @@
-import { ExerciseEntry, ExerciseSet, FoodEntry, JournalEntry, MeditateEntry, Mood, MoodEntry, SleepEntry, WaterEntry } from "@prisma/client"
+import { ExerciseEntry, ExerciseSet, FoodEntry, JournalEntry, MeditateEntry, Mood, MoodEntry, SleepEntry, WaterEntry, WeightEntry } from "@prisma/client"
 
 
 
@@ -6,7 +6,7 @@ import { ExerciseEntry, ExerciseSet, FoodEntry, JournalEntry, MeditateEntry, Moo
 type backgroundColor = [string, string, string, string]
 
 
-export interface DateState {
+export interface UserActivityState {
   id: string
   month: number
   day: number
@@ -37,7 +37,7 @@ export interface Settings {
 }
 
 export interface AppState {
-  date: DateState,
+  userActivity: UserActivityState,
   dashboard: Dashboard,
   settings: Settings
 }
@@ -53,7 +53,7 @@ export type NewExerciseSetState =
   ExerciseSet & StepsState;
 
 export interface ExerciseAppState {
-  newExercise: Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "dateId"> & {
+  newExercise: Omit<ExerciseEntry, "userId" | "updatedAt" | "createdAt" | "userActivityId"> & {
     set: NewExerciseSetState
   } & StepsState
   newTags: string[]
@@ -70,6 +70,10 @@ export interface DailyCheckState {
   }
 }
 
+export interface Payload {
+  success: boolean;
+  statusCode: number;
+}
 
 
 

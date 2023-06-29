@@ -14,7 +14,7 @@ const logExerciseThunk = createAsyncThunk(
         method: 'POST',
         body: JSON.stringify({
           newExercise: state.app.dashboard.exercise.newExercise,
-          dateId: state.app.date.id,
+          userActivityId: state.app.userActivity.id,
         }),
       }).then((res) => res.json());
 

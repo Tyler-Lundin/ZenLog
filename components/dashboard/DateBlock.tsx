@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { decrementDate, incrementDate, resetDate, setDateState, } from "@/store/appSlice";
+import { decrementDate, incrementDate, resetDate, setUserActivity, } from "@/store/appSlice";
 import { Button } from "../ui/button";
 import useSWR from 'swr';
 import { useEffect } from "react";
@@ -14,7 +14,7 @@ interface IFetchDate {
   year: number;
 }
 
-const fetchDate = ({ month, day, year }: IFetchDate) => fetch('/api/date', {
+const fetchUserActivity = ({ month, day, year }: IFetchDate) => fetch('/api/user/activity', {
   headers: {
     'Content-Type': 'application/json',
   },
@@ -24,14 +24,14 @@ const fetchDate = ({ month, day, year }: IFetchDate) => fetch('/api/date', {
 
 
 export default function DateBlock() {
-  const { month, day, year } = useSelector((state: RootState) => state.app.date);
-  const { data, error, mutate } = useSWR('/api/date', () => fetchDate({ month, day, year }), { revalidateOnMount: true });
+  const { month, day, year } = useSelector((state: RootState) => state.app.userActivity);
+  const { data, error, mutate } = useSWR('/api/date', () => fetchUserActivity({ month, day, year }), { revalidateOnMount: true });
   const isLoading = !data && !error;
   const dispatch = useDispatch();
 
   useEffect(() => {
     mutate();
-    if (data && !isLoading) dispatch(setDateState(data));
+    if (data && !isLoading) dispatch(setUserActivity(data));
   }, [data, isLoading, mutate, dispatch, day, month, year])
 
   if (isLoading) return (
