@@ -63,7 +63,9 @@ const Loading = ({ decision }: { decision: string }) => {
     <div className="w-screen h-screen absolute top-0 left-0 z-50 bg-white dark:bg-black grid place-content-center">
       <BackButton onClick={() => null} />
       <h1 className="text-4xl font-thin mb-4 text-center dark:text-white">Loading {decision}</h1>
-      <Spinner />
+      <div className="w-full h-full flex place-content-center place-items-center">
+        <Spinner />
+      </div>
     </div>
   )
 }
