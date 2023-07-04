@@ -1,14 +1,13 @@
 // Daily Check In
 
-import { authOptions } from "@/server/authOptions";
-import { prisma } from "@/server/db";
-import { MoodEntry, SleepEntry, WeightEntry } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { authOptions } from '@/server/authOptions'
+import { prisma } from '@/server/db'
+import { MoodEntry, SleepEntry, WeightEntry } from '@prisma/client'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { getServerSession } from 'next-auth'
+import { NextResponse } from 'next/server'
 
 export async function POST(req: Request, res: Response) {
-
   try {
     const session = await getServerSession(
       req as unknown as NextApiRequest,
@@ -18,15 +17,16 @@ export async function POST(req: Request, res: Response) {
         setHeader: (name: string, value: string) => res.headers?.set(name, value),
       } as unknown as NextApiResponse,
       authOptions
-    );
+    )
 
-    if (!session) return NextResponse.json({ error: "Not Authorized" });
+    if (!session) return NextResponse.json({ error: 'Not Authorized' })
     console.log('found session')
 
-    const { user: { id: userId } } = session;
+    const {
+      user: { id: userId },
+    } = session
 
-    const { weight, mood, sleep, userActivityId } = await req.json();
-
+    const { weight, mood, sleep, userDayId } = await req.json()
 
     let weightEntry: WeightEntry | undefined = undefined
     let moodEntry: MoodEntry | undefined = undefined
@@ -36,56 +36,56 @@ export async function POST(req: Request, res: Response) {
       weightEntry = await prisma.weightEntry.create({
         data: {
           weight,
-          userActivityId,
+          userDayId,
           userId,
-        }
-      });
+        },
+      })
     }
 
     if (mood !== undefined || mood !== '') {
       moodEntry = await prisma.moodEntry.create({
         data: {
           mood,
-          userActivityId,
+          userDayId,
           userId,
-        }
-      });
+        },
+      })
     }
 
     if (sleep !== undefined || sleep > 0) {
       sleepEntry = await prisma.sleepEntry.create({
         data: {
           hours: sleep,
-          userActivityId,
+          userDayId,
           userId,
-        }
-      });
+        },
+      })
     }
 
-    if (!weightEntry && !moodEntry && !sleepEntry) return NextResponse.json({ status: 'error', message: 'Could not create entry' });
+    if (!weightEntry && !moodEntry && !sleepEntry)
+      return NextResponse.json({ status: 'error', message: 'Could not create entry' })
 
     const formatData = () => {
-      let D = {} as { [key: string]: any };
-      if (weightEntry) D.WeightEntries = { push: weightEntry.id };
-      if (moodEntry) D.MoodEntries = { push: moodEntry.id };
-      if (sleepEntry) D.SleepEntries = { push: sleepEntry.id };
-      return D;
+      let D = {} as { [key: string]: any }
+      if (weightEntry) D.WeightEntries = { push: weightEntry.id }
+      if (moodEntry) D.MoodEntries = { push: moodEntry.id }
+      if (sleepEntry) D.SleepEntries = { push: sleepEntry.id }
+      return D
     }
-    let data = formatData();
+    let data = formatData()
 
-    const date = await prisma.userActivity.update({
+    const userDay = await prisma.userDay.update({
       where: {
-        id: userActivityId
+        id: userDayId,
       },
-      data
-    });
+      data,
+    })
 
-    if (!date) return NextResponse.json({ status: 'error', message: 'Could not update date' });
+    if (!userDay) return NextResponse.json({ status: 'error', message: 'Could not update date' })
 
-    return NextResponse.json({ message: "Success" }, { status: 200 });
+    return NextResponse.json({ message: 'Success' }, { status: 200 })
   } catch (error: any) {
-    console.error(error);
-    return NextResponse.error();
+    console.error(error)
+    return NextResponse.error()
   }
-
 }

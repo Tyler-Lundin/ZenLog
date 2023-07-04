@@ -9,13 +9,13 @@ import { Sheet } from "@/components/ui/sheet";
 export default function ExercisePage() {
   return (
     <Page>
-      <Sheet>
-        <div className="grid gap-4">
+      <div className="grid gap-4">
+        <Sheet>
           <ExerciseActions />
-          <AddExerciseEntry />
-          <ExerciseEntries />
-        </div>
-      </Sheet>
+        </Sheet>
+        <AddExerciseEntry />
+        <ExerciseEntries />
+      </div>
     </Page>
   )
 }

@@ -1,13 +1,14 @@
-import { ExerciseEntry, } from '@prisma/client';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppState, DailyCheckState } from '@/types/global'; import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry';
-import logExerciseThunk from './thunks/logExerciseThunk';
-import postDailyCheck from './thunks/postDailyCheckThunk';
+import { ExerciseEntry } from '@prisma/client'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AppState, DailyCheckState } from '@/types/global'
+import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry'
+import logExerciseThunk from './thunks/logExerciseThunk'
+import postDailyCheck from './thunks/postDailyCheckThunk'
 import {
   incrementDateReducer,
   decrementDateReducer,
   resetDateReducer,
-  setUserActivityReducer,
+  setuserDayReducer,
   addExerciseEntryReducer,
   setExerciseEntriesReducer,
   setNewExerciseReducer,
@@ -30,12 +31,11 @@ import {
   nextNewSetStepReducer,
   previousNewSetStepReducer,
   setNewExerciseNameReducer,
-
 } from './reducers/app'
 
-const todaysMonth = new Date().getMonth() + 1;
-const todaysDay = new Date().getDate();
-const todaysYear = new Date().getFullYear();
+const TODAYS_MONTH = new Date().getMonth() + 1
+const TODAYS_DAY = new Date().getDate()
+const TODAYS_YEAR = new Date().getFullYear()
 
 const DEFAULT_DAILY_CHECK: DailyCheckState = {
   weight: 180,
@@ -45,15 +45,15 @@ const DEFAULT_DAILY_CHECK: DailyCheckState = {
     weight: true,
     mood: true,
     sleep: true,
-  }
+  },
 }
 
 const initialState: AppState = {
-  userActivity: {
+  userDay: {
     id: '',
-    month: todaysMonth,
-    day: todaysDay,
-    year: todaysYear,
+    month: TODAYS_MONTH,
+    day: TODAYS_DAY,
+    year: TODAYS_YEAR,
     ExerciseEntries: [],
     FoodEntries: [],
     JournalEntries: [],
@@ -71,7 +71,7 @@ const initialState: AppState = {
       SleepEntries: [],
       WeightEntries: [],
       WaterEntries: [],
-    }
+    },
   },
   dashboard: {
     exercise: {
@@ -81,7 +81,7 @@ const initialState: AppState = {
         exerciseName: '',
         exerciseId: '',
         set: EMPTY_SET,
-        isDone: false
+        isDone: false,
       },
       newTags: [],
     },
@@ -89,14 +89,9 @@ const initialState: AppState = {
   },
   settings: {
     isCookiesEnabled: false,
-    backgroundColors: [
-      '#F94144',
-      '#F3722C',
-      '#F8961E',
-      '#F9844A',
-    ],
-  }
-};
+    backgroundColors: ['#F94144', '#F3722C', '#F8961E', '#F9844A'],
+  },
+}
 export { initialState as AppInitialState }
 
 const appSlice = createSlice({
@@ -108,8 +103,8 @@ const appSlice = createSlice({
     decrementDate: decrementDateReducer,
     resetDate: resetDateReducer,
 
-    // User activity related reducers
-    setUserActivity: setUserActivityReducer,
+    // User Day related reducers
+    setUserDay: setuserDayReducer,
 
     // Exercise entries related reducers
     addExerciseEntry: addExerciseEntryReducer,
@@ -143,27 +138,33 @@ const appSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(logExerciseThunk.fulfilled, (state, action: PayloadAction<ExerciseEntry>) => {
-      state.userActivity.ExerciseEntries.push(action.payload);
-      state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise;
-    });
-    builder.addCase(postDailyCheck.fulfilled, (state, action: PayloadAction<{
-      isDone: {
-        mood: boolean,
-        sleep: boolean,
-        weight: boolean
+      state.userDay.ExerciseEntries.push(action.payload)
+      state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise
+    })
+    builder.addCase(
+      postDailyCheck.fulfilled,
+      (
+        state,
+        action: PayloadAction<{
+          isDone: {
+            mood: boolean
+            sleep: boolean
+            weight: boolean
+          }
+        }>
+      ) => {
+        state.dashboard.dailyCheck = initialState.dashboard.dailyCheck
+        state.dashboard.dailyCheck.isDone = action.payload.isDone
       }
-    }>) => {
-      state.dashboard.dailyCheck = initialState.dashboard.dailyCheck;
-      state.dashboard.dailyCheck.isDone = action.payload.isDone;
-    });
-  }
-});
+    )
+  },
+})
 
 export const {
   incrementDate,
   decrementDate,
   resetDate,
-  setUserActivity,
+  setUserDay,
   addExerciseEntry,
   setExerciseEntries,
   setNewExerciseName,
@@ -186,6 +187,6 @@ export const {
   setDailyCheckIsDone,
   nextNewSetStep,
   previousNewSetStep,
-} = appSlice.actions;
+} = appSlice.actions
 
-export default appSlice.reducer;
+export default appSlice.reducer

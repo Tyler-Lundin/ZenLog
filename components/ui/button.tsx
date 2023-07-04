@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-black flex gap-2 rounded-md transition-all font-thin text-white dark:text-black bg-black hover:text-black dark:bg-white hover:bg-transparent dark:hover:text-white dark:hover:bg-transparent hover:border-black dark:hover:border-white border",
+        default: "bg-black flex gap-2 rounded-md transition-all font-thin text-white dark:text-black bg-black hover:text-black dark:bg-white hover:bg-transparent dark:hover:text-white dark:hover:bg-transparent hover:border-black dark:hover:border-white border focus:dark:border-white focus:border-black focus:bg-transparent focus:dark:text-white focus:text-black",
         defaultInverted: "bg-white flex gap-2 rounded-md transition-all font-thin text-black dark:text-white bg-white hover:text-white dark:bg-black hover:bg-transparent dark:hover:bg-transparent hover:border-white dark:hover:border-black border",
         glass: "flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border",
         glassGreen: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-green-400",
@@ -18,7 +18,8 @@ const buttonVariants = cva(
         destructive:
           "bg-red-400 text-destructive-foreground hover:bg-red-400/90",
         event: "font-bold bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase",
-        logEvent: "font-bold bg-green-500 disabled:bg-red-500 text-white hover:bg-black/90 uppercase",
+        logEvent: "font-bold bg-green-500 disabled:bg-red-500 text-white uppercase hover:bg-transparent hover:text-green-500 hover:border hover:border-green-500",
+        green: "bg-green-500 flex gap-2 rounded-md transition-all font-thin text-white hover:border-green-500 hover:bg-transparent hover:text-green-500 border focus:border-green-500 focus:text-green-500 focus:bg-transparent",
         large: "bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase font-bold tracking-wider rounded-none",
 
       },

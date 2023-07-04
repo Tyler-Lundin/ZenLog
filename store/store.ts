@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import uiReducer from "./uiSlice";
 import appReducer from "./appSlice";
+import exerciseReducer from "./exerciseSlice";
 
 
 
@@ -8,6 +9,7 @@ const store = configureStore({
   reducer: {
     ui: uiReducer,
     app: appReducer,
+    exercise: exerciseReducer
   }
 })
 

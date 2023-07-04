@@ -46,18 +46,18 @@ model VerificationToken {
 }
 
 model User {
-  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  id               String       @id @default(auto()) @map("_id") @db.ObjectId
   name             String?
-  email            String?        @unique
+  email            String?      @unique
   emailVerified    DateTime?
   image            String?
-  role             String         @default("user")
+  role             String       @default("user")
   accounts         Account[]
   sessions         Session[]
-  activities       UserActivity[]
+  days             userDay[]
   createdExercises String[]
-  friendships1     Friendship[]   @relation("Friendship_User1")
-  friendships2     Friendship[]   @relation("Friendship_User2")
+  friendships1     Friendship[] @relation("Friendship_User1")
+  friendships2     Friendship[] @relation("Friendship_User2")
 }
 
 model Friendship {
@@ -73,7 +73,7 @@ model Friendship {
   @@unique([user1Id, user2Id])
 }
 
-model UserActivity {
+model userDay {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   day             Int
   month           Int
@@ -91,23 +91,23 @@ model UserActivity {
 }
 
 model WeightEntry {
-  id             String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String     @db.ObjectId
-  userActivityId String     @db.ObjectId
-  weight         Int
-  weightUnit     WeightUnit
-  createdAt      DateTime   @default(now())
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String     @db.ObjectId
+  userDayId  String     @db.ObjectId
+  weight     Int
+  weightUnit WeightUnit
+  createdAt  DateTime   @default(now())
 }
 
 model ExerciseEntry {
-  id             String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String      @db.ObjectId
-  exerciseName   String
-  exerciseId     String      @db.ObjectId
-  set            ExerciseSet
-  userActivityId String      @db.ObjectId
-  updatedAt      DateTime    @updatedAt
-  createdAt      DateTime    @default(now())
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String      @db.ObjectId
+  exerciseName String
+  exerciseId   String      @db.ObjectId
+  set          ExerciseSet
+  userDayId    String      @db.ObjectId
+  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime    @default(now())
 }
 
 type ExerciseSet {
@@ -162,12 +162,12 @@ model FoodEntry {
 }
 
 model SleepEntry {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String   @db.ObjectId
-  userActivityId String   @db.ObjectId
-  hours          Int
-  updatedAt      DateTime @updatedAt
-  createdAt      DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  userDayId String   @db.ObjectId
+  hours     Int
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 
 model JournalEntry {
@@ -176,12 +176,12 @@ model JournalEntry {
 }
 
 model MoodEntry {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String   @db.ObjectId
-  userActivityId String   @db.ObjectId
-  mood           Mood
-  updatedAt      DateTime @updatedAt
-  createdAt      DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  userDayId String   @db.ObjectId
+  mood      Mood
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 
 model WaterEntry {

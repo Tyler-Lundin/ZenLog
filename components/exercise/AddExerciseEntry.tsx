@@ -9,7 +9,17 @@ import BackButton from '../ui/BackButton';
 import { resetNewExercise } from '@/store/appSlice';
 import { NewExerciseSetState } from '@/types/global';
 
-export const EMPTY_SET: NewExerciseSetState = { reps: 0, weight: 0, toFailure: false, intensity: 5, notes: '', tags: [], isDone: false, step: 0 }
+export const EMPTY_SET: NewExerciseSetState = {
+  reps: 0,
+  weight: 0,
+  intensity: 0,
+  toFailure: false,
+  notes: '',
+  tags: [],
+  isDone: false,
+  step: 0,
+  weightUnit: 'POUND',
+}
 
 export default function AddExerciseEntry() {
   const dispatch = useDispatch();

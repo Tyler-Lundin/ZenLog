@@ -15,7 +15,7 @@ export default function ExerciseActions() {
   return (
     <ul className="flex gap-4 w-full bg-white/80 dark:bg-black/80 p-2 rounded-md border border-black dark:border-white">
       <SheetTrigger asChild>
-        <Button size="mdSquare" className={`transition-all relative`} variant="logEvent" onClick={() => dispatch(openLogExerciseForm())}>
+        <Button size="mdSquare" className={`transition-all relative`} variant="green" onClick={() => dispatch(openLogExerciseForm())}>
           <BiPlus />
         </Button>
       </SheetTrigger>

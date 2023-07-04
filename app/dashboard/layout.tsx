@@ -1,6 +1,6 @@
-import Providers from "@/components/Providers"
-import DateBlock from "@/components/dashboard/DateBlock"
 import Navigation from "@/components/navigation/Navigation"
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function DashboardLayout({
@@ -13,6 +13,7 @@ export default function DashboardLayout({
     <>
       {/* @ts-expect-error promise element*/}
       <Navigation />
+      <ToastContainer />
       {children}
     </>
   )

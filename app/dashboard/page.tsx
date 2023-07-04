@@ -22,6 +22,7 @@ export default async function DashboardPage() {
         <YourExercise />
       </div>
       <LogButton />
+      {/* @ts-expect-error */}
       <LogEventMenu />
     </Page>
   )

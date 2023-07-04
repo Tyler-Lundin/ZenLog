@@ -1,7 +1,9 @@
 
 import { Input } from "@/components/ui/input";
+import { formatLeadingZero } from "@/lib/utils";
 import { setNewWeight } from "@/store/appSlice";
 import { AppDispatch, RootState } from "@/store/store";
+import { useState } from "react";
 import { IoBarbellOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,10 +14,14 @@ export default function WeightStep() {
   const { weight } = set
   const dispatch = useDispatch<AppDispatch>();
 
+  const [inputValue, setInputValue] = useState(weight.toString());
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newWeight = parseInt(e.target.value);
+    const W = formatLeadingZero(e.target.value);
+    const newWeight = Number(W);
     if (newWeight > 999 || newWeight < -999) return
     dispatch(setNewWeight(newWeight));
+    setInputValue(W);
   }
 
   return (
@@ -24,7 +30,7 @@ export default function WeightStep() {
         How much weight did you lift?
       </label>
       <div className="relative border-b dark:border-white border-black mx-auto grid justify-center">
-        <Input variant="glass" size="8xlFit" className="w-60 text-center" min={0} max={24} type="number" value={weight} onChange={handleChange} />
+        <Input variant="glass" size="8xlFit" className="w-60 text-center" type="number" value={inputValue} onChange={handleChange} />
         <span className="text-2xl absolute right-0 bottom-0 dark:text-white">lbs</span>
         <IoBarbellOutline className="absolute left-0 bottom-1 text-2xl dark:text-white" />
       </div>

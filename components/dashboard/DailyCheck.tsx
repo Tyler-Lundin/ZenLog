@@ -11,7 +11,6 @@ import { setDailyCheckIsDone } from "@/store/appSlice";
 
 
 export default function DailyCheck() {
-  console.log("rendering daily check in")
   const { isDone } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
   const [step, setStep] = useState(0);
   const dispatch = useDispatch<AppDispatch>();

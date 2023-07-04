@@ -13,6 +13,7 @@ import TagsStep from './steps/TagsStep';
 import ExerciseOverviewStep from './steps/ExerciseOverviewStep';
 import logExerciseThunk from '@/store/thunks/logExerciseThunk';
 import { nextNewSetStep, previousNewSetStep } from '@/store/appSlice';
+import { useEffect } from 'react';
 
 
 export default function ExerciseSetSteps() {
@@ -36,7 +37,23 @@ export default function ExerciseSetSteps() {
   const isLastStep = step === SET_STEPS.length - 1;
   const isFirstStep = step === 0;
   const isReadyToLog = set.reps > 0 && !isNaN(set.weight) && set.intensity > 0 && isLastStep;
-  console.log({ isReadyToLog })
+
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      console.log(e.key);
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        dispatch(nextNewSetStep());
+      }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        dispatch(previousNewSetStep());
+      }
+    }
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [dispatch])
 
   return (
     <>
@@ -44,35 +61,34 @@ export default function ExerciseSetSteps() {
         {currentStep}
       </div>
       <div className="grid grid-cols-5 justify-items-center p-2 lg:p-16 w-screen h-24 items-center gap-2">
+        <kbd className="text-xs hidden lg:block dark:text-white text-center col-span-1">Esc</kbd>
+        <span className="text-xs hidden lg:block dark:text-white col-span-3 text-center">Step {step + 1} of {SET_STEPS.length}</span>
+        <kbd className="text-xs hidden lg:block dark:text-white text-center col-span-1">Enter</kbd>
+        <Button
+          type="button"
+          variant="default"
+          size="lgSquare"
+          className="p-2 col-span-1"
+          onClick={() => dispatch(previousNewSetStep())}
+          disabled={isFirstStep}
+        > <BsChevronLeft /> </Button>
 
-        {!isFirstStep ? (
-          <Button
-            type="button"
-            variant="default"
-            size="lgSquare"
-            className="p-2 col-span-1"
-            onClick={() => dispatch(previousNewSetStep())}
-            disabled={step === 0}
-          > <BsChevronLeft /> </Button>) : (<span className="I am a placeholder col-span-1" />)}
+        <Button
+          disabled={!isReadyToLog}
+          type="button"
+          variant="logEvent"
+          className="p-6 text-xl lg:text-4xl font-black rounded-lg col-span-3 whitespace-nowrap"
+          onClick={() => dispatch(logExerciseThunk())}
+        > Log Exercise </Button>
 
-        {isLastStep ? (
-          <Button
-            disabled={!isReadyToLog}
-            type="button"
-            variant="logEvent"
-            className="p-6 text-xl lg:text-4xl font-black rounded-lg col-span-3 whitespace-nowrap"
-            onClick={() => dispatch(logExerciseThunk())}
-          > Log Exercise </Button>) : (<span className="I am a placeholder col-span-3" />)}
-
-        {!isLastStep ? (
-          <Button
-            type="button"
-            variant="default"
-            size="lgSquare"
-            className="p-2 col-span-1"
-            onClick={() => dispatch(nextNewSetStep())}
-            disabled={step === SET_STEPS.length - 1}
-          > <BsChevronRight /> </Button>) : <span className="me too! col-span-1" />}
+        <Button
+          type="button"
+          variant="default"
+          size="lgSquare"
+          className="p-2 col-span-1"
+          onClick={() => dispatch(nextNewSetStep())}
+          disabled={isLastStep}
+        > <BsChevronRight /> </Button>
       </div>
     </>
 

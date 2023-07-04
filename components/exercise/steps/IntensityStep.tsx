@@ -20,7 +20,7 @@ export default function IntensityStep() {
         How intense was the set?
       </label>
       <div className="relative border-b dark:border-white border-black grid justify-center mx-auto">
-        <div className="grid grid-cols-5 lg:grid-cols-10 justify-center gap-2 mb-10">
+        <div className="grid grid-cols-5  justify-center gap-4 mb-10">
           {INTENSITY.map((rpe) => (
             <Button key={rpe} variant="default" disabled={intensity === rpe} size="xlSquare" className="p-2" onClick={() => dispatch(setNewIntensity(rpe))}>{rpe}</Button>
           ))}
