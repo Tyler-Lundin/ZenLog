@@ -36,6 +36,7 @@ export async function POST(req: Request, res: Response) {
       weightEntry = await prisma.weightEntry.create({
         data: {
           weight,
+          weightUnit: 'POUND',
           userDayId,
           userId,
         },

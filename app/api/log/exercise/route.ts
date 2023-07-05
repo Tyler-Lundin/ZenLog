@@ -1,4 +1,5 @@
 // import { ExerciseSet } from "@prisma/client";
+import useServerSession from '@/hooks/useServerSession'
 import { ExerciseEntry } from '@prisma/client'
 import { authOptions } from '@server/authOptions'
 import { prisma } from '@server/db'
@@ -43,11 +44,11 @@ const validateRequestData = (
   if (typeof exerciseId !== 'string') throw new Error('Invalid exerciseId')
   if (typeof exerciseName !== 'string') throw new Error('Invalid exerciseName')
 
-  // Validate set
+    // Validate set
 
-  ;['reps', 'weight', 'intensity'].forEach((field) => {
-    convertToNumber(set, field as ExerciseNumericField)
-  })
+    ;['reps', 'weight', 'intensity'].forEach((field) => {
+      convertToNumber(set, field as ExerciseNumericField)
+    })
 
   if (
     typeof set.toFailure !== 'boolean' ||
@@ -64,21 +65,10 @@ const validateRequestData = (
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const session = await getServerSession(
-      req as unknown as NextApiRequest,
-      {
-        ...res,
-        getHeader: (name: string) => res.headers?.get(name),
-        setHeader: (name: string, value: string) => res.headers?.set(name, value),
-      } as unknown as NextApiResponse,
-      authOptions
-    )
-
+    const session = await useServerSession(req, res);
     if (!session) return NextResponse.json({ error: 'Not Authorized' })
 
-    const {
-      user: { id },
-    } = session
+    const { user: { id } } = session
     const { newExercise, userDayId } = await req.json()
     const { exerciseId, exerciseName, set } = newExercise as Omit<
       ExerciseEntry,
@@ -88,7 +78,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     validateRequestData({ exerciseId, exerciseName, set, userDayId })
 
-    const validateDate = await prisma.date.findUnique({
+    const validateDate = await prisma.userDay.findUnique({
       where: {
         id: userDayId,
       },
@@ -105,6 +95,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         set: {
           reps: set.reps,
           weight: set.weight,
+          weightUnit: set.weightUnit || 'lb',
           intensity: set.intensity,
           toFailure: set.toFailure,
           notes: set.notes || '',
@@ -115,7 +106,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
     })
 
-    await prisma.date.update({
+    await prisma.userDay.update({
       where: {
         id: userDayId,
       },

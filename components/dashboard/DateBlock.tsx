@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
-import { decrementDate, incrementDate, resetDate, setuserDay } from '@/store/appSlice'
+import { decrementDate, incrementDate, resetDate, setUserDay } from '@/store/appSlice'
 import { Button } from '../ui/button'
 import useSWR from 'swr'
 import { useEffect } from 'react'
@@ -20,7 +20,7 @@ export default function DateBlock() {
   useEffect(() => {
     mutate()
     console.log({ data, isLoading })
-    if (data && !isLoading) dispatch(setuserDay(data))
+    if (data && !isLoading) dispatch(setUserDay(data))
   }, [data, isLoading, mutate, dispatch, day, month, year])
 
   if (isLoading)

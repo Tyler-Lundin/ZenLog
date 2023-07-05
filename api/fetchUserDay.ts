@@ -4,7 +4,7 @@ interface IFetchDate {
   year: number
 }
 
-const fetchuserDay = ({ month, day, year }: IFetchDate) =>
+const fetchUserDay = ({ month, day, year }: IFetchDate) =>
   fetch('/api/user/day', {
     headers: {
       'Content-Type': 'application/json',
@@ -13,4 +13,4 @@ const fetchuserDay = ({ month, day, year }: IFetchDate) =>
     body: JSON.stringify({ month, day, year }),
   }).then((res) => res.json())
 
-export default fetchuserDay
+export default fetchUserDay

@@ -1,7 +1,7 @@
 import Page from "@/components/Page";
-import ExerciseEntries from "@/components/exercise/ExerciseEntries";
+import ExerciseEntries from "@/components/exercise/ExerciseEntries2";
 import ExerciseActions from "@/components/exercise/ExerciseActions";
-import AddExerciseEntry from "@/components/exercise/AddExerciseEntry";
+import LogExerciseEntry from "@/components/exercise/LogExerciseEntry";
 import { Sheet } from "@/components/ui/sheet";
 
 
@@ -13,7 +13,7 @@ export default function ExercisePage() {
         <Sheet>
           <ExerciseActions />
         </Sheet>
-        <AddExerciseEntry />
+        <LogExerciseEntry />
         <ExerciseEntries />
       </div>
     </Page>
