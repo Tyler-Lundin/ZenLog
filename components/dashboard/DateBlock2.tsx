@@ -8,10 +8,10 @@ import useUserDay from '@/hooks/useUserDay';
 
 
 export default function DateBlock() {
-  const { userDay } = useUserDay()
-  const { month, day, year } = userDay
   const dispatch = useDispatch()
-
+  const { userDay } = useUserDay()
+  if (!userDay) return null
+  const { month, day, year } = userDay
   return (
     <div className='relative grid grid-cols-5 grid-flow-row'>
       <Button

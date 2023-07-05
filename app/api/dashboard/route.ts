@@ -8,9 +8,7 @@ import { NextResponse } from "next/server"
 export async function GET(req: Request, res: Response) {
   const session = await useServerSession(req, res);
   if (!session) return NextResponse.json({ error: 'Not Authorized' })
-  console.log({ session });
   const { searchParams } = new URL(req.url);
-  console.log("###### SEARCHPARAMS:, ", searchParams)
   const dayId = searchParams.get('dayId');
   if (!dayId) {
     return NextResponse.json({ status: 'error', message: 'Missing date id' })

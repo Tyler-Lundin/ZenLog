@@ -74,7 +74,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       ExerciseEntry,
       'userId' | 'updatedAt' | 'createdAt' | 'userDayId'
     >
-    console.log({ exerciseId, exerciseName, set, userDayId })
 
     validateRequestData({ exerciseId, exerciseName, set, userDayId })
 

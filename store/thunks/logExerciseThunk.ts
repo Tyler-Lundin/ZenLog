@@ -12,7 +12,6 @@ const logExerciseThunk = createAsyncThunk('logExercise', async (_, thunkAPI) => 
       newExercise: state.app.dashboard.exercise.newExercise,
       userDayId: state.app.userDay.id,
     })
-    console.log(body)
     const res = await fetch('/api/log/exercise', {
       method: 'POST',
       body,

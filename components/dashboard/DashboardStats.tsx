@@ -11,7 +11,6 @@ import useDashboardData from "@/hooks/useDashboardData";
 export default function DashboardStats() {
   const data = useDashboardData();
   const { sleep, weight, mood, exercise } = data;
-  console.log(data);
   return (
     <div>
       <h1 className="bg-gray-200 font-bold text-xl p-4 rounded-t-md border-t border-r border-l border-black dark:border-white">Your Stats</h1>

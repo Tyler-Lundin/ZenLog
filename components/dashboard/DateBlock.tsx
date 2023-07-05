@@ -19,7 +19,6 @@ export default function DateBlock() {
 
   useEffect(() => {
     mutate()
-    console.log({ data, isLoading })
     if (data && !isLoading) dispatch(setUserDay(data))
   }, [data, isLoading, mutate, dispatch, day, month, year])
 

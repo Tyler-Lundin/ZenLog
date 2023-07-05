@@ -1,4 +1,4 @@
-import { ExerciseSet, ExerciseEntry as IExerciseEntry, } from "@prisma/client"
+import { ExerciseEntry as IExerciseEntry, } from "@prisma/client"
 import { Badge } from "../ui/badge"
 import { formatRepsWeightAndUnit } from "@/lib/utils"
 
@@ -6,11 +6,6 @@ import { formatRepsWeightAndUnit } from "@/lib/utils"
 const dateToTime = (date: string) => {
   const D = new Date(date)
   return D.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-}
-
-const getVolume = (set: ExerciseSet) => {
-  if (set?.weight >= 0 && set?.reps >= 0) return set.weight * set.reps;
-  return 0;
 }
 
 export default function ExerciseEntry({ exercise }: { exercise: IExerciseEntry }) {

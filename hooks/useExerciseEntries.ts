@@ -1,11 +1,10 @@
-import { RootState } from "@/store/store";
 import { ExerciseEntry } from "@prisma/client";
 import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
+import useUserDay from "./useUserDay";
 
 
 const useExerciseEntries = () => {
-  const { id } = useSelector((state: RootState) => state.app.userDay);
+  const { userDay: { id } } = useUserDay();
   const { data } = useQuery(`exercise-entries-${id}`, async () => {
     return fetch(`/api/entries/exercise?dayId=${id}`).then((res) => res.json());
   });

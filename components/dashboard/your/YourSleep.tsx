@@ -17,7 +17,6 @@ export default function YourSleep() {
   const isLoading = !data && !error
 
   const sleepEntries = data?.sleepEntries || []
-  console.log({ SleepEntries, sleepEntries, data })
 
   if (sleepEntries === undefined || error || isLoading)
     return (

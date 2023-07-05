@@ -20,7 +20,6 @@ export async function POST(req: Request, res: Response) {
     )
 
     if (!session) return NextResponse.json({ error: 'Not Authorized' })
-    console.log('found session')
 
     const {
       user: { id: userId },

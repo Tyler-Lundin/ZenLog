@@ -9,8 +9,8 @@ export default function LogButton() {
   const dispatch = useDispatch<AppDispatch>()
 
   return (
-    <Button onClick={() => dispatch(toggleLogEventMenu())} className="absolute bottom-8 left-1/2 -translate-x-1/2 aspect-square outline outline-gray-black rounded-full bg-green-500/70 backdrop-blur-md grid  place-items-center text-white font-bold w-14 h-14">
-      <AiOutlinePlus className="text-2xl" />
+    <Button onClick={() => dispatch(toggleLogEventMenu())} className="fixed  hover:opacity-50 focus:opacity-50 bottom-4 right-8 backdrop-blur-sm aspect-square outline outline-gray-black rounded-full bg-green-500/70 border-none outline-black  grid  place-items-center text-white font-bold w-20 h-20">
+      <AiOutlinePlus className="text-4xl" />
     </Button>
   )
 }

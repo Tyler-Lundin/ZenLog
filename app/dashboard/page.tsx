@@ -16,11 +16,16 @@ export default async function DashboardPage() {
   if (!session) return redirect('/')
   return (
     <Page>
-      <DailyCheck />
-      <DashboardStats />
       <LogButton />
-      {/* @ts-expect-error */}
-      <LogEventMenu />
+      <div className="grid gap-4">
+        <DailyCheck />
+        <DashboardStats />
+        {/* @ts-expect-error */}
+        <LogEventMenu />
+        <footer className="h-20">
+
+        </footer>
+      </div>
     </Page>
   )
 }

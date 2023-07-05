@@ -47,7 +47,6 @@ export default function YourExercise() {
       </div>
     )
   } else {
-    console.log('error', error)
     return (
       <div className='flex gap-4'>
         <h2 className='text-2xl font-bold whitespace-nowrap dark:text-white'>Exercise</h2>

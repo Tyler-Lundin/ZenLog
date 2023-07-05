@@ -3,7 +3,6 @@ import { RootState } from '../store'
 
 const postDailyCheck = createAsyncThunk('dailyCheck/postDailyCheck', async (_, thunkAPI) => {
   try {
-    console.log('posting daily check')
     const state = thunkAPI.getState() as RootState
     const { weight, sleep, mood } = state.app.dashboard.dailyCheck
     const userDayId = state.app.userDay.id

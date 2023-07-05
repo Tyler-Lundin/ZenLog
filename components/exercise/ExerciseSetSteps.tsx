@@ -40,7 +40,6 @@ export default function ExerciseSetSteps() {
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
-      console.log(e.key);
       if (e.key === 'Enter') {
         e.preventDefault();
         dispatch(nextNewSetStep());
