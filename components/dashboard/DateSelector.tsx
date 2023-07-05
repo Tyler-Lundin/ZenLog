@@ -7,7 +7,7 @@ import useUserDay from '@/hooks/useUserDay';
 
 
 
-export default function DateBlock() {
+export default function DateSelector() {
   const dispatch = useDispatch()
   const { userDay } = useUserDay()
   if (!userDay) return null

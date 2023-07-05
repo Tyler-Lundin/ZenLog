@@ -1,19 +1,19 @@
 import { useQuery } from "react-query";
 import useUserDay from "./useUserDay";
 
-// {
-//     sleep: { totalHours, sleepEntries: sleep.length },
-//     weight: { averageWeight, weightEntries: weight.length },
-//     mood: { mostRecentMood: mood[mood.length - 1]?.mood, moodEntries: mood.length },
-//     exercise: { totalReps, totalWeight, totalExercises: exercises.length, totalVolume: totalReps * totalWeight },
-//   }
+interface DashboardData {
+  sleep: { totalHours: number; sleepEntries: number };
+  weight: { averageWeight: number; weightEntries: number };
+  mood: { mostRecentMood: null | string; moodEntries: number };
+  exercise: { totalReps: number; totalWeight: number; totalExercises: number; totalVolume: number };
+}
 
 export default function useDashboardData() {
   const { userDay } = useUserDay();
   const { id } = userDay;
-  const { data } = useQuery(`dashboard-${id}`, async () => {
+  const { data } = useQuery<DashboardData>(`dashboard-${id}`, async () => {
     return fetch(`/api/dashboard?dayId=${id}`).then((res) => res.json());
-  });
+  }, { enabled: !!id });
 
   return {
     sleep: data?.sleep || { totalHours: 0, sleepEntries: 0 },

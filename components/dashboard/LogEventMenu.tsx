@@ -19,10 +19,8 @@ const EVENTS = [
 
 export default function LogEventMenu() {
   const { isLogEventMenuOpen, exercise } = useSelector((state: RootState) => state.ui.dashboard)
-  const { isLogExerciseFormOpen } = exercise
   const [isLoading, setIsLoading] = useState(false);
   const [decision, setDecision] = useState('');
-  const dispatch = useDispatch<AppDispatch>()
   if (!isLogEventMenuOpen) return null
   if (isLoading) return <Loading decision={decision} />
   if (!isLoading) return <NotLoading setIsLoading={setIsLoading} setDecision={setDecision} />

@@ -1,5 +1,5 @@
 import Page from "@/components/Page";
-import ExerciseEntries from "@/components/exercise/ExerciseEntries2";
+import ExerciseEntries from "@/components/exercise/ExerciseEntries";
 import ExerciseActions from "@/components/exercise/ExerciseActions";
 import LogExerciseEntry from "@/components/exercise/LogExerciseEntry";
 import { Sheet } from "@/components/ui/sheet";
