@@ -11,10 +11,6 @@ import ExerciseEntry from './ExerciseEntry'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-const dateToTime = (date: string) => {
-  const D = new Date(date)
-  return D.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-}
 
 const sortEntries = (entries: IExerciseEntry[]): IExerciseEntry[] => {
   const copyEntries = [...entries]
@@ -31,6 +27,7 @@ const RenderIfDateLoaded = () => {
   if (!userDayId) return null
   return <ExerciseEntries />
 }
+
 
 function ExerciseEntries() {
   const { id: userDayId } = useSelector((state: RootState) => state.app.userDay)
@@ -49,7 +46,7 @@ function ExerciseEntries() {
     mutate()
   }, [exerciseEntries, mutate])
 
-  if (isLoading)
+  if (isLoading || !exerciseEntries)
     return (
       <DashboardBlock>
         <Spinner size='xl' />

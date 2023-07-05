@@ -23,9 +23,7 @@ export async function POST(req: Request, res: Response) {
 
   if (!session) return NextResponse.json({ error: 'Not Authorized' })
 
-  const {
-    user: { id, email },
-  } = session
+  const { user: { id, email } } = session
   if (!id || !email) return NextResponse.json({ error: 'Not Authorized' })
 
   const userDay = await prisma.userDay.findFirst({

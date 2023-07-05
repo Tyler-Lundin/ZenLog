@@ -5,9 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
 
   try {
-    console.log("GET /api/sleep/route.ts ~~~~~ ~~ ~ ~  ~ ~~  ~ ~ ~~  ~");
     const { SleepEntries } = await req.json();
-    console.log(SleepEntries);
 
     const sleepEntries = await prisma.sleepEntry.findMany({
       where: {

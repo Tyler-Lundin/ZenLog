@@ -12,7 +12,7 @@ export function formatRepsWeightAndUnit(set: ExerciseSet) {
   if (reps > 0 && weight !== 0) return `${reps} x ${weight} ${weightUnit}`
   if (reps > 0 && weight === 0) return `${reps} reps`
   if (reps === 0 && weight !== 0) return `${weight} ${weightUnit}`
-  return ''
+  return 'Missing Weight and Reps'
 }
 
 export function formatLeadingZero(num: string | number) {

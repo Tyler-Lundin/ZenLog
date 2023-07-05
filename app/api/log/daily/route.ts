@@ -20,7 +20,6 @@ export async function POST(req: Request, res: Response) {
     )
 
     if (!session) return NextResponse.json({ error: 'Not Authorized' })
-    console.log('found session')
 
     const {
       user: { id: userId },
@@ -36,6 +35,7 @@ export async function POST(req: Request, res: Response) {
       weightEntry = await prisma.weightEntry.create({
         data: {
           weight,
+          weightUnit: 'POUND',
           userDayId,
           userId,
         },

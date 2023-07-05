@@ -38,10 +38,8 @@ export async function GET(req: Request, res: any) {
   )
 
   if (!session) return NextResponse.json({ error: 'Not Authorized' })
-  const {
-    user: { id: userId },
-  } = session
-
+  const { user: { id: userId } } = session
+  console.log('userId - # - # - # - ', userId)
   const exerciseEntries = await prisma.exerciseEntry.findMany({
     where: {
       userDayId,

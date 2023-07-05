@@ -21,7 +21,7 @@ export const EMPTY_SET: NewExerciseSetState = {
   weightUnit: 'POUND',
 }
 
-export default function AddExerciseEntry() {
+export default function LogExerciseEntry() {
   const dispatch = useDispatch();
   const { isLogExerciseFormOpen } = useSelector((state: RootState) => state.ui.dashboard.exercise)
   const newExercise = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)

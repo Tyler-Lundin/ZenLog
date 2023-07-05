@@ -1,7 +1,7 @@
 export { incrementDateReducer } from './IncrementDateReducer'
 export { decrementDateReducer } from './decrementDate'
 export { resetDateReducer } from './resetDateReducer'
-export { setuserDayReducer } from './setuserDayReducer'
+export { setUserDayReducer } from './setUserDayReducer'
 export { addExerciseEntryReducer } from './exercise/addExerciseEntryReducer'
 export { setExerciseEntriesReducer } from './exercise/setExerciseEntriesReducer'
 export { setNewExerciseReducer } from './exercise/setNewExerciseReducer'

@@ -38,10 +38,8 @@ export default function ExerciseSetSteps() {
   const isFirstStep = step === 0;
   const isReadyToLog = set.reps > 0 && !isNaN(set.weight) && set.intensity > 0 && isLastStep;
 
-
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
-      console.log(e.key);
       if (e.key === 'Enter') {
         e.preventDefault();
         dispatch(nextNewSetStep());
@@ -57,13 +55,10 @@ export default function ExerciseSetSteps() {
 
   return (
     <>
-      <div className="absolute place-content-center w-screen max-w-md grid top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-        {currentStep}
-      </div>
       <div className="grid grid-cols-5 justify-items-center p-2 lg:p-16 w-screen h-24 items-center gap-2">
-        <kbd className="text-xs hidden lg:block dark:text-white text-center col-span-1">Esc</kbd>
-        <span className="text-xs hidden lg:block dark:text-white col-span-3 text-center">Step {step + 1} of {SET_STEPS.length}</span>
-        <kbd className="text-xs hidden lg:block dark:text-white text-center col-span-1">Enter</kbd>
+        <kbd className="text-xs hidden md:block dark:text-white text-center col-span-1">Esc</kbd>
+        <span className="text-xs hidden md:block dark:text-white col-span-3 text-center">Step {step + 1} of {SET_STEPS.length}</span>
+        <kbd className="text-xs hidden md:block dark:text-white text-center col-span-1">Enter</kbd>
         <Button
           type="button"
           variant="default"
@@ -89,6 +84,9 @@ export default function ExerciseSetSteps() {
           onClick={() => dispatch(nextNewSetStep())}
           disabled={isLastStep}
         > <BsChevronRight /> </Button>
+      </div>
+      <div className="absolute w-screen px-8 lg:px-16 grid top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
+        {currentStep}
       </div>
     </>
 

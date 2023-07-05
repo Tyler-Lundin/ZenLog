@@ -6,7 +6,6 @@ import { closeLogExerciseForm } from '../uiSlice'
 const postNewExerciseEntryThunk = createAsyncThunk(
   'exercise/postNewExerciseEntry',
   async (_, thunkAPI) => {
-    console.log('postNewExerciseEntryThunk')
     const dispatch = thunkAPI.dispatch
     const state = thunkAPI.getState() as RootState
     const { newExercise } = state.app.dashboard.exercise

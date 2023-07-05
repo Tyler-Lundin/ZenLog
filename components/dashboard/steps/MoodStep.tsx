@@ -5,7 +5,6 @@ import { Mood } from "@prisma/client"
 import { useDispatch, useSelector } from "react-redux"
 
 export default function MoodStep() {
-  console.log("rendering mood step")
   const { mood } = useSelector((state: RootState) => state.app.dashboard.dailyCheck);
   const dispatch = useDispatch<AppDispatch>();
 

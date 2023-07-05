@@ -16,7 +16,7 @@ export default function Page({ children, className, ...props }: PageProps) {
         backgroundSize: '45px 45px',
         backgroundPosition: '0 0, 14px 14px',
       }}
-      className={`min-h-screen p-4 md:p-6 lg:p-8 bg-white dark:bg-black w-screen relative ${className} `}>
+      className={`min-h-screen md:p-6 lg:p-8 bg-white dark:bg-black w-screen relative ${className} `}>
       <div className="h-16" />
       {children}
     </main>

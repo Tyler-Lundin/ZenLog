@@ -54,7 +54,7 @@ model User {
   role             String       @default("user")
   accounts         Account[]
   sessions         Session[]
-  days             userDay[]
+  days             UserDay[]
   createdExercises String[]
   friendships1     Friendship[] @relation("Friendship_User1")
   friendships2     Friendship[] @relation("Friendship_User2")
@@ -73,7 +73,7 @@ model Friendship {
   @@unique([user1Id, user2Id])
 }
 
-model userDay {
+model UserDay {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   day             Int
   month           Int

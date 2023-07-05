@@ -43,8 +43,6 @@ const exerciseSlice = createSlice({
 });
 
 const {
-  setExerciseEntries,
-  setNewEntry,
 } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

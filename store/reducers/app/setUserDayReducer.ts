@@ -1,12 +1,12 @@
 import { AppState } from '@/types/global'
-import { userDay } from '@prisma/client'
+import { UserDay } from '@prisma/client'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 export const setUserDayReducer = (
   state: AppState,
-  action: PayloadAction<{ userDay: userDay; status: string }>
+  action: PayloadAction<UserDay>
 ) => {
-  if (!action.payload.userDay) return
+  if (!action.payload) return
   const {
     id,
     MoodEntries,
@@ -17,7 +17,7 @@ export const setUserDayReducer = (
     WaterEntries,
     JournalEntries,
     MeditateEntries,
-  } = action.payload.userDay
+  } = action.payload
   state.userDay.id = id
   if (MoodEntries.length > 0) {
     state.dashboard.dailyCheck.isDone.mood = true

@@ -1,14 +1,14 @@
 import { ExerciseEntry } from '@prisma/client'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppState, DailyCheckState } from '@/types/global'
-import { EMPTY_SET } from '@/components/exercise/AddExerciseEntry'
+import { EMPTY_SET } from '@/components/exercise/LogExerciseEntry'
 import logExerciseThunk from './thunks/logExerciseThunk'
 import postDailyCheck from './thunks/postDailyCheckThunk'
 import {
   incrementDateReducer,
   decrementDateReducer,
   resetDateReducer,
-  setuserDayReducer,
+  setUserDayReducer,
   addExerciseEntryReducer,
   setExerciseEntriesReducer,
   setNewExerciseReducer,
@@ -104,7 +104,7 @@ const appSlice = createSlice({
     resetDate: resetDateReducer,
 
     // User Day related reducers
-    setUserDay: setuserDayReducer,
+    setUserDay: setUserDayReducer,
 
     // Exercise entries related reducers
     addExerciseEntry: addExerciseEntryReducer,
