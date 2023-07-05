@@ -8,7 +8,6 @@ const useExerciseEntries = () => {
   const { data } = useQuery(`exercise-entries-${id}`, async () => {
     return fetch(`/api/entries/exercise?userDayId=${id}`).then((res) => res.json());
   }, { enabled: !!id });
-  console.log({ id, data, 'USE_EXERCISE_ENTRIES': 'useExerciseEntries' })
 
   return {
     exerciseEntries: data?.exerciseEntries || [] as ExerciseEntry[],

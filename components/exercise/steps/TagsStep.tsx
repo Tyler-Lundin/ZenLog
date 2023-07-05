@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { addSetTag, removeSetTag } from "@/store/appSlice";
-import { setNewTag } from "@/store/appSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useState } from "react";
 import { IoJournalOutline } from "react-icons/io5";
@@ -38,10 +37,13 @@ export default function TagsStep() {
   };
 
   return (
-    <>
-      <label className="text-center text-2xl font-thin dark:text-white mb-4">
-        Add Tags (Separated by Commas)
-      </label>
+    <div className="w-full">
+      <div className="grid text-center ">
+        <label className=" text-2xl font-thin dark:text-white">
+          Add Tags
+        </label>
+        <small className="text-sm text-gray-400"> (optional, comma separated)</small>
+      </div>
       <div className="relative border-b dark:border-white border-black mx-auto grid justify-center">
         <div className="gap-1 flex">
           {tags.length > 0 && (
@@ -51,10 +53,10 @@ export default function TagsStep() {
           )}
         </div>
         <Input onKeyUp={handleEnterPress} variant={"glass"} className="text-center text-2xl font-thin" placeholder="Tags" type="text" value={tagInput} onChange={handleChange} />
-        <span className="text-2xl absolute right-0 bottom-0 dark:text-white">Tags</span>
+        <span className="text-xl absolute right-0 bottom-0 dark:text-white">Tags</span>
         <IoJournalOutline className="absolute left-0 bottom-1 text-2xl dark:text-white" />
       </div>
-    </>
+    </div>
   )
 }
 

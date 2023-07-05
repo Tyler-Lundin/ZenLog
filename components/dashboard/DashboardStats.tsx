@@ -13,7 +13,7 @@ export default function DashboardStats() {
   const { sleep, weight, mood, exercise } = data;
   return (
     <div>
-      <h1 className="bg-gray-200 font-bold text-xl p-4 rounded-t-md border-t border-r border-l border-black dark:border-white">Your Stats</h1>
+      <h1 className="bg-gray-200 text-black font-bold text-xl p-4 rounded-t-md border-t border-r border-l border-black dark:border-white">Your Stats</h1>
       <ul className="bg-white dark:bg-black font-light text-lg dark:text-white p-4 rounded-br-md rounded-bl-md border-l border-b border-r border-black dark:border-white">
         <li className="flex justify-between"><span>Exercise Total Reps</span> <span>{exercise.totalReps || 0} <small className="text-sm"> reps</small> </span></li>
         <li className="flex justify-between"><span>Exercise Total Weight</span> <span>{exercise.totalWeight || 0} <small className="text-sm"> lbs</small></span></li>

@@ -14,6 +14,7 @@ function ExerciseEntries() {
         exerciseEntries.map((exercise: IExerciseEntry) => (
           <ExerciseEntry key={exercise.id} exercise={exercise} />
         ))}
+      <div className="h-8" />
     </ul>
   )
 }

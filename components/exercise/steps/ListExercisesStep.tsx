@@ -31,7 +31,7 @@ export default function ListExercisesStep() {
               dispatch(setNewExercise(exercise))
               dispatch(nextNewExerciseStep())
             }} className={`flex gap-8 items-center h-24 w-full`} >
-              <h2 className={`text-4xl w-full text-center lg:text-6xl `}>{exercise.name}</h2>
+              <h2 className={`text-2xl md:text-4xl w-full text-center lg:text-6xl `}>{exercise.name}</h2>
             </Button>
           </div>
         ))}

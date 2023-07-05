@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { AppDispatch, RootState } from '@/store/store';
-import React, { useState } from 'react';
+import React from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import RepsStep from './steps/RepsStep';
@@ -14,14 +14,17 @@ import ExerciseOverviewStep from './steps/ExerciseOverviewStep';
 import logExerciseThunk from '@/store/thunks/logExerciseThunk';
 import { nextNewSetStep, previousNewSetStep } from '@/store/appSlice';
 import { useEffect } from 'react';
+import { useQueryClient } from 'react-query';
 
 
 export default function ExerciseSetSteps() {
 
   const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise);
-  const { step, isDone } = set;
+  const { id } = useSelector((state: RootState) => state.app.userDay)
+  const { step } = set;
 
   const dispatch = useDispatch<AppDispatch>();
+  const queryClient = useQueryClient();
 
   const SET_STEPS = [
     <RepsStep key={`reps_set`} />,
@@ -53,6 +56,11 @@ export default function ExerciseSetSteps() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [dispatch])
 
+  const handleLogExerciseEntry = () => {
+    dispatch(logExerciseThunk())
+    queryClient.invalidateQueries({ queryKey: [`exercise-entries-${id}`] })
+  }
+
   return (
     <>
       <div className="grid grid-cols-5 justify-items-center p-2 lg:p-16 w-screen h-24 items-center gap-2">
@@ -73,7 +81,7 @@ export default function ExerciseSetSteps() {
           type="button"
           variant="logEvent"
           className="p-6 text-xl lg:text-4xl font-black rounded-lg col-span-3 whitespace-nowrap"
-          onClick={() => dispatch(logExerciseThunk())}
+          onClick={handleLogExerciseEntry}
         > Log Exercise </Button>
 
         <Button
