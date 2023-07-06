@@ -120,22 +120,6 @@ type ExerciseSet {
   tags       String[]
 }
 
-model Exercise {
-  id               String      @id @default(auto()) @map("_id") @db.ObjectId
-  name             String
-  aliases          String[]
-  primaryMuscles   Muscle[]
-  secondaryMuscles Muscle[]
-  force            Force
-  level            Level
-  mechanic         Mechanic
-  equipment        Equipment[]
-  category         Category[]
-  instructions     String[]
-  description      String
-  tips             String[]
-}
-
 model Ingredient {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String
@@ -205,13 +189,6 @@ enum Mood {
   // Add more moods as necessary
 }
 
-enum WeightUnit {
-  GRAM
-  KILOGRAM
-  POUND
-  OUNCE
-}
-
 enum LengthUnit {
   METER
   CENTIMETER
@@ -233,13 +210,35 @@ enum TimeUnit {
   HOUR
 }
 
+enum WeightUnit {
+  GRAM
+  KILOGRAM
+  POUND
+  OUNCE
+}
+
+model Exercise {
+  id               String      @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  aliases          String[]
+  primaryMuscles   Muscle[]
+  secondaryMuscles Muscle[]
+  force            Force
+  level            Level
+  mechanic         Mechanic
+  equipment        Equipment[]
+  category         Category[]
+  instructions     String[]
+  description      String
+  tips             String[]
+}
+
 enum Muscle {
   ABS
   BACK
   BICEPS
   BRACHIALIS
   BRACHIORADIALIS
-  CALF_MUSCLES
   CALVES
   CHEST
   CORE
