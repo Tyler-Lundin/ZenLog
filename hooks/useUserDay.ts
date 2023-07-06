@@ -14,7 +14,7 @@ const useUserDay = () => {
     if (data?.userDay && data?.userDay?.id) dispatch(setUserDay(data.userDay));
   }, [data, dispatch])
   if (isError) return { month, day, year }
-  return { userDay: data?.userDay || { userDay: { month, day, year, id: '' } } }
+  return { userDay: data?.userDay || { month, day, year, id: '' } }
 }
 
 export default useUserDay;
