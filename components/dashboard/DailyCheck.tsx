@@ -7,13 +7,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/store/store"
 import { Button } from "../ui/button";
 import postDailyCheck from "@/store/thunks/postDailyCheckThunk";
-import { setDailyCheckIsDone } from "@/store/appSlice";
+import { nextDailyCheckStep, previousDailyCheckStep, setDailyCheckIsDone } from "@/store/appSlice";
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
 export default function DailyCheck() {
-  const { isDone } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
+  const { isDone, step } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
+  console.log({ isDone })
   const dispatch = useDispatch<AppDispatch>();
-  const [step, setStep] = useState(0);
+  // const [step, setStep] = useState(0);
 
   const steps = [
     { component: <BodyweightStep key="body_weight_step" />, isDone: isDone.weight || false },
@@ -28,10 +29,10 @@ export default function DailyCheck() {
   const isReadyToLog = steps.every(step => step.isDone);
 
   const handleNext = useCallback(() => {
-    if (step < steps.length - 1) {
-      setStep(step + 1);
+    if (!isLastStep) {
+      dispatch(nextDailyCheckStep())
     }
-  }, [step, steps.length])
+  }, [isLastStep, dispatch])
 
   const handleDone = () => {
     dispatch(postDailyCheck());
@@ -39,13 +40,11 @@ export default function DailyCheck() {
   }
 
   const handleBack = useCallback(() => {
-    if (isFirstStep) return dispatch(setDailyCheckIsDone()); // closes but reopens on next reload 
-    setStep(step - 1)
-  }, [dispatch, isFirstStep, step])
+    if (!isFirstStep) dispatch(previousDailyCheckStep());
+  }, [dispatch, isFirstStep])
 
   const currentStep = steps[step].component
   const allDone = steps.every(step => step.isDone)
-  if (steps[step]?.isDone && step < steps.length - 1) handleNext();
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {

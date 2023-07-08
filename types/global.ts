@@ -77,6 +77,12 @@ export interface DailyCheckState {
     mood: boolean
     sleep: boolean
   }
+  step: number
+  skipped: {
+    weight: boolean
+    mood: boolean
+    sleep: boolean
+  }
 }
 
 export interface Payload {

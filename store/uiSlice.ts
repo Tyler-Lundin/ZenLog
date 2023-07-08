@@ -4,7 +4,7 @@ export interface UiState {
   isNavigationOpen: boolean;
   dashboard: {
     isWelcomeDialogOpen: boolean;
-    isLogEventMenuOpen: boolean;
+    isLogEntryMenuOpen: boolean;
     error: string;
     exercise: {
       isLogExerciseFormOpen: boolean;
@@ -18,7 +18,7 @@ const initialState: UiState = {
   isNavigationOpen: false,
   dashboard: {
     isWelcomeDialogOpen: true,
-    isLogEventMenuOpen: false,
+    isLogEntryMenuOpen: false,
     error: '',
     exercise: {
       isLogExerciseFormOpen: false,
@@ -38,8 +38,8 @@ const uiSlice = createSlice({
     closeWelcomeDialog(state) {
       state.dashboard.isWelcomeDialogOpen = false;
     },
-    toggleLogEventMenu(state) {
-      state.dashboard.isLogEventMenuOpen = !state.dashboard.isLogEventMenuOpen;
+    toggleLogEntryMenu(state) {
+      state.dashboard.isLogEntryMenuOpen = !state.dashboard.isLogEntryMenuOpen;
     },
     openLogExerciseForm(state) {
       if (state.dashboard.exercise.isLogExerciseFormOpen === true) // this is just in case, but it should never happen 
@@ -65,7 +65,7 @@ const uiSlice = createSlice({
 export const {
   toggleNavigation,
   closeWelcomeDialog,
-  toggleLogEventMenu,
+  toggleLogEntryMenu,
   openLogExerciseForm,
   closeLogExerciseForm,
   setExerciseError,

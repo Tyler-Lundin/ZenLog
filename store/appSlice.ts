@@ -46,6 +46,12 @@ const DEFAULT_DAILY_CHECK: DailyCheckState = {
     mood: true,
     sleep: true,
   },
+  step: 0,
+  skipped: {
+    weight: false,
+    mood: false,
+    sleep: false,
+  },
 }
 
 const initialState: AppState = {
@@ -135,27 +141,25 @@ const appSlice = createSlice({
     setDailySleep: setDailySleepReducer,
     skipDailyStep: skipDailyStepReducer,
     setDailyCheckIsDone: setDailyCheckIsDoneReducer,
+    nextDailyCheckStep: (state) => {
+      if (state.dashboard.dailyCheck.step === 0) state.dashboard.dailyCheck.isDone.weight = true
+      if (state.dashboard.dailyCheck.step === 1) state.dashboard.dailyCheck.isDone.mood = true
+      if (state.dashboard.dailyCheck.step === 2) state.dashboard.dailyCheck.isDone.sleep = true
+      state.dashboard.dailyCheck.step++
+    },
+    previousDailyCheckStep: (state) => {
+      state.dashboard.dailyCheck.step--
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(logExerciseThunk.fulfilled, (state, action: PayloadAction<ExerciseEntry>) => {
       state.userDay.ExerciseEntries.push(action.payload)
       state.dashboard.exercise.newExercise = initialState.dashboard.exercise.newExercise
     })
-    builder.addCase(
-      postDailyCheck.fulfilled,
-      (
-        state,
-        action: PayloadAction<{
-          isDone: {
-            mood: boolean
-            sleep: boolean
-            weight: boolean
-          }
-        }>
-      ) => {
-        state.dashboard.dailyCheck = initialState.dashboard.dailyCheck
-        state.dashboard.dailyCheck.isDone = action.payload.isDone
-      }
+    builder.addCase(postDailyCheck.fulfilled, (state, action: PayloadAction<{ isDone: { mood: boolean, sleep: boolean, weight: boolean } }>) => {
+      state.dashboard.dailyCheck = initialState.dashboard.dailyCheck
+      state.dashboard.dailyCheck.isDone = action.payload.isDone
+    }
     )
   },
 })
@@ -187,6 +191,8 @@ export const {
   setDailyCheckIsDone,
   nextNewSetStep,
   previousNewSetStep,
+  nextDailyCheckStep,
+  previousDailyCheckStep,
 } = appSlice.actions
 
 export default appSlice.reducer

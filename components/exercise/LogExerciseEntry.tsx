@@ -41,7 +41,7 @@ export default function LogExerciseEntry() {
   const currentStep = STEPS[step]
 
   return (
-    <div className="absolute top-0 left-0 bg-white dark:bg-black z-50 h-screen w-screen overflow-y-auto">
+    <div className="fixed top-0 left-0 bg-white dark:bg-black z-50 h-screen w-screen overflow-y-auto">
       <div className="h-20 grid items-center w-full fixed bg-white/80 dark:bg-black/80 z-50 backdrop-blur-sm">
         <BackButton onClick={() => {
           dispatch(closeLogExerciseForm())
