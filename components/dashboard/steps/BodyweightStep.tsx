@@ -25,14 +25,11 @@ export default function BodyweightStep() {
 
   return (
     <>
-      <label className="text-center text-2xl font-thin">How much do you weigh today?</label>
-      <div className="relative border-b dark:border-white border-black mx-4 grid justify-center">
+      <label className="text-center text-black dark:text-white text-2xl font-thin">How much do you weigh today?</label>
+      <div className="relative border-b dark:border-white border-black mx-4 grid justify-center text-black dark:text-white">
         <Input variant="glass" size="8xlFit" className="w-60 text-center" max={999} type="number" value={inputValue} onChange={handleChange} />
-        <span className="text-2xl absolute right-0 bottom-0">lbs</span>
+        <span className="text-2xl absolute right-0 bottom-0 ">lbs</span>
         <IoScaleOutline className="absolute left-0 bottom-1 text-2xl" />
-      </div>
-      <div className="flex justify-center gap-4 mt-20">
-        <Button onClick={() => dispatch(skipDailyStep('weight'))} variant="red" className="text-3xl font-thin">skip</Button>
       </div>
     </>
 
