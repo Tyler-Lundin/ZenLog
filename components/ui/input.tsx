@@ -28,7 +28,7 @@ const inputVariants = cva(
         "6xl": "h-28 px-24 rounded-md text-6xl",
         "7xl": "h-32 px-28 rounded-md text-7xl",
         "8xl": "h-36 px-32 rounded-md text-8xl",
-        "8xlFit": "h-36 px-4 rounded-md text-8xl",
+        "8xlFit": "h-36 px-4 rounded-md text-6xl md:text-8xl",
         search: "h-14 px-4 text-xl font-thin",
       },
     },

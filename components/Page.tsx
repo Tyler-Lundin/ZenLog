@@ -11,7 +11,7 @@ export default function Page({ children, className, ...props }: PageProps) {
     <main
       {...props}
       style={{
-        backgroundImage: ` radial-gradient(rgb(${isDark ? "255,255,255" : "0,0,0"}) 1px, rgba(${isDark ? "255,255,255" : "0,0,0"}) 1px)`,
+        backgroundImage: ` radial-gradient(rgb(100,100,100) 1px, transparent 1px)`,
         backgroundSize: '45px 45px',
         backgroundPosition: '0 0, 14px 14px',
       }}

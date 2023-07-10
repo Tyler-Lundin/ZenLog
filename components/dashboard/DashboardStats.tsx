@@ -80,25 +80,22 @@ export default function DashboardStats() {
   ]
 
   return (
-    <div>
-      <h1 className="bg-gray-200 text-black font-bold text-xl p-4 md:rounded-t-md border-t border-r border-l border-black dark:border-white">Your Stats</h1>
-      <div className="bg-white dark:bg-black font-light text-lg dark:text-white p-4 md:rounded-br-md md:rounded-bl-md border-l border-b border-r border-black dark:border-white">
-        {STATS.map((stat, index) => (
-          <div key={`${stat.title}-dashboard-stat`}>
-            <h2 className="text-2xl font-bold">{stat.title}</h2>
-            <ul key={index} className="w-full ">
-              {stat.stats.map((s, i) => (
-                <li key={`${i} ${s.title}`} className=" justify-between w-full flex">
-                  <span className=" ">{s.title}</span>
-                  <span>
-                    {s.value} {s.abbreviation && <small className="text-sm">{s.abbreviation}</small>}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+    <div className="bg-white/80 dark:bg-black/80 font-light text-lg dark:text-white p-4 md:rounded-md  md:border-x border-y border-black dark:border-white w-full">
+      {STATS.map((stat, index) => (
+        <div key={`${stat.title}-dashboard-stat`}>
+          <h2 className="text-2xl font-bold">{stat.title}</h2>
+          <ul key={index} className="w-full ">
+            {stat.stats.map((s, i) => (
+              <li key={`${i} ${s.title}`} className=" justify-between w-full flex">
+                <span className=" ">{s.title}</span>
+                <span>
+                  {s.value} {s.abbreviation && <small className="text-sm">{s.abbreviation}</small>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   )
 }

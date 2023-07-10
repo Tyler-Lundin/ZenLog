@@ -20,23 +20,20 @@ export default function MoodStep() {
   const isMoodSelected = (m: Mood) => m === mood
 
   return (
-    <>
-      <label className="text-center  text-2xl font-thin">How are you feeling today?</label>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 py-4 justify-items-center">
+    <div className="overflow-x-auto">
+      <label className="text-center text-xl md:text-2xl font-thin text-black dark:text-white">How are you feeling today?</label>
+      <div className="grid grid-cols-2 gap-2 justify-items-center text-black dark:text-white">
         {MOODS.map(mood => (
           <button
-            className={`w-32 h-32 transition-all rounded-full group ${isMoodSelected(mood.value as Mood) && 'dark:border-white border-2 border-black'}`}
+            className={`w-20 h-20 md:w-32 md:h-32 transition-all rounded-full group ${isMoodSelected(mood.value as Mood) && 'dark:border-white/50 border border-black/50'}`}
             key={mood.value}
             onClick={() => dispatch(setDailyMood(mood.value as Mood))}
           >
-            <p className={`text-4xl group-hover:animate-bounce ${isMoodSelected(mood.value as Mood) && 'animate-bounce'}`}>{mood.icon}</p>
-            <p className="text-xl text-black dark:text-white font-black uppercase">{mood.name}</p>
+            <p className={`text-2xl md:text-4xl group-hover:animate-bounce  ${isMoodSelected(mood.value as Mood) && 'animate-bounce'}`}>{mood.icon}</p>
+            <p className="text-md md:text-xl text-black dark:text-white font-black uppercase bg-white dark:bg-black">{mood.name}</p>
           </button>
         ))}
       </div>
-      <div className="flex justify-center gap-4 mt-20">
-        <Button onClick={() => dispatch(skipDailyStep('mood'))} variant="red" className="text-3xl font-thin">skip</Button>
-      </div>
-    </>
+    </div>
   )
 }

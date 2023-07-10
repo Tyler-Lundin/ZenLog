@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-black flex gap-2 rounded-md transition-all font-thin text-white dark:text-black bg-black hover:text-black dark:bg-white hover:bg-transparent dark:hover:text-white dark:hover:bg-transparent hover:border-black dark:hover:border-white border focus:dark:border-white focus:border-black focus:bg-transparent focus:dark:text-white focus:text-black",
+        default: "bg-transparent flex gap-2 rounded-md transition-all font-thin dark:text-white hover:dark:text-black hover:dark:bg-white hover:bg-black hover:text-white",
         defaultInverted: "bg-white flex gap-2 rounded-md transition-all font-thin text-black dark:text-white bg-white hover:text-white dark:bg-black hover:bg-transparent dark:hover:bg-transparent hover:border-white dark:hover:border-black border",
         glass: "flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border",
         glassGreen: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-green-400",

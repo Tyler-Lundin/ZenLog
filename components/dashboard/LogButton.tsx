@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { openLogExerciseForm, toggleLogEntryMenu } from "@/store/uiSlice";
 
 export default function LogButton({
-  className = "fixed hover:opacity-50 focus:opacity-50 bottom-4 right-4 z-40",
+  className = "fixed hover:bg-green-300 hover:dark:bg-green-300 focus:opacity-50 bottom-4 right-4 z-40",
   dispatchName = 'toggleLogEntryMenu'
 }: {
   className?: string
@@ -21,8 +21,8 @@ export default function LogButton({
 
 
   return (
-    <Button onClick={() => dispatch(dispatches[dispatchName]())} className={`${className} backdrop-blur-sm aspect-square outline outline-gray-black rounded-full bg-green-500/70 border-none outline-black  grid  place-items-center text-white font-bold w-20 h-20`}>
-      <AiOutlinePlus className="text-4xl" />
+    <Button onClick={() => dispatch(dispatches[dispatchName]())} className={`${className} backdrop-blur-sm aspect-square outline outline-gray-black rounded-full bg-green-500/70 border-none outline-black  grid  place-items-center text-white font-bold w-16 h-16`}>
+      <AiOutlinePlus className="text-4xl text-white" />
     </Button>
   )
 }

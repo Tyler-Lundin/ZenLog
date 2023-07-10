@@ -25,7 +25,7 @@ export default function BodyweightStep() {
 
   return (
     <>
-      <label className="text-center text-black dark:text-white text-2xl font-thin">How much do you weigh today?</label>
+      <label className="text-center text-black dark:text-white text-xl md:text-2xl font-thin">How much do you weigh today?</label>
       <div className="relative border-b dark:border-white border-black mx-4 grid justify-center text-black dark:text-white">
         <Input variant="glass" size="8xlFit" className="w-60 text-center" max={999} type="number" value={inputValue} onChange={handleChange} />
         <span className="text-2xl absolute right-0 bottom-0 ">lbs</span>

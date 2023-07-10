@@ -66,9 +66,6 @@ export default function DailyCheck() {
   return (
     <div className="bg-white/80 dark:bg-black/80 rounded-lg border py-8 border-black dark:border-white grid gap-4">
       <div className="grid grid-cols-5 justify-items-center p-2 lg:p-16 w-full items-center gap-2">
-        <kbd className="text-xs hidden md:block dark:text-white text-center col-span-1">Esc</kbd>
-        <span className="text-xs hidden md:block dark:text-white col-span-3 text-center">Step {step + 1} of {steps.length}</span>
-        <kbd className="text-xs hidden md:block dark:text-white text-center col-span-1">Enter</kbd>
         <Button
           type="button"
           variant="default"

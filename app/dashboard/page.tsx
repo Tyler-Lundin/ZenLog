@@ -19,7 +19,7 @@ export default async function DashboardPage() {
         {/* @ts-expect-error */}
         <LogEntryMenu />
         <footer className="h-20 grid place-content-center ">
-          <a href="https://tylerlundin.me" target="_blank" rel="noopener noreferrer" className="text-blue-500 whitespace-nowrap">Created by Tyler Lundin</a>
+          <a href="https://tylerlundin.me" target="_blank" rel="noopener noreferrer" className="text-red-500 whitespace-nowrap">♡</a>
         </footer>
       </div>
     </Page>
