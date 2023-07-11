@@ -10,7 +10,6 @@ export default function SettingsPage() {
         <Settings />
       </div>
     </Page>
-
   )
 }
 

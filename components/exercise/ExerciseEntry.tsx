@@ -22,7 +22,7 @@ export default function ExerciseEntry({ exercise }: { exercise: IExerciseEntry }
     <div className="grid bg-white dark:bg-black dark:text-white items-center border mx-4 w-full border-black/50 dark:border-white/50 p-3 md:p-4 lg:p-8 md:rounded-xl relative">
       <div className="grid grid-cols-10 justify-between items-center w-full">
         {exerciseName && <h1 className="text-xl col-span-8  font-bold uppercase  ">{exerciseName}</h1>}
-        {createdAt && <h2 className="text-md col-span-2 whitespace-nowrap bg-gray-300 px-1 rounded-lg border border-black dark:border-white font-thin justify-self-end">{createdAt}</h2>}
+        {createdAt && <h2 className="text-md col-span-2 dark:text-black text-white whitespace-nowrap bg-gray-300 px-1 rounded-lg border border-black dark:border-white font-bold justify-self-end">{createdAt}</h2>}
       </div>
       <span className="my-1" />
       <hr className="my-1 border-zinc-600" />

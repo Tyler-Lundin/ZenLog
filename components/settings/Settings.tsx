@@ -1,5 +1,5 @@
 'use client';
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import DashboardBlock from "../dashboard/DashboardBlock";
 import { Slider } from "../ui/slider";
 import { BsQuestionCircle } from "react-icons/bs";
@@ -51,12 +51,6 @@ export default function Settings() {
       on: isOn[2]
     },
   ];
-
-  useEffect(() => {
-    if (isOn[0]) {
-      document.cookie = "cookies=true; path=/";
-    }
-  }, [isOn])
 
   return (
     <DashboardBlock>

@@ -19,6 +19,7 @@ export const setUserDayReducer = (
     MeditateEntries,
   } = action.payload
   state.userDay.id = id
+  console.log('action.payload', action.payload)
   if (MoodEntries.length > 0) {
     state.dashboard.dailyCheck.isDone.mood = true
     state.userDay.ids.MoodEntries = MoodEntries

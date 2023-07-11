@@ -1,5 +1,6 @@
 import Page from "@/components/Page";
 import DailyCheck from "@/components/dashboard/DailyCheck2";
+import DashboardBlock from "@/components/dashboard/DashboardBlock";
 import DashboardStats from "@/components/dashboard/DashboardStats";
 import LogButton from "@/components/dashboard/LogButton";
 import LogEntryMenu from "@/components/dashboard/LogEntryMenu";

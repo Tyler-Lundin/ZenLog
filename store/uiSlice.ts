@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface UiState {
   isNavigationOpen: boolean;
   dashboard: {
-    isWelcomeDialogOpen: boolean;
     isLogEntryMenuOpen: boolean;
     error: string;
     exercise: {
@@ -17,7 +16,6 @@ export interface UiState {
 const initialState: UiState = {
   isNavigationOpen: false,
   dashboard: {
-    isWelcomeDialogOpen: true,
     isLogEntryMenuOpen: false,
     error: '',
     exercise: {
@@ -34,9 +32,6 @@ const uiSlice = createSlice({
   reducers: {
     toggleNavigation(state) {
       state.isNavigationOpen = !state.isNavigationOpen;
-    },
-    closeWelcomeDialog(state) {
-      state.dashboard.isWelcomeDialogOpen = false;
     },
     toggleLogEntryMenu(state) {
       state.dashboard.isLogEntryMenuOpen = !state.dashboard.isLogEntryMenuOpen;
@@ -64,7 +59,6 @@ const uiSlice = createSlice({
 
 export const {
   toggleNavigation,
-  closeWelcomeDialog,
   toggleLogEntryMenu,
   openLogExerciseForm,
   closeLogExerciseForm,

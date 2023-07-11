@@ -80,7 +80,7 @@ export default function DashboardStats() {
   ]
 
   return (
-    <div className="bg-white/80 dark:bg-black/80 font-light text-lg dark:text-white p-4 md:rounded-md  md:border-x border-y border-black dark:border-white w-full">
+    <div className="bg-white/80 dark:bg-black/80 font-light text-lg dark:text-white p-4 md:rounded-md  backdrop-blur-sm md:border-x border-y border-black dark:border-white w-full">
       {STATS.map((stat, index) => (
         <div key={`${stat.title}-dashboard-stat`}>
           <h2 className="text-2xl font-bold">{stat.title}</h2>

@@ -20,9 +20,9 @@ export default function MoodStep() {
   const isMoodSelected = (m: Mood) => m === mood
 
   return (
-    <div className="overflow-x-auto">
+    <>
       <label className="text-center text-xl md:text-2xl font-thin text-black dark:text-white">How are you feeling today?</label>
-      <div className="grid grid-cols-2 gap-2 justify-items-center text-black dark:text-white">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 justify-items-center text-black dark:text-white">
         {MOODS.map(mood => (
           <button
             className={`w-20 h-20 md:w-32 md:h-32 transition-all rounded-full group ${isMoodSelected(mood.value as Mood) && 'dark:border-white/50 border border-black/50'}`}
@@ -34,6 +34,6 @@ export default function MoodStep() {
           </button>
         ))}
       </div>
-    </div>
+    </>
   )
 }

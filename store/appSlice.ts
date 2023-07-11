@@ -42,9 +42,9 @@ const DEFAULT_DAILY_CHECK: DailyCheckState = {
   mood: 'HAPPY',
   sleep: 8,
   isDone: {
-    weight: true,
-    mood: true,
-    sleep: true,
+    weight: false,
+    mood: false,
+    sleep: false,
   },
   step: 0,
   skipped: {
@@ -142,9 +142,6 @@ const appSlice = createSlice({
     skipDailyStep: skipDailyStepReducer,
     setDailyCheckIsDone: setDailyCheckIsDoneReducer,
     nextDailyCheckStep: (state) => {
-      if (state.dashboard.dailyCheck.step === 0) state.dashboard.dailyCheck.isDone.weight = true
-      if (state.dashboard.dailyCheck.step === 1) state.dashboard.dailyCheck.isDone.mood = true
-      if (state.dashboard.dailyCheck.step === 2) state.dashboard.dailyCheck.isDone.sleep = true
       state.dashboard.dailyCheck.step++
     },
     previousDailyCheckStep: (state) => {
