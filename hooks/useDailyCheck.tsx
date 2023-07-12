@@ -2,14 +2,13 @@ import { AppDispatch } from "@/_store";
 import BodyweightStep from "@/components/dashboard/steps/BodyweightStep";
 import MoodStep from "@/components/dashboard/steps/MoodStep";
 import SleepStep from "@/components/dashboard/steps/SleepStep";
-import { nextDailyCheckStep, previousDailyCheckStep, setDailyCheckIsDone } from "@/store/appSlice";
-import { RootState } from "@/store/store";
-import postDailyCheck from "@/store/thunks/postDailyCheckThunk";
+import { RootState } from "@/_store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { nextStep, prevStep } from "@/_store/slices/dashboardSlice";
 
 export default function useDailyCheck() {
-  const { isDone, step } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
+  const { currentStep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
   const dispatch = useDispatch<AppDispatch>();
   const STEPS = [
     <BodyweightStep key={`step-0`} />,
@@ -17,22 +16,21 @@ export default function useDailyCheck() {
     <SleepStep key={`step-2`} />,
   ]
 
-  const isLastStep = step === STEPS.length - 1;
-  const isFirstStep = step === 0;
+  const isLastStep = currentStep === STEPS.length - 1;
+  const isFirstStep = currentStep === 0;
 
-  const handleClose = () => dispatch(setDailyCheckIsDone())
-
-  const handleSubmit = () => dispatch(postDailyCheck())
+  // const handleClose = () => dispatch(setDailyCheckIsDone())
+  // const handleSubmit = () => dispatch(postDailyCheck())
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === 'Enter' && !isLastStep) {
         e.preventDefault();
-        dispatch(nextDailyCheckStep())
+        dispatch(nextStep())
       }
       if (e.key === 'Escape' && !isFirstStep) {
         e.preventDefault();
-        dispatch(previousDailyCheckStep())
+        dispatch(prevStep())
       }
     }
     window.addEventListener('keydown', handleKey);
@@ -40,14 +38,14 @@ export default function useDailyCheck() {
   }, [dispatch, isLastStep, isFirstStep])
 
   return {
-    currentStep: STEPS[step],
-    nextStep: () => !isLastStep ? dispatch(nextDailyCheckStep()) : null,
-    prevStep: () => !isFirstStep ? dispatch(previousDailyCheckStep()) : null,
-    handleClose,
-    handleSubmit,
-    isDone,
+    currentStep: STEPS[currentStep],
+    nextStep: () => !isLastStep ? dispatch(nextStep()) : null,
+    prevStep: () => !isFirstStep ? dispatch(prevStep()) : null,
+    handleClose: () => null,
+    handleSubmit: () => null,
     isLastStep,
     isFirstStep,
+    isDone: false,
   }
 
 

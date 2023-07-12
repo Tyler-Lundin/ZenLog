@@ -1,21 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { setDailySleep, skipDailyStep } from "@/store/appSlice";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch, RootState } from "@/_store";
 import { IoBed } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
+import { setSleep } from "@/_store/slices/dashboardSlice";
+import { formatLeadingZero } from "@/lib/utils";
 
 
 export default function SleepStep() {
-  const { sleep } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
+  const { sleep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
   const dispatch = useDispatch<AppDispatch>();
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    const sleep = parseInt(e.target.value)
+    const sleep = parseInt(formatLeadingZero((e.target.value)));
     if (sleep > 24 || sleep < 0) return
-    dispatch(setDailySleep(sleep));
+    dispatch(setSleep(sleep));
   }
 
   return (

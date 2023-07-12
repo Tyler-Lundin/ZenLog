@@ -10,15 +10,12 @@ const initialState = {
     month: TODAYS_MONTH,
     day: TODAYS_DAY,
     year: TODAYS_YEAR,
-    entries: {
-      ExerciseEntries: [],
-      MoodEntries: [],
-      SleepEntries: [],
-      BodyWeightEntries: [],
-    },
   },
   dailyEntries: {
     currentStep: 0,
+    bodyweight: 0,
+    sleep: 0,
+    mood: 'NEUTRAL',
   }
 }
 
@@ -27,11 +24,21 @@ const dashboardSlice = createSlice({
   initialState,
   reducers: {
     setUserDay(state, action) { state.userDay = action.payload },
+    setBodyweight(state, action) { state.dailyEntries.bodyweight = action.payload },
+    setSleep(state, action) { state.dailyEntries.sleep = action.payload },
+    setMood(state, action) { state.dailyEntries.mood = action.payload },
+    nextStep(state) { state.dailyEntries.currentStep++ },
+    prevStep(state) { state.dailyEntries.currentStep-- },
   }
 })
 
 export const {
   setUserDay,
+  setBodyweight,
+  setSleep,
+  setMood,
+  nextStep,
+  prevStep,
 } = dashboardSlice.actions
 
 

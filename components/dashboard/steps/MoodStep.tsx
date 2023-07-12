@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { setDailyMood, skipDailyStep } from "@/store/appSlice";
-import { AppDispatch, RootState } from "@/store/store"
+import { AppDispatch, RootState } from "@/_store"
+import { setMood } from "@/_store/slices/dashboardSlice";
 import { Mood } from "@prisma/client"
 import { useDispatch, useSelector } from "react-redux"
 
 export default function MoodStep() {
-  const { mood } = useSelector((state: RootState) => state.app.dashboard.dailyCheck);
+  const { mood } = useSelector((state: RootState) => state.dashboard.dailyEntries);
   const dispatch = useDispatch<AppDispatch>();
 
   const MOODS = [
@@ -27,7 +26,7 @@ export default function MoodStep() {
           <button
             className={`w-20 h-20 md:w-32 md:h-32 transition-all rounded-full group ${isMoodSelected(mood.value as Mood) && 'dark:border-white/50 border border-black/50'}`}
             key={mood.value}
-            onClick={() => dispatch(setDailyMood(mood.value as Mood))}
+            onClick={() => dispatch(setMood(mood.value as Mood))}
           >
             <p className={`text-2xl md:text-4xl group-hover:animate-bounce  ${isMoodSelected(mood.value as Mood) && 'animate-bounce'}`}>{mood.icon}</p>
             <p className="text-md md:text-xl text-black dark:text-white font-black uppercase bg-white dark:bg-black">{mood.name}</p>

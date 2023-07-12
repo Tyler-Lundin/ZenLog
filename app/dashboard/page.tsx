@@ -1,5 +1,5 @@
 import Page from "@/components/Page";
-import DailyCheck from "@/components/dashboard/DailyCheck2";
+import DailyEntries from "@/components/dashboard/DailyEntries";
 import DashboardStats from "@/components/dashboard/DashboardStats";
 import LogButton from "@/components/dashboard/LogButton";
 import LogEntryMenu from "@/components/dashboard/LogEntryMenu";
@@ -14,7 +14,7 @@ export default async function DashboardPage() {
     <Page>
       <LogButton />
       <div className="grid gap-4">
-        <DailyCheck />
+        <DailyEntries />
         <DashboardStats />
         {/* @ts-expect-error */}
         <LogEntryMenu />

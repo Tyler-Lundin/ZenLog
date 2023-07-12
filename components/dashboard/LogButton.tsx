@@ -1,23 +1,22 @@
 'use client';
 import { AiOutlinePlus } from "react-icons/ai";
 import { Button } from "../ui/button";
-import { AppDispatch } from "@/store/store";
+import { AppDispatch } from "@/_store";
 import { useDispatch } from "react-redux";
-import { openLogExerciseForm, toggleLogEntryMenu } from "@/store/uiSlice";
+import { toggleEntrySelector } from "@/_store/slices/uiSlice";
+
+const dispatches = {
+  toggleEntrySelector
+}
 
 export default function LogButton({
   className = "fixed hover:bg-green-300 hover:dark:bg-green-300 focus:opacity-50 bottom-4 right-4 z-40",
-  dispatchName = 'toggleLogEntryMenu'
+  dispatchName = 'toggleEntrySelector'
 }: {
   className?: string
-  dispatchName?: 'toggleLogEntryMenu' | 'openLogExerciseForm'
+  dispatchName?: keyof typeof dispatches
 }) {
   const dispatch = useDispatch<AppDispatch>()
-
-  const dispatches = {
-    toggleLogEntryMenu,
-    openLogExerciseForm,
-  }
 
 
   return (

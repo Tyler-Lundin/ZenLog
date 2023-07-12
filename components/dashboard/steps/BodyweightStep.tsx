@@ -1,25 +1,21 @@
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { formatLeadingZero } from "@/lib/utils"
-import { skipDailyStep, setDailyWeight } from "@/store/appSlice"
-import { AppDispatch, RootState } from "@/store/store"
+import { AppDispatch, RootState } from "@/_store"
 import { useState } from "react"
 import { IoScaleOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
+import { setBodyweight } from "@/_store/slices/dashboardSlice"
 
 
 export default function BodyweightStep() {
-
-  const { weight } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
+  const { bodyweight } = useSelector((state: RootState) => state.dashboard.dailyEntries)
   const dispatch = useDispatch<AppDispatch>();
-
-  const [inputValue, setInputValue] = useState(weight.toString());
+  const [inputValue, setInputValue] = useState(bodyweight)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const W = formatLeadingZero(e.target.value);
-    const newWeight = Number(W);
-    if (newWeight > 999 || newWeight < -999) return
-    dispatch(setDailyWeight(newWeight));
+    let W = formatLeadingZero(e.target.value);
+    if (W > 999 || W < -999) return
+    dispatch(setBodyweight(W));
     setInputValue(W);
   }
 

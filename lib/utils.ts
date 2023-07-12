@@ -16,6 +16,6 @@ export function formatRepsWeightAndUnit(set: ExerciseSet) {
 }
 
 export function formatLeadingZero(num: string | number) {
-  return String(num).replace(/^0+(?=\d)/, '');
+  return Number(String(num).replace(/^0+(?=\d)/, ''));
 }
 

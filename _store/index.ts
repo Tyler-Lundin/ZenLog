@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from './slices/userSlice';
 import dashboardReducer from './slices/dashboardSlice';
 import exerciseReducer from './slices/exerciseSlice';
-import interfaceReducer from './slices/interfaceSlice';
+import interfaceReducer from './slices/uiSlice';
 
 const store = configureStore({
   reducer: {
