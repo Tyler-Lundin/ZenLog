@@ -4,15 +4,11 @@ import FilterExerciseActions from "./FilterExerciseActions";
 import LogButton from "../dashboard/LogButton";
 
 export default function ExerciseActions() {
-
   return (
     <>
       <ul className="flex gap-4 w-full  p-2">
         <FilterExerciseActions />
       </ul>
-      <SheetTrigger asChild>
-        <LogButton dispatchName="openLogExerciseForm" />
-      </SheetTrigger>
     </>
   )
 }

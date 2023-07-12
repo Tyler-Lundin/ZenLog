@@ -45,7 +45,6 @@ const NotLoading = ({ setIsLoading, setDecision }: { setIsLoading: (b: boolean) 
                 'text-4xl w-full', 'p-8'
               )}
               href={`/dashboard/${event.name.toLowerCase()}`
-
               }>
               {event.name} {event.icon}
             </Link>

@@ -83,7 +83,7 @@ export default function DashboardStats() {
     <div className="bg-white/80 dark:bg-black/80 font-light text-lg dark:text-white p-4 md:rounded-md  backdrop-blur-sm md:border-x border-y border-black dark:border-white w-full">
       {STATS.map((stat, index) => (
         <div key={`${stat.title}-dashboard-stat`}>
-          <h2 className="text-2xl font-bold">{stat.title}</h2>
+          <h2 className="text-xl font-bold">{stat.title}</h2>
           <ul key={index} className="w-full ">
             {stat.stats.map((s, i) => (
               <li key={`${i} ${s.title}`} className=" justify-between w-full flex">

@@ -8,7 +8,7 @@ import { RootState } from "@/store/store";
 const useExerciseEntries = () => {
   const { userDay: { id } } = useUserDay();
   const { isSorted } = useSelector((state: RootState) => state.ui.dashboard.exercise)
-  const { data, isError } = useQuery(`exercise-entries-${id}`, async () => {
+  const { data, isError, isLoading } = useQuery(`exercise-entries-${id}`, async () => {
     return fetch(`/api/entries/exercise?userDayId=${id}`).then((res) => res.json());
   }, { enabled: !!id });
 
@@ -21,6 +21,7 @@ const useExerciseEntries = () => {
 
   return {
     exerciseEntries,
+    isLoading,
   }
 }
 

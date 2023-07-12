@@ -1,6 +1,5 @@
 import Page from "@/components/Page";
 import DailyCheck from "@/components/dashboard/DailyCheck2";
-import DashboardBlock from "@/components/dashboard/DashboardBlock";
 import DashboardStats from "@/components/dashboard/DashboardStats";
 import LogButton from "@/components/dashboard/LogButton";
 import LogEntryMenu from "@/components/dashboard/LogEntryMenu";
@@ -20,7 +19,7 @@ export default async function DashboardPage() {
         {/* @ts-expect-error */}
         <LogEntryMenu />
         <footer className="h-20 grid place-content-center ">
-          <a href="https://tylerlundin.me" target="_blank" rel="noopener noreferrer" className="text-red-500 whitespace-nowrap">♡</a>
+          <a href="https://tylerlundin.me" target="_blank" rel="noopener noreferrer" className="text-gray-500 whitespace-nowrap">Created by Tyler</a>
         </footer>
       </div>
     </Page>

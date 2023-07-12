@@ -17,18 +17,21 @@ const initialState = {
       BodyWeightEntries: [],
     },
   },
+  dailyEntries: {
+    currentStep: 0,
+  }
 }
 
 const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
-
+    setUserDay(state, action) { state.userDay = action.payload },
   }
 })
 
 export const {
-
+  setUserDay,
 } = dashboardSlice.actions
 
 
