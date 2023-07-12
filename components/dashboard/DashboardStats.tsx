@@ -6,7 +6,6 @@ export default function DashboardStats() {
   const data = useDashboardData();
   const { sleep, weight, mood, exercise } = data;
 
-
   const STATS = [
     {
       title: "EXERCISE",

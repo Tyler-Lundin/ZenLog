@@ -1,18 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { setNewIntensity } from "@/store/appSlice";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch, RootState } from "@/_store";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
+import { setNewIntensity } from "@/_store/slices/exerciseSlice";
 
+const INTENSITY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 export default function IntensityStep() {
 
-  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
-  const { intensity } = set;
+  const { intensity } = useSelector((state: RootState) => state.exercise.newEntry)
   const dispatch = useDispatch<AppDispatch>();
 
-
-  const INTENSITY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   return (
     <>
@@ -20,7 +18,7 @@ export default function IntensityStep() {
         How intense was the set?
       </label>
       <div className="relative border-b dark:border-white border-black grid justify-center mx-auto">
-        <div className="grid grid-cols-5  justify-center gap-4 mb-10">
+        <div className="grid grid-cols-2 lg:grid-cols-5  justify-center gap-4 mb-10">
           {INTENSITY.map((rpe) => (
             <Button key={rpe} variant="default" disabled={intensity === rpe} size="xlSquare" className="p-2" onClick={() => dispatch(setNewIntensity(rpe))}>{rpe}</Button>
           ))}

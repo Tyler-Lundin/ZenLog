@@ -22,8 +22,6 @@ export default function RootLayout({
         <Providers>
           <div className=" min-h-screen w-screen overflow-hidden">
             {children}
-            {/* <span className="absolute bottom-2 right-2 text-xs text-gray-500">v0.0.1</span> */}
-            {/* <span className="absolute bottom-2 left-2 text-xs text-gray-500">© 2023 Zen Log</span> */}
           </div>
         </Providers>
       </body>

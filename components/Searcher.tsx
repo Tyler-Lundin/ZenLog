@@ -1,6 +1,5 @@
 import { SearchIcon } from "lucide-react";
 import { Input } from "./ui/input";
-import { IoBarbell } from "react-icons/io5";
 
 export const Searcher = ({ search, setSearch }: { search: string, setSearch: (search: string) => void }) => {
 

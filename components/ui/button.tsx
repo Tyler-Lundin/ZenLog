@@ -15,12 +15,14 @@ const buttonVariants = cva(
         glassGreen: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-green-400",
         glassRed: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-red-400",
         ghost: "bg-transparent text-black hover:bg-black/10 dark:text-white dark:hover:bg-white/10",
-        red: "text-red-600 hover:text-red-800 border-none bg-transparent",
         destructive:
           "bg-red-400 text-destructive-foreground hover:bg-red-400/90",
         event: "font-bold bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase",
         logEvent: "font-bold border border-green-500 bg-transparent text-green-500 uppercase hover:bg-green-500 hover:text-white hover:border hover:border-white disabled:opacity-50",
-        green: "bg-green-500 flex gap-2 rounded-md transition-all font-thin text-white hover:border-green-500 hover:bg-transparent hover:text-green-500 border focus:border-green-500 focus:text-green-500 focus:bg-transparent",
+        green: "bg-green-500 flex gap-2 rounded-md transition-all font-thin text-black hover:border-green-500 border-white dark:border-black hover:bg-transparent hover:text-green-500 border focus:border-green-500 focus:text-green-500 focus:bg-transparent",
+        invertedGreen: "bg-black flex gap-2 transition-all text-green-500 hover:border-white dark:hover:border-black border-green-500 hover:bg-green-500 hover:text-white border focus:border-white focus:text-white focus:bg-transparent",
+        red: "bg-red-500 flex gap-2 rounded-md transition-all font-thin text-black hover:border-red-500 border-white dark:border-black hover:bg-transparent hover:text-red-500 border focus:border-red-500 focus:text-red-500 focus:bg-transparent",
+        invertedRed: "bg-black flex gap-2 transition-all text-red-500 hover:border-white dark:hover:border-black border-red-500 hover:bg-red-500 hover:text-white border focus:border-white focus:text-white focus:bg-transparent",
         large: "bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase font-bold tracking-wider rounded-none",
 
       },

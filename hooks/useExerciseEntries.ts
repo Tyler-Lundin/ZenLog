@@ -12,8 +12,20 @@ const useExerciseEntries = () => {
     return fetch(`/api/entries/exercise?userDayId=${id}`).then((res) => res.json());
   }, { enabled: !!id });
 
+  const exerciseEntries = Array.isArray(data?.exerciseEntries) && data?.exerciseEntries?.sort((a: ExerciseEntry, b: ExerciseEntry) => {
+    if (isFiltered) {
+      return sortOrder === 'asc' ? a.createdAt.getTime() - b.createdAt.getTime() : b.createdAt.getTime() - a.createdAt.getTime();
+    }
+  }) || [];
+
+  console.log({
+    data,
+    exerciseEntries,
+  })
+
+
   return {
-    exerciseEntries: data as ExerciseEntry[],
+    exerciseEntries,
     isLoading,
   }
 }

@@ -1,16 +1,15 @@
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { addSetTag, removeSetTag } from "@/store/appSlice";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch, RootState } from "@/_store";
 import { useState } from "react";
 import { IoJournalOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
+import { pushNewTag, removeTag } from "@/_store/slices/exerciseSlice";
 
 
 export default function TagsStep() {
 
-  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
-  const { tags } = set;
+  const { tags } = useSelector((state: RootState) => state.exercise.newEntry)
   const dispatch = useDispatch<AppDispatch>();
 
   const [tagInput, setTagInput] = useState('')
@@ -24,7 +23,7 @@ export default function TagsStep() {
     const newTagWithoutLastChar = event.target.value.slice(0, -1).trim();
     if (tags.includes(newTagWithoutLastChar)) return;
     if (newTagWithoutLastChar.length === 0) return;
-    dispatch(addSetTag(newTagWithoutLastChar));
+    dispatch(pushNewTag(newTagWithoutLastChar));
     setTagInput('');
   };
 
@@ -32,7 +31,7 @@ export default function TagsStep() {
     if (key.key !== 'Enter') return;
     const newTag = tagInput.trim();
     if (newTag.length === 0) return;
-    dispatch(addSetTag(newTag));
+    dispatch(pushNewTag(newTag));
     setTagInput('');
   };
 
@@ -48,7 +47,7 @@ export default function TagsStep() {
         <div className="gap-1 flex">
           {tags.length > 0 && (
             tags.map((tag, i) => (
-              <Badge variant={"default"} key={i} onClick={() => dispatch(removeSetTag(i))}>{tag}</Badge>
+              <Badge variant={"default"} key={i} onClick={() => dispatch(removeTag(i))}>{tag}</Badge>
             ))
           )}
         </div>

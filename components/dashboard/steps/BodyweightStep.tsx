@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { formatLeadingZero } from "@/lib/utils"
 import { AppDispatch, RootState } from "@/_store"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IoScaleOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { setBodyweight } from "@/_store/slices/dashboardSlice"
@@ -10,14 +10,45 @@ import { setBodyweight } from "@/_store/slices/dashboardSlice"
 export default function BodyweightStep() {
   const { bodyweight } = useSelector((state: RootState) => state.dashboard.dailyEntries)
   const dispatch = useDispatch<AppDispatch>();
-  const [inputValue, setInputValue] = useState(bodyweight)
+  const [inputValue, setInputValue] = useState<string>(bodyweight.value.toString() ? '000' : bodyweight.value.toString())
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let W = formatLeadingZero(e.target.value);
-    if (W > 999 || W < -999) return
-    dispatch(setBodyweight(W));
-    setInputValue(W);
+    let W = formatLeadingZero(e.target.value) as string;
+    if (W.length === 1) {
+      W = `00${W}`
+      setInputValue(W);
+      dispatch(setBodyweight(parseInt(W)))
+      return
+    }
+    if (W.length === 2) {
+      W = `0${W}`
+      setInputValue(W);
+      dispatch(setBodyweight(parseInt(W)))
+      return
+    }
+    if (W.length === 3) {
+      setInputValue(W);
+      dispatch(setBodyweight(parseInt(W)))
+      return
+    }
   }
+
+  useEffect(() => {
+    if (bodyweight.value.toString().length === 1) {
+      setInputValue(`00${bodyweight.value}`)
+      return
+    }
+    if (bodyweight.value.toString().length === 2) {
+      setInputValue(`0${bodyweight.value}`)
+      return
+    }
+    if (bodyweight.value.toString().length === 3) {
+      setInputValue(`${bodyweight.value}`)
+      return
+    }
+  }, [bodyweight.value])
+
+
 
   return (
     <>

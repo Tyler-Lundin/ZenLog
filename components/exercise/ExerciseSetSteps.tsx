@@ -1,6 +1,6 @@
 
 import { Button } from '@/components/ui/button';
-import { AppDispatch, RootState } from '@/store/store';
+import { AppDispatch, RootState } from '@/_store';
 import React from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,17 +11,15 @@ import FailureStep from './steps/FailureStep';
 import NotesStep from './steps/NotesStep';
 import TagsStep from './steps/TagsStep';
 import ExerciseOverviewStep from './steps/ExerciseOverviewStep';
-import logExerciseThunk from '@/store/thunks/logExerciseThunk';
-import { nextNewSetStep, previousNewSetStep } from '@/store/appSlice';
+import logExerciseThunk from '@/_store/thunks/logExerciseThunk';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 
 
 export default function ExerciseSetSteps() {
 
-  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise);
-  const { id } = useSelector((state: RootState) => state.app.userDay)
-  const { step } = set;
+  const { id } = useSelector((state: RootState) => state.dashboard.userDay)
+  const { currentStep, reps, weight, intensity } = useSelector((state: RootState) => state.exercise.newEntry);
 
   const dispatch = useDispatch<AppDispatch>();
   const queryClient = useQueryClient();
@@ -36,10 +34,9 @@ export default function ExerciseSetSteps() {
     <ExerciseOverviewStep key={`overview_set`} />,
   ]
 
-  const currentStep = SET_STEPS[step];
-  const isLastStep = step === SET_STEPS.length - 1;
-  const isFirstStep = step === 0;
-  const isReadyToLog = set.reps > 0 && !isNaN(set.weight) && set.intensity > 0 && isLastStep;
+  const isLastStep = currentStep === SET_STEPS.length - 1;
+  const isFirstStep = currentStep === 0;
+  const isReadyToLog = reps > 0 && !isNaN(weight) && intensity > 0 && isLastStep;
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {

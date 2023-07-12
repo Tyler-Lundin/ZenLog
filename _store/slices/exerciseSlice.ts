@@ -1,21 +1,22 @@
 import { ExerciseEntry } from "@prisma/client";
 import { createSlice } from "@reduxjs/toolkit";
+import { removeSetTagReducer } from "../reducers/app";
 
-export type SortKeys = "date" | "exercise" | "reps" | "weight" | "intensity" | "toFailure" | "notes" | "tags";
+export type SortKeys = "date" | "exercise" | "reps" | "weight" | "intensity" | "toFailure" | "notes" | "tags" | "createdAt" | "updatedAt";
 export type SortOrder = "asc" | "desc";
 
 export interface Exercise {
-  id: string | undefined;
-  name: string | undefined;
+  id: string;
+  name: string;
 }
 
 export interface EntryFields {
   exercise: Exercise;
-  reps: number | undefined;
-  weight: number | undefined;
-  toFailure: boolean | undefined;
-  intensity: number | undefined;
-  notes: string | undefined;
+  reps: number;
+  weight: number;
+  toFailure: boolean;
+  intensity: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  notes: string;
   tags: string[];
 }
 
@@ -38,19 +39,21 @@ const initialState: ExerciseState = {
   filteredEntries: [],
   sortBy: "date",
   sortOrder: "desc",
-  searchQuery: undefined,
+  searchQuery: '',
   isFiltered: false,
   newEntry: {
     currentStep: 0,
-    exercise: { id: undefined, name: undefined },
-    reps: undefined,
-    weight: undefined,
-    toFailure: undefined,
-    intensity: undefined,
-    notes: undefined,
+    exercise: { id: '', name: '' },
+    reps: 0,
+    weight: 0,
+    toFailure: false,
+    intensity: 5,
+    notes: '',
     tags: [],
   }
 }
+
+export const ExerciseInitialState: ExerciseState = initialState;
 
 const exerciseSlice = createSlice({
   name: "exercise",
@@ -63,9 +66,16 @@ const exerciseSlice = createSlice({
     setNewIntensity(state, action) { state.newEntry.intensity = action.payload },
     setNewNotes(state, action) { state.newEntry.notes = action.payload },
     setNewTags(state, action) { state.newEntry.tags = action.payload },
-    nextStep(state) { state.newEntry.currentStep++ },
-    prevStep(state) { state.newEntry.currentStep-- },
-    setExerciseEntries(state, action) { state.allEntries = action.payload }
+    pushNewTag(state, action) { state.newEntry.tags.push(action.payload) },
+    nextExerciseStep(state) { state.newEntry.currentStep++ },
+    prevExerciseStep(state) { state.newEntry.currentStep-- },
+    setExerciseEntries(state, action) { state.allEntries = action.payload },
+    toggleSortOrder(state) {
+      state.sortOrder = state.sortOrder === "asc" ? "desc" : "asc";
+    },
+    removeTag(state, action) {
+      state.newEntry.tags = state.newEntry.tags.filter(tag => tag !== action.payload)
+    }
   },
 });
 
@@ -77,9 +87,12 @@ export const {
   setNewIntensity,
   setNewNotes,
   setNewTags,
-  nextStep,
-  prevStep,
+  pushNewTag,
+  nextExerciseStep,
+  prevExerciseStep,
   setExerciseEntries,
+  toggleSortOrder,
+  removeTag,
 } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

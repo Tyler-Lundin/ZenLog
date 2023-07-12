@@ -2,7 +2,7 @@
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
 import { Button } from '../ui/button'
 import { useDispatch } from 'react-redux';
-import { decrementDate, incrementDate, resetDate } from '@/store/appSlice';
+import { decrementDate, incrementDate, resetDate } from '@/_store/slices/dashboardSlice';
 import useUserDay from '@/hooks/useUserDay';
 
 

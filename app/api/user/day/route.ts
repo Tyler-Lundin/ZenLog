@@ -1,4 +1,5 @@
 import useServerSession from '@/hooks/useServerSession'
+import { Mood } from '@prisma/client';
 import { prisma } from '@server/db'
 import { NextResponse } from 'next/server'
 
@@ -40,11 +41,37 @@ export async function POST(req: Request, res: Response) {
   const isMoodDone = Array.isArray(userDay.MoodEntries) && userDay.MoodEntries.length > 0
   const isSleepDone = Array.isArray(userDay.SleepEntries) && userDay.SleepEntries.length > 0
 
+  let bodyweight = { value: 0, isDone: false }
+  let mood = { value: Mood.NEUTRAL as Mood, isDone: false }
+  let sleep = { value: 0, isDone: false }
+
+  if (isBodyweightDone) {
+    const prevBodyweightEntry = await prisma.weightEntry.findUnique({
+      where: { id: userDay.WeightEntries[userDay.WeightEntries.length - 1] },
+    })
+    if (prevBodyweightEntry) bodyweight = { value: prevBodyweightEntry.weight, isDone: true }
+  }
+
+  if (isMoodDone) {
+    const prevMoodEntry = await prisma.moodEntry.findUnique({
+      where: { id: userDay.MoodEntries[userDay.MoodEntries.length - 1] },
+    })
+    if (prevMoodEntry) mood = { value: prevMoodEntry.mood, isDone: true }
+  }
+
+  if (isSleepDone) {
+    const prevSleepEntry = await prisma.sleepEntry.findUnique({
+      where: { id: userDay.SleepEntries[userDay.SleepEntries.length - 1] },
+    })
+    if (prevSleepEntry) sleep = { value: prevSleepEntry.hours, isDone: true }
+  }
+
   return NextResponse.json({
-    userDay, dailyEntriesStatus: {
-      bodyweight: isBodyweightDone,
-      mood: isMoodDone,
-      sleep: isSleepDone,
+    userDay,
+    dailyEntries: {
+      bodyweight,
+      sleep,
+      mood,
     }
   }, { status: 200 })
 }

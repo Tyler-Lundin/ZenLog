@@ -7,10 +7,16 @@ import { useSelector } from "react-redux";
 
 export default function NewExerciseEntryPage() {
 
-  const { newEntry } = useSelector((state: RootState) => state.exercise);
-  const { currentStep, exercise: { id, name }, reps, weight, intensity, toFailure, tags, notes } = newEntry;
-
-
+  const {
+    currentStep,
+    exercise: { id, name },
+    reps,
+    weight,
+    intensity,
+    toFailure,
+    tags,
+    notes
+  } = useSelector((state: RootState) => state.exercise.newEntry);
   return (
     <Page>
       <LogExerciseEntry />

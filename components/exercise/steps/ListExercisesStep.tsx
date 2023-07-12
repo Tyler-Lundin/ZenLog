@@ -6,9 +6,9 @@ import { Spinner } from '@/components/ui/Spinner';
 import DashboardBlock from '@/components/dashboard/DashboardBlock';
 import { useState } from 'react';
 import { useDispatch, } from 'react-redux';
-import { AppDispatch, } from '@/store/store';
-import { nextNewExerciseStep, setNewExercise } from '@/store/appSlice';
 import { Searcher } from '@/components/Searcher';
+import { AppDispatch } from '@/_store';
+import { nextExerciseStep, setNewExercise } from '@/_store/slices/exerciseSlice';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -28,8 +28,8 @@ export default function ListExercisesStep() {
         {(data && filteredData ? filteredData : data)?.map((exercise: Exercise) => (
           <div key={exercise.id} className={`dark:text-white text-black w-full overflow-hidden h-fit shadow dark:border-y dark:border-white/20`} >
             <Button variant="ghost" onClick={() => {
-              dispatch(setNewExercise(exercise))
-              dispatch(nextNewExerciseStep())
+              dispatch(setNewExercise({ id: exercise.id, name: exercise.name }))
+              dispatch(nextExerciseStep())
             }} className={`flex gap-8 items-center h-24 w-full`} >
               <h2 className={`text-2xl md:text-4xl w-full text-center lg:text-6xl `}>{exercise.name}</h2>
             </Button>

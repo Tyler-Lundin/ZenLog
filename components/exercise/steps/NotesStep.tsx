@@ -1,14 +1,13 @@
 import { Textarea } from "@/components/ui/textarea";
-import { setNewNotes } from "@/store/appSlice";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch, RootState } from "@/_store";
 import { IoPencil } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
+import { setNewNotes } from "@/_store/slices/exerciseSlice";
 
 
 export default function NotesStep() {
 
-  const { set } = useSelector((state: RootState) => state.app.dashboard.exercise.newExercise)
-  const { notes } = set
+  const { notes } = useSelector((state: RootState) => state.exercise.newEntry)
   const dispatch = useDispatch<AppDispatch>();
 
 
