@@ -5,10 +5,16 @@ import SleepStep from "@/components/dashboard/steps/SleepStep";
 import { RootState } from "@/_store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { nextStep, prevStep } from "@/_store/slices/dashboardSlice";
+import { Entry, nextStep, prevStep } from "@/_store/slices/dashboardSlice";
+import postDailyEntriesThunk from "@/_store/thunks/postDailyEntriesThunk";
+import { toggleDailyEntry } from "@/_store/slices/uiSlice";
+import { Mood } from "@prisma/client";
 
-export default function useDailyCheck() {
-  const { currentStep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
+const isComplete = (o: Entry<number | Mood>) => o.status === 'COMPLETE';
+
+export default function useDailyEntries() {
+  const { currentStep, mood, bodyweight, sleep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
+  const { isDailyEntryOpen } = useSelector((state: RootState) => state.ui)
   const dispatch = useDispatch<AppDispatch>();
   const STEPS = [
     <BodyweightStep key={`step-0`} />,
@@ -18,9 +24,7 @@ export default function useDailyCheck() {
 
   const isLastStep = currentStep === STEPS.length - 1;
   const isFirstStep = currentStep === 0;
-
-  // const handleClose = () => dispatch(setDailyCheckIsDone())
-  // const handleSubmit = () => dispatch(postDailyCheck())
+  const isDone = isComplete(mood) && isComplete(bodyweight) && isComplete(sleep);
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -41,12 +45,12 @@ export default function useDailyCheck() {
     currentStep: STEPS[currentStep],
     nextStep: () => !isLastStep ? dispatch(nextStep()) : null,
     prevStep: () => !isFirstStep ? dispatch(prevStep()) : null,
-    handleClose: () => null,
-    handleSubmit: () => null,
+    handleClose: () => isFirstStep ? dispatch(toggleDailyEntry(false)) : null,
+    handleSubmit: () => isLastStep ? dispatch(postDailyEntriesThunk()) : null,
+    handleOpen: () => dispatch(toggleDailyEntry(true)),
     isLastStep,
     isFirstStep,
-    isDone: false,
+    isDone,
+    isDailyEntryOpen,
   }
-
-
 }

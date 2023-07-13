@@ -1,23 +1,14 @@
 'use client';
-import useDailyCheck from "@/hooks/useDailyCheck";
-import { Button } from "../ui/button";
-import { AiOutlineClose, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { IoCheckmark } from "react-icons/io5";
+import useDailyEntries from "@/hooks/useDailyEntries";
 import StepControls from "../StepControls";
+import { Button } from "../ui/button";
 
 
-export default function DailyCheck() {
-  const { isDone, currentStep, nextStep, prevStep, handleClose, handleSubmit, isLastStep, isFirstStep } = useDailyCheck();
+export default function DailyEntries() {
+  const { isDone, currentStep, isLastStep, isFirstStep, isDailyEntryOpen, nextStep, prevStep, handleClose, handleSubmit, handleOpen } = useDailyEntries();
   if (isDone) return null;
-
-  const stepControlsProps = {
-    isLastStep,
-    isFirstStep,
-    nextStep,
-    prevStep,
-    handleClose,
-    handleSubmit,
-  }
+  if (!isDailyEntryOpen) return <Button className="mt-4 mx-auto rounded-lg" variant="logEvent" onClick={handleOpen}>Daily Entries</Button>
+  const stepControlsProps = { isLastStep, isFirstStep, nextStep, prevStep, handleClose, handleSubmit, }
 
   return (
     <div className="bg-white/80 dark:bg-black/80 md:rounded-lg border-b md:border py-8 border-black dark:border-white grid gap-4 relative">

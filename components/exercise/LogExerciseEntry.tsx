@@ -3,8 +3,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/_store';
 import ListExercisesStep from './steps/ListExercisesStep';
-import { NewExerciseSetState } from '@/types/global';
-import BackLink from '../ui/BackLink';
 import RepsStep from './steps/RepsStep';
 import WeightStep from './steps/WeightStep';
 import IntensityStep from './steps/IntensityStep';
@@ -17,17 +15,6 @@ import { nextExerciseStep, prevExerciseStep } from '@/_store/slices/exerciseSlic
 import logExerciseThunk from '@/_store/thunks/logExerciseThunk';
 import Breadcrumbs, { Breadcrumb } from '../Breadcrumbs';
 
-export const EMPTY_SET: NewExerciseSetState = {
-  reps: 0,
-  weight: 0,
-  intensity: 0,
-  toFailure: false,
-  notes: '',
-  tags: [],
-  isDone: false,
-  step: 0,
-  weightUnit: 'POUND',
-}
 
 export default function LogExerciseEntry() {
   const { currentStep, exercise: { name }, weight, reps, intensity, toFailure, notes, tags } = useSelector((state: RootState) => state.exercise.newEntry)

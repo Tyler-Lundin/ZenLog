@@ -1,8 +1,9 @@
 // Daily Check In
 
+import { Entry } from '@/_store/slices/dashboardSlice'
 import { authOptions } from '@/server/authOptions'
 import { prisma } from '@/server/db'
-import { MoodEntry, SleepEntry, WeightEntry } from '@prisma/client'
+import { Mood, MoodEntry, SleepEntry, WeightEntry } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
@@ -25,16 +26,21 @@ export async function POST(req: Request, res: Response) {
       user: { id: userId },
     } = session
 
-    const { weight, mood, sleep, userDayId } = await req.json()
+    const { bodyweight, mood, sleep, userDayId } = await req.json() as {
+      bodyweight: Entry<number>
+      mood: Entry<Mood>
+      sleep: Entry<number>
+      userDayId: string
+    }
 
     let weightEntry: WeightEntry | undefined = undefined
     let moodEntry: MoodEntry | undefined = undefined
     let sleepEntry: SleepEntry | undefined = undefined
 
-    if (weight !== undefined || weight > 0 || weight < 999) {
+    if (bodyweight !== undefined || bodyweight > 0 || bodyweight < 999) {
       weightEntry = await prisma.weightEntry.create({
         data: {
-          weight,
+          weight: bodyweight.value,
           weightUnit: 'POUND',
           userDayId,
           userId,
@@ -45,7 +51,7 @@ export async function POST(req: Request, res: Response) {
     if (mood !== undefined || mood !== '') {
       moodEntry = await prisma.moodEntry.create({
         data: {
-          mood,
+          mood: mood.value,
           userDayId,
           userId,
         },
@@ -55,7 +61,7 @@ export async function POST(req: Request, res: Response) {
     if (sleep !== undefined || sleep > 0) {
       sleepEntry = await prisma.sleepEntry.create({
         data: {
-          hours: sleep,
+          hours: sleep.value,
           userDayId,
           userId,
         },

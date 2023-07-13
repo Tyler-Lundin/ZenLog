@@ -3,8 +3,7 @@ import useDashboardData from "@/hooks/useDashboardData";
 
 
 export default function DashboardStats() {
-  const data = useDashboardData();
-  const { sleep, weight, mood, exercise } = data;
+  const { sleep, weight, mood, exercise } = useDashboardData();
 
   const STATS = [
     {

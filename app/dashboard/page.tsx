@@ -1,22 +1,33 @@
 import Page from "@/components/Page";
-import DailyEntries from "@/components/dashboard/DailyEntries";
 import DashboardStats from "@/components/dashboard/DashboardStats";
-import LogButton from "@/components/dashboard/LogButton";
-import { authOptions } from "@server/authOptions";
+import { authOptions } from "@/server/authOptions";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import LogEntryMenu from "@/components/dashboard/LogEntryMenu";
+import dynamic from 'next/dynamic'
+
+const DynamicLogEntryMenu = dynamic(() => import('../../components/dashboard/LogEntryMenu'), {
+  loading: () => <p>Loading...</p>,
+})
+
+const DynamicLogButton = dynamic(() => import('../../components/dashboard/LogButton'), {
+  loading: () => <p>Loading...</p>,
+})
+
+const DynamicDailyEntries = dynamic(() => import('../../components/dashboard/DailyEntries'), {
+  loading: () => <p>Loading...</p>,
+})
+
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
-  if (!session) return redirect('/')
+  if (!session?.user) redirect('/');
   return (
     <Page>
-      <LogButton />
+      <DynamicLogButton />
       <div className="grid gap-4">
-        <DailyEntries />
+        <DynamicDailyEntries />
         <DashboardStats />
-        <LogEntryMenu />
+        <DynamicLogEntryMenu />
         <footer className="h-20 grid place-content-center ">
           <a href="https://tylerlundin.me" target="_blank" rel="noopener noreferrer" className="text-gray-500 whitespace-nowrap">Created by Tyler</a>
         </footer>

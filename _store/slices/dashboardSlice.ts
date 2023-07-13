@@ -7,7 +7,7 @@ const TODAYS_DAY = new Date().getDate()
 const TODAYS_YEAR = new Date().getFullYear()
 
 type Status = 'INCOMPLETE' | 'COMPLETE' | 'SKIPPED'
-type Entry<T> = { value: T, status: Status }
+export type Entry<T> = { value: T, status: Status }
 
 export interface DailyEntries {
   currentStep: number,
@@ -70,7 +70,7 @@ const dashboardSlice = createSlice({
     resetDate: resetDateReducer,
     nextDailyEntryStep(state) { state.dailyEntries.currentStep++ },
     previousDailyEntryStep(state) { state.dailyEntries.currentStep-- },
-    setDailyEntryIsDone(state) {
+    setDailyEntriesDone(state) {
       state.dailyEntries.mood.status = 'COMPLETE'
       state.dailyEntries.sleep.status = 'COMPLETE'
       state.dailyEntries.bodyweight.status = 'COMPLETE'
@@ -91,7 +91,7 @@ export const {
   resetDate,
   nextDailyEntryStep,
   previousDailyEntryStep,
-  setDailyEntryIsDone
+  setDailyEntriesDone
 } = dashboardSlice.actions
 
 
