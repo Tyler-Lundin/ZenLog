@@ -68,6 +68,13 @@ const dashboardSlice = createSlice({
     decrementDate: decrementDateReducer,
     incrementDate: incrementDateReducer,
     resetDate: resetDateReducer,
+    nextDailyEntryStep(state) { state.dailyEntries.currentStep++ },
+    previousDailyEntryStep(state) { state.dailyEntries.currentStep-- },
+    setDailyEntryIsDone(state) {
+      state.dailyEntries.mood.status = 'COMPLETE'
+      state.dailyEntries.sleep.status = 'COMPLETE'
+      state.dailyEntries.bodyweight.status = 'COMPLETE'
+    }
   }
 })
 
@@ -82,7 +89,11 @@ export const {
   decrementDate,
   incrementDate,
   resetDate,
+  nextDailyEntryStep,
+  previousDailyEntryStep,
+  setDailyEntryIsDone
 } = dashboardSlice.actions
 
 
 export default dashboardSlice.reducer
+

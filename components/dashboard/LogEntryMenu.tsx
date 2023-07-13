@@ -21,9 +21,9 @@ export default function LogEntryMenu() {
   const [isLoading, setIsLoading] = useState(false);
   const [decision, setDecision] = useState('');
 
-  if (!isEntrySelectorOpen) /****/ return null
+  if (!isEntrySelectorOpen) /****/ return <> </>
   if (isLoading) /***************/ return <Loading decision={decision} />
-  if (!isLoading) /**************/ return <NotLoading setIsLoading={setIsLoading} setDecision={setDecision} />
+  return <NotLoading setIsLoading={setIsLoading} setDecision={setDecision} />
 }
 
 const NotLoading = ({ setIsLoading, setDecision }: { setIsLoading: (b: boolean) => void, setDecision: (s: string) => void }) => {

@@ -34,7 +34,7 @@ export const setUserDayReducer = (
     // state.sleep.allEntries = SleepEntries;
   } else state.dashboard.dailyEntries.sleep.status = "INCOMPLETE"
 
-  if (ExerciseEntries.length > 0) state.exercise.allEntries = ExerciseEntries
+  if (ExerciseEntries.length > 0) state.exercise.allEntryIds = ExerciseEntries
   // if (FoodEntries.length > 0) state.food.allEntries = FoodEntries
   // if (WaterEntries.length > 0) state.water.allEntries = WaterEntries
   // if (JournalEntries.length > 0) state.journal.allEntries = JournalEntries

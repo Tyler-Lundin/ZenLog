@@ -1,15 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { RootState } from '../store'
-import { resetNewExercise } from '../appSlice'
-import { closeLogExerciseForm } from '../uiSlice'
+import { RootState } from '..'
+import { resetNewEntry } from '../slices/exerciseSlice'
 
 const postNewExerciseEntryThunk = createAsyncThunk(
   'exercise/postNewExerciseEntry',
   async (_, thunkAPI) => {
     const dispatch = thunkAPI.dispatch
     const state = thunkAPI.getState() as RootState
-    const { newExercise } = state.app.dashboard.exercise
-    const userDayId = state.app.userDay.id
+    const { newEntry } = state.exercise
+    const userDayId = state.dashboard.userDay.id
     if (!userDayId) return thunkAPI.rejectWithValue({ error: 'missing date id' })
     const response = await fetch('/api/log/exercise', {
       method: 'POST',
@@ -17,7 +16,7 @@ const postNewExerciseEntryThunk = createAsyncThunk(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ...newExercise,
+        ...{ newExercise: newEntry },
         userDayId,
       }),
     })
@@ -26,8 +25,7 @@ const postNewExerciseEntryThunk = createAsyncThunk(
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue({ error: result.message })
     }
-    dispatch(resetNewExercise())
-    dispatch(closeLogExerciseForm())
+    dispatch(resetNewEntry())
     return result
   }
 )

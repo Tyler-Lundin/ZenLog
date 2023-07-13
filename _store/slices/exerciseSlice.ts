@@ -15,7 +15,7 @@ export interface EntryFields {
   reps: number;
   weight: number;
   toFailure: boolean;
-  intensity: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  intensity: number;
   notes: string;
   tags: string[];
 }
@@ -26,6 +26,7 @@ export interface NewEntry extends EntryFields {
 
 export interface ExerciseState {
   allEntries: ExerciseEntry[];
+  allEntryIds: string[];
   filteredEntries: ExerciseEntry[];
   sortBy: SortKeys;
   sortOrder: SortOrder;
@@ -36,6 +37,7 @@ export interface ExerciseState {
 
 const initialState: ExerciseState = {
   allEntries: [],
+  allEntryIds: [],
   filteredEntries: [],
   sortBy: "date",
   sortOrder: "desc",
@@ -59,6 +61,9 @@ const exerciseSlice = createSlice({
   name: "exercise",
   initialState,
   reducers: {
+    resetNewEntry(state) {
+      state.newEntry = initialState.newEntry;
+    },
     setNewExercise(state, action) { state.newEntry.exercise = action.payload },
     setNewReps(state, action) { state.newEntry.reps = action.payload },
     setNewWeight(state, action) { state.newEntry.weight = action.payload },
@@ -80,6 +85,7 @@ const exerciseSlice = createSlice({
 });
 
 export const {
+  resetNewEntry,
   setNewExercise,
   setNewReps,
   setNewWeight,

@@ -1,49 +1,49 @@
 'use client';
-import { useState, useEffect, useCallback } from "react"
+import { useEffect, useCallback } from "react"
+import { nextDailyEntryStep, previousDailyEntryStep, setDailyEntryIsDone } from "@/_store/slices/dashboardSlice";
 import BodyweightStep from "./steps/BodyweightStep"
 import MoodStep from "./steps/MoodStep"
 import SleepStep from "./steps/SleepStep"
 import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch, RootState } from "@/store/store"
+import { AppDispatch, RootState } from "@/_store"
 import { Button } from "../ui/button";
-import postDailyCheck from "@/store/thunks/postDailyCheckThunk";
-import { nextDailyCheckStep, previousDailyCheckStep, setDailyCheckIsDone } from "@/store/appSlice";
+import postDailyCheck from "@/_store/thunks/postDailyCheckThunk";
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
 export default function DailyCheck() {
-  const { isDone, step } = useSelector((state: RootState) => state.app.dashboard.dailyCheck)
-  console.log({ isDone })
+  const { currentStep, mood, bodyweight, sleep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
   const dispatch = useDispatch<AppDispatch>();
-  // const [step, setStep] = useState(0);
+
+  type O = typeof mood | typeof bodyweight | typeof sleep
+  const isDone = (obj: O) => obj.status === 'COMPLETE'
 
   const steps = [
-    { component: <BodyweightStep key="body_weight_step" />, isDone: isDone.weight || false },
-    { component: <MoodStep key="mood_step" />, isDone: isDone.mood || false },
-    { component: <SleepStep key="sleep_step" />, isDone: isDone.sleep || false },
+    { component: <BodyweightStep key="body_weight_step" />, isDone: isDone(bodyweight) },
+    { component: <MoodStep key="mood_step" />, isDone: isDone(mood) },
+    { component: <SleepStep key="sleep_step" />, isDone: isDone(sleep) },
   ]
 
 
   const numNotDone = steps.filter(step => !step.isDone).length - 1
-  const isLastStep = step === numNotDone
-  const isFirstStep = step === 0
+  const isLastStep = currentStep === numNotDone
+  const isFirstStep = currentStep === 0
   const isReadyToLog = steps.every(step => step.isDone);
 
   const handleNext = useCallback(() => {
     if (!isLastStep) {
-      dispatch(nextDailyCheckStep())
+      dispatch(nextDailyEntryStep())
     }
   }, [isLastStep, dispatch])
 
   const handleDone = () => {
     dispatch(postDailyCheck());
-    dispatch(setDailyCheckIsDone());
+    dispatch(setDailyEntryIsDone());
   }
 
   const handleBack = useCallback(() => {
-    if (!isFirstStep) dispatch(previousDailyCheckStep());
+    if (!isFirstStep) dispatch(previousDailyEntryStep());
   }, [dispatch, isFirstStep])
 
-  const currentStep = steps[step].component
   const allDone = steps.every(step => step.isDone)
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function DailyCheck() {
         > <BsChevronRight /> </Button>
       </div>
       <div className="px-8 lg:px-16 grid ">
-        {currentStep}
+        {steps[currentStep].component}
       </div>
     </div>
   )
