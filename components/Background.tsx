@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 
 export default function Background() {
-  const numLayers = 4
+  const numLayers = 2
   const layerMultiplier = 5
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const size = 85
-  const sensitivity = 0.1
-
+  const size = 50
+  const sensitivity = 0.3
 
   useEffect(() => {
-    function handleMouseMove(event: MouseEvent) {
-      // get the position of the mouse cursor
-      let mouseX = event.clientX;
-      let mouseY = event.clientY;
-      mouseX = mouseX * sensitivity;
-      mouseY = mouseY * sensitivity;
 
-      setPos({ x: mouseX, y: mouseY });
+    const handleTouch = (e: TouchEvent) => {
+      e.preventDefault();
+      setPos({ x: e.touches[0].clientX * sensitivity, y: e.touches[0].clientY * sensitivity })
+    };
+    const handleMouse = (e: MouseEvent) => {
+      e.preventDefault();
+      setPos({ x: e.clientX * sensitivity, y: e.clientY * sensitivity });
     }
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouse);
+    window.addEventListener("touchmove", handleTouch);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousemove", handleMouse);
+      window.removeEventListener("touchmove", handleTouch);
     };
   }, []);
 
@@ -32,8 +33,8 @@ export default function Background() {
             <div
               className="fixed -top-1/2 -left-1/2 w-[150vw] h-[150vh] -z-10"
               style={{
-                transform: `translate(${pos.x / (i + 1)}px, ${pos.y / (i + 1)}px)`,
-                opacity: `${40 - (20 / numLayers * i)}%`,
+                transform: `translate(${pos.x / (i ^ i + 1)}px, ${pos.y / (i ^ i + 1)}px)`,
+                opacity: `50%`,
                 backgroundImage: ` radial-gradient(rgb(100,100,100) ${numLayers - (i)}px, transparent 1px)`,
                 backgroundSize: `${size + (i * layerMultiplier)}px ${size + (i * layerMultiplier)}px`,
                 backgroundPosition: '0 0, 14px 14px'
