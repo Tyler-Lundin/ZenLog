@@ -22,11 +22,11 @@ export default function StepControls({
 }) {
   return (
     <div className={className}>
-      <Button variant="invertedRed" size="xlSquare" className="rounded-full pointer-events-auto" onClick={isFirstStep ? handleClose : prevStep}>
+      <Button variant="red" size="xlSquare" className="rounded-full pointer-events-auto" onClick={isFirstStep ? handleClose : prevStep}>
         {isFirstStep ? <AiOutlineClose /> : <AiOutlineLeft />}
       </Button>
 
-      <Button variant="invertedGreen" size="xlSquare" className="rounded-full pointer-events-auto" onClick={isLastStep ? handleSubmit : nextStep}>
+      <Button variant="green" size="xlSquare" className="rounded-full pointer-events-auto" onClick={isLastStep ? handleSubmit : nextStep}>
         {isLastStep ? <IoCheckmark /> : <AiOutlineRight />}
       </Button>
     </div>

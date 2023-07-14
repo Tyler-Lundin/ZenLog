@@ -78,15 +78,15 @@ export default function DashboardStats() {
   ]
 
   return (
-    <div className="bg-white/80 dark:bg-black/80 font-light text-lg dark:text-white p-4 md:rounded-md  backdrop-blur-sm md:border-x border-y border-black dark:border-white w-full">
+    <div className="bg-white dark:bg-black font-light text-lg dark:text-white px-4 w-full shadow-2xl shadow-white dark:shadow-black py-2">
       {STATS.map((stat, index) => (
-        <div key={`${stat.title}-dashboard-stat`}>
-          <h2 className="text-xl font-bold">{stat.title}</h2>
+        <div key={`${stat.title}-dashboard-stat`} className="mb-4">
+          <h2 className="text-2xl lg:text-3xl tracking-widest font-bold">{stat.title}</h2>
           <ul key={index} className="w-full ">
             {stat.stats.map((s, i) => (
-              <li key={`${i} ${s.title}`} className=" justify-between w-full flex">
-                <span className=" ">{s.title}</span>
-                <span>
+              <li key={`${i} ${s.title}`} className=" justify-between w-full flex border-b border-dashed dark:border-white/30 border-black/30">
+                <span className="text-xl lg:text-2xl">{s.title}</span>
+                <span className="text-xl lg:text-2xl">
                   {s.value} {s.abbreviation && <small className="text-sm">{s.abbreviation}</small>}
                 </span>
               </li>

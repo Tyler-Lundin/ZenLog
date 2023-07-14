@@ -4,8 +4,6 @@ const Collapsible = () => (
   <>
     <span className="font-thin hidden md:inline-block">ZEN</span>
     <span className="font-black hidden md:inline-block">LOG</span>
-    <span className="font-thin md:hidden">Z</span>
-    <span className="font-bold md:hidden">L</span>
   </>
 )
 

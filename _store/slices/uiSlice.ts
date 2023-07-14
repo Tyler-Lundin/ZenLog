@@ -4,7 +4,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isNavOpen: false,
   isEntrySelectorOpen: false,
-  isDailyEntryOpen: false,
+  isDailyEntryOpen: true,
 }
 
 const uiSlice = createSlice({

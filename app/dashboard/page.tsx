@@ -22,17 +22,18 @@ export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
   if (!session?.user) redirect('/');
   return (
-    <Page>
+    <div className="dark:bg-black dark:text-white mt-16">
       <DynamicLogButton />
-      <div className="grid gap-4">
+      <div className="grid">
         <DynamicDailyEntries />
+        <hr className="dark:border-zinc-900 border-zinc-100" />
         <DashboardStats />
         <DynamicLogEntryMenu />
         <footer className="h-20 grid place-content-center ">
           <a href="https://tylerlundin.me" target="_blank" rel="noopener noreferrer" className="text-gray-500 whitespace-nowrap">Created by Tyler</a>
         </footer>
       </div>
-    </Page>
+    </div>
   )
 }
 

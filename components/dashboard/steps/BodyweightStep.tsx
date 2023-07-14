@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { IoScaleOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { setBodyweight } from "@/_store/slices/dashboardSlice"
+import { Dosis } from "next/font/google";
+const dosis = Dosis({ subsets: ['latin'] });
 
 
 export default function BodyweightStep() {
@@ -52,11 +54,9 @@ export default function BodyweightStep() {
 
   return (
     <>
-      <label className="text-center text-black dark:text-white text-xl md:text-2xl font-thin">How much do you weigh today?</label>
-      <div className="relative border-b dark:border-white border-black mx-4 grid justify-center text-black dark:text-white">
-        <Input variant="glass" size="8xlFit" className="w-60 text-center" max={999} type="number" value={inputValue} onChange={handleChange} />
-        <span className="text-2xl absolute right-0 bottom-0 ">lbs</span>
-        <IoScaleOutline className="absolute left-0 bottom-1 text-2xl" />
+      <h1 className="text-center text-black dark:text-white text-3xl md:text-6xl font-black">BODYWEIGHT</h1>
+      <div className="relative mx-4 text-black dark:text-white h-fit">
+        <Input style={dosis.style} variant="glass" size="8xlFit" className="w-full text-center" max={999} type="number" value={inputValue} onChange={handleChange} />
       </div>
     </>
 
