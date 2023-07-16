@@ -33,7 +33,6 @@ export const authOptions: AuthOptions = {
       return true;
     },
     async jwt({ token }) {
-
       const user = await prisma.user.findUnique({
         where: {
           email: token.email as string,
@@ -49,8 +48,12 @@ export const authOptions: AuthOptions = {
 
       return token;
     },
-    redirect() {
-      return '/dashboard';
+    redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     }
   },
 }
