@@ -21,7 +21,8 @@ export const SignInWithGoogle = () => {
   const [disabled, setDisabled] = useState(false);
   const handleClick = () => {
     setDisabled(true);
-    signIn('google', { callbackUrl: '/dashboard' });
+    // signIn('google', { callbackUrl: '/dashboard' });
+    signIn('google');
   }
 
   return (
