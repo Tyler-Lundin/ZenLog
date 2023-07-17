@@ -9,7 +9,7 @@ export const SignInWithGithub = () => {
   const [disabled, setDisabled] = useState(false);
   const handleClick = () => {
     setDisabled(true);
-    signIn('github', { callbackUrl: '/dashboard' });
+    signIn('github');
   }
   return (
     <Button onClick={handleClick} disabled={disabled}> <BsGithub /> Sign in with Github </Button>
@@ -21,7 +21,6 @@ export const SignInWithGoogle = () => {
   const [disabled, setDisabled] = useState(false);
   const handleClick = () => {
     setDisabled(true);
-    // signIn('google', { callbackUrl: '/dashboard' });
     signIn('google');
   }
 
