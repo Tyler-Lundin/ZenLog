@@ -1,17 +1,16 @@
-import { NextAuthOptions } from "next-auth";
-import { getGithubOptions, getGoogleOptions, getNextAuthSecret } from "./providerOptions";
+import { AuthOptions } from "next-auth";
+import { getGithubOptions, getGoogleOptions } from "./providerOptions";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "./db";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider(getGithubOptions()),
     GoogleProvider(getGoogleOptions()),
   ],
-  secret: getNextAuthSecret(),
   session: {
     strategy: "jwt",
   },
@@ -26,7 +25,6 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.image = token.picture;
       }
-
       return session;
     },
     async jwt({ token }) {
@@ -35,15 +33,13 @@ export const authOptions: NextAuthOptions = {
           email: token.email as string,
         }
       })
-
       if (user) {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
         token.picture = user.image;
       }
-
       return token;
     },
   },
-}
+} satisfies AuthOptions;
