@@ -7,6 +7,7 @@ import { prisma } from "./db";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET as string,
   providers: [
     GithubProvider(getGithubOptions()),
     GoogleProvider(getGoogleOptions()),
