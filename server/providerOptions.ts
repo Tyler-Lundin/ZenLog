@@ -19,3 +19,8 @@ export const getGoogleOptions = (): { clientId: string, clientSecret: string } =
   }
 }
 
+export const getNextAuthSecret = (): string => {
+  const secret = process.env.NEXTAUTH_SECRET as string;
+  if (!secret) throw new Error("Missing Production NextAuth Secret")
+  return secret;
+}

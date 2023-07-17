@@ -1,17 +1,17 @@
-import { AuthOptions } from "next-auth";
-import { getGithubOptions, getGoogleOptions } from "./providerOptions";
+import { NextAuthOptions } from "next-auth";
+import { getGithubOptions, getGoogleOptions, getNextAuthSecret } from "./providerOptions";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "./db";
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET as string,
   providers: [
     GithubProvider(getGithubOptions()),
     GoogleProvider(getGoogleOptions()),
   ],
+  secret: getNextAuthSecret(),
   session: {
     strategy: "jwt",
   },
