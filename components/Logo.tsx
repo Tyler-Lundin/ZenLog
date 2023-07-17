@@ -16,8 +16,8 @@ const NotCollapsible = () => (
 
 import Link from "next/link";
 import { GiYinYang } from "react-icons/gi"
-const Logo = ({ isCollapsible }: { isCollapsible: boolean }) => (
-  <Link href="/dashboard" className={`flex items-center dark:text-white text-black '}`}>
+const Logo = ({ isCollapsible, href = "/dashboard" }: { isCollapsible: boolean, href?: string }) => (
+  <Link href={href} className={`flex items-center dark:text-white text-black '}`}>
     <h6 className=" text-xl md:text-2xl font-thin">
       <GiYinYang className={`inline-block mb-1 text-xl md:text-2xl`} />
       {isCollapsible ? <Collapsible /> : <NotCollapsible />}

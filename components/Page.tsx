@@ -6,14 +6,15 @@ import Background from "./Background";
 export interface PageProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   className?: string
+  isOffset?: boolean
 }
 
-export default function Page({ children, className, ...props }: PageProps) {
+export default function Page({ children, className, isOffset = true, ...props }: PageProps) {
   return (
     <main
       {...props}
       className={`min-h-screen w-screen relative ${className} `}>
-      <div className="h-16" />
+      {isOffset && <div className="h-16" />}
       <Background />
       {children}
     </main>

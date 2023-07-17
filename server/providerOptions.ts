@@ -39,7 +39,6 @@ export const getGoogleOptions = (): { clientId: string, clientSecret: string } =
       clientSecret: devSecret,
     }
   }
-
   return {
     clientId: prodID,
     clientSecret: prodSecret,
