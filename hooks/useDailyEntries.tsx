@@ -24,7 +24,8 @@ export default function useDailyEntries() {
 
   const isLastStep = currentStep === STEPS.length - 1;
   const isFirstStep = currentStep === 0;
-  const isDone = isComplete(mood) && isComplete(bodyweight) && isComplete(sleep);
+  const isDone = mood.status === 'COMPLETE' && bodyweight.status === 'COMPLETE' && sleep.status === 'COMPLETE';
+  console.log({ isDone, mood, bodyweight, sleep })
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -42,12 +43,13 @@ export default function useDailyEntries() {
   }, [dispatch, isLastStep, isFirstStep])
 
   return {
-    currentStep: STEPS[currentStep],
-    nextStep: () => !isLastStep ? dispatch(nextStep()) : null,
-    prevStep: () => !isFirstStep ? dispatch(prevStep()) : null,
-    handleClose: () => isFirstStep ? dispatch(toggleDailyEntry(false)) : null,
-    handleSubmit: () => isLastStep ? dispatch(postDailyEntriesThunk()) : null,
-    handleOpen: () => dispatch(toggleDailyEntry(true)),
+    STEPS,
+    currentStep,
+    nextStep: () => dispatch(nextStep()),
+    prevStep: () => dispatch(prevStep()),
+    handleClose: () => dispatch(toggleDailyEntry()),
+    handleSubmit: () => dispatch(postDailyEntriesThunk()),
+    handleOpen: () => dispatch(toggleDailyEntry()),
     isLastStep,
     isFirstStep,
     isDone,
