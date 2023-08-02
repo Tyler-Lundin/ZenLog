@@ -4,12 +4,13 @@ import ExerciseActions from "@/components/exercise/ExerciseActions";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
+import LogExerciseEntry from "@/components/exercise/LogExerciseEntry";
 
 
 
 export default function ExercisePage() {
   return (
-    <div className="bg-white dark:bg-black mt-16">
+    <Page className="pt-16">
       <div className="grid gap-4 z-30">
         <ExerciseActions />
 
@@ -18,6 +19,6 @@ export default function ExercisePage() {
         </div>
         <ExerciseEntries />
       </div>
-    </div>
+    </Page>
   )
 }
