@@ -35,13 +35,9 @@ export default function SleepStep() {
   }
 
   return (
-    <>
+    <div className="relative grid justify-center h-fit bg-black/50 rounded-lg text-white pt-2 w-screen">
       <h1 className="text-center text-black dark:text-white text-3xl md:text-6xl font-black">SLEEP</h1>
-      <div className="relative border-b dark:border-white border-black mx-4 grid justify-center text-black dark:text-white">
-        <Input style={dosis.style} variant="glass" size="8xlFit" className="w-60 text-center" type="number" value={inputValue} onChange={handleChange} />
-        <span className="text-2xl absolute right-0 bottom-0">hrs</span>
-        <IoBed className="absolute left-0 bottom-1 text-2xl" />
-      </div>
-    </>
+      <Input style={dosis.style} variant="glass" size="8xlFit" className=" text-center text-white" type="number" value={inputValue} onChange={handleChange} />
+    </div>
   )
 }

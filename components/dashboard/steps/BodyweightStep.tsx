@@ -2,7 +2,6 @@ import { Input } from "@/components/ui/input"
 import { formatLeadingZero } from "@/lib/utils"
 import { AppDispatch, RootState } from "@/_store"
 import { useEffect, useState } from "react"
-import { IoScaleOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { setBodyweight } from "@/_store/slices/dashboardSlice"
 import { Dosis } from "next/font/google";
@@ -53,12 +52,9 @@ export default function BodyweightStep() {
 
 
   return (
-    <>
+    <div className="relative grid justify-center h-fit bg-black/50 rounded-lg text-white pt-2 w-screen">
       <h1 className="text-center text-black dark:text-white text-3xl md:text-6xl font-black">BODYWEIGHT</h1>
-      <div className="relative mx-4 text-black dark:text-white h-fit">
-        <Input style={dosis.style} variant="glass" size="8xlFit" className="w-full text-center" max={999} type="number" value={inputValue} onChange={handleChange} />
-      </div>
-    </>
-
+      <Input style={dosis.style} variant="glass" size="8xlFit" className=" text-center text-white" type="number" value={inputValue} onChange={handleChange} />
+    </div>
   )
 }
