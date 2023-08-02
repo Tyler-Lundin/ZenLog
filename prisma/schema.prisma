@@ -55,9 +55,61 @@ model User {
   accounts         Account[]
   sessions         Session[]
   days             UserDay[]
+  goals            Goals[]
   createdExercises String[]
   friendships1     Friendship[] @relation("Friendship_User1")
   friendships2     Friendship[] @relation("Friendship_User2")
+}
+
+model Goals {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String        @db.ObjectId
+  userDayId    String        @db.ObjectId
+  type         GoalType
+  value        Int
+  updatedAt    DateTime      @updatedAt
+  createdAt    DateTime      @default(now())
+  deadline     DateTime?
+  weightGoal   WeightGoal?
+  sleepGoal    SleepGoal?
+  exerciseGoal ExerciseGoal?
+  meditateGoal MeditateGoal?
+  waterGoal    WaterGoal?
+
+  User User @relation(fields: [userId], references: [id])
+}
+
+enum GoalType {
+  WEIGHT
+  SLEEP
+  EXERCISE
+  MEDITATE
+  WATER
+}
+
+type WeightGoal {
+  target Int
+}
+
+type SleepGoal {
+  totalSleep Int
+}
+
+type ExerciseGoal {
+  totalReps    Int
+  totalEntries Int
+  totalVolume  Int
+  totalWeight  Int
+}
+
+type MeditateGoal {
+  totalTime Int
+}
+
+type WaterGoal {
+  totalOunces  Int
+  totalCups    Int
+  totalGallons Int
 }
 
 model Friendship {
