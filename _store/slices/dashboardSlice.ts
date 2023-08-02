@@ -39,15 +39,15 @@ const initialState: DashboardState = {
     currentStep: 0,
     bodyweight: {
       value: 0,
-      status: 'INCOMPLETE',
+      status: 'COMPLETE',
     },
     sleep: {
       value: 0,
-      status: 'INCOMPLETE',
+      status: 'COMPLETE',
     },
     mood: {
       value: Mood.NEUTRAL,
-      status: 'INCOMPLETE',
+      status: 'COMPLETE',
     }
   }
 }
@@ -59,7 +59,23 @@ const dashboardSlice = createSlice({
   initialState,
   reducers: {
     setUserDay(state, action: PayloadAction<UserDay>) { state.userDay = action.payload },
-    setDailyEntries(state, action: PayloadAction<DailyEntries>) { state.dailyEntries = { ...action.payload, currentStep: state.dailyEntries.currentStep } },
+    setDailyEntries(state, action: PayloadAction<DailyEntries>) {
+      state.dailyEntries = {
+        currentStep: state.dailyEntries.currentStep,
+        bodyweight: {
+          status: "COMPLETE",
+          value: action.payload.bodyweight.value
+        },
+        sleep: {
+          status: "COMPLETE",
+          value: action.payload.sleep.value,
+        },
+        mood: {
+          status: "COMPLETE",
+          value: action.payload.mood.value,
+        }
+      }
+    },
     setBodyweight(state, action: PayloadAction<number>) { state.dailyEntries.bodyweight.value = action.payload },
     setSleep(state, action: PayloadAction<number>) { state.dailyEntries.sleep.value = action.payload },
     setMood(state, action: PayloadAction<Mood>) { state.dailyEntries.mood.value = action.payload },

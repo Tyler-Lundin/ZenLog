@@ -74,6 +74,8 @@ const exerciseSlice = createSlice({
     pushNewTag(state, action) { state.newEntry.tags.push(action.payload) },
     nextExerciseStep(state) { state.newEntry.currentStep++ },
     prevExerciseStep(state) { state.newEntry.currentStep-- },
+    setExerciseStep(state, action) { state.newEntry.currentStep = action.payload },
+    resetNewExercise(state) { state.newEntry = initialState.newEntry },
     setExerciseEntries(state, action) { state.allEntries = action.payload },
     toggleSortOrder(state) {
       state.sortOrder = state.sortOrder === "asc" ? "desc" : "asc";
@@ -96,6 +98,8 @@ export const {
   pushNewTag,
   nextExerciseStep,
   prevExerciseStep,
+  setExerciseStep,
+  resetNewExercise,
   setExerciseEntries,
   toggleSortOrder,
   removeTag,
