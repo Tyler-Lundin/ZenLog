@@ -22,21 +22,21 @@ export default function ListExercisesStep() {
   const filteredData = data?.filter((exercise: Exercise) => exercise.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <>
+    <div className="w-screen h-screen bg-white dark:bg-black fixed top-0 left-0 pt-20 pb-20 z-10 grid ">
       <Searcher search={search} setSearch={setSearch} />
-      <div className="h-full w-full ">
-        {(data && filteredData ? filteredData : data)?.map((exercise: Exercise) => (
-          <div key={exercise.id} className={`dark:text-white text-black w-full overflow-hidden h-fit shadow dark:border-y dark:border-white/20`} >
+      <div className="h-full w-full overflow-y-auto">
+        {(data && filteredData ? filteredData : data)?.map((exercise: Exercise, index: number) => (
+          <div key={exercise.id} className={`dark:text-white text-black w-full border-b border-black/10 dark:border-white/10 overflow-hidden h-fit shadow`} >
             <Button variant="ghost" onClick={() => {
               dispatch(setNewExercise({ id: exercise.id, name: exercise.name }))
               dispatch(nextExerciseStep())
-            }} className={`flex gap-8 items-center h-24 w-full`} >
-              <h2 className={`text-2xl md:text-4xl w-full text-center lg:text-6xl `}>{exercise.name}</h2>
+            }} className={`flex gap-8 items-center w-full`} >
+              <h2 className={`w-full text-left`}>{exercise.name}</h2>
             </Button>
           </div>
         ))}
       </div >
-    </>
+    </div >
   )
 }
 

@@ -11,21 +11,19 @@ export default function WeightStep() {
   const handleChange = (b: boolean) => dispatch(setNewToFailure(b));
 
   return (
-    <>
+    <div className="w-screen h-screen bg-white dark:bg-black fixed top-0 left-0 z-10 pointer-events-none grid place-content-center">
       <label className="text-center text-2xl font-thin dark:text-white mb-4">
         Did you lift to failure?
       </label>
-      <div className="relative border-b dark:border-white border-black justify-center flex flex-wrap gap-4 py-8">
+      <div className="relative place-content-center grid gap-4 py-8 ">
         <div className="relative">
-          <Button variant="glass" size="5xl" disabled={!toFailure} onClick={() => handleChange(false)}>No</Button>
-          <span className={`${!toFailure && "animate-bounce"} text-3xl absolute bottom-0 left-2`}>🥱</span>
+          <Button className={"disabled:opacity-100 opacity-50 w-full"} variant="glass" size="5xl" disabled={toFailure} onClick={() => handleChange(true)}>Yes</Button>
         </div>
         <div className="relative">
-          <Button variant="glass" size="5xl" disabled={toFailure} onClick={() => handleChange(true)}>Yes</Button>
-          <span className={`${toFailure && "animate-bounce"} text-3xl absolute bottom-0 left-2 `}>😎</span>
+          <Button className={"disabled:opacity-100 opacity-50 w-full"} variant="glass" size="5xl" disabled={!toFailure} onClick={() => handleChange(false)}>No</Button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
