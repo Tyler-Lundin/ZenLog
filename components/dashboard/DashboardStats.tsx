@@ -1,5 +1,6 @@
 'use client';
 import useDashboardData from "@/hooks/useDashboardData";
+import NumberProgressBar from "../NumberProgressBar";
 
 
 export default function DashboardStats() {
@@ -78,22 +79,29 @@ export default function DashboardStats() {
   ]
 
   return (
-    <div className="bg-white dark:bg-black font-light text-lg dark:text-white px-4 w-full shadow-2xl shadow-white dark:shadow-black py-2">
-      {STATS.map((stat, index) => (
-        <div key={`${stat.title}-dashboard-stat`} className="mb-4">
-          <h2 className="text-2xl lg:text-3xl tracking-widest font-bold">{stat.title}</h2>
-          <ul key={index} className="w-full ">
-            {stat.stats.map((s, i) => (
-              <li key={`${i} ${s.title}`} className=" justify-between w-full flex border-b border-dashed dark:border-white/30 border-black/30">
-                <span className="text-xl lg:text-2xl">{s.title}</span>
-                <span className="text-xl lg:text-2xl">
-                  {s.value} {s.abbreviation && <small className="text-sm">{s.abbreviation}</small>}
-                </span>
-              </li>
-            ))}
-          </ul>
+    <div className=" font-light text-lg dark:text-white px-4 w-full shadow-2xl shadow-white dark:shadow-black py-2 grid gap-8">
+      <h1 className="text-2xl font-bold">Stats</h1>
+      <div className="">
+        <div className="grid gap-2">
+
+          <div className="flex flex-col gap-2">
+            <h3 className="text-lg font-bold">Exercise</h3>
+            <div className="grid grid-cols-2 gap-2">
+
+              <div className="flex flex-col gap-2">
+                <h4 className="text-md font-bold">Total Reps</h4>
+                <div className="h-24 w-24">
+                  <NumberProgressBar value={63} goal={73} label={"reps"} />
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
         </div>
-      ))}
-    </div>
+      </div>
+    </div >
   )
 }

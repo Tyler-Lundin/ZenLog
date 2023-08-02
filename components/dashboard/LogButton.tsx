@@ -20,7 +20,7 @@ export default function LogButton({
 
 
   return (
-    <Button variant="green" onClick={() => dispatch(dispatches[dispatchName]())} className={`${className} aspect-square rounded-full border-none outline-black  grid  place-items-center font-bold w-12 h-12`}>
+    <Button variant="green" onClick={() => dispatch(dispatches[dispatchName]())} className={`${className} aspect-square rounded-full outline-black  grid  place-items-center font-bold w-12 h-12`}>
       <AiOutlinePlus className="text-xl " />
     </Button>
   )

@@ -29,8 +29,8 @@ export default function LogEntryMenu() {
 const NotLoading = ({ setIsLoading, setDecision }: { setIsLoading: (b: boolean) => void, setDecision: (s: string) => void }) => {
   const dispatch = useDispatch<AppDispatch>()
   return (
-    <div className="w-screen h-screen fixed top-0 left-0 z-50 bg-white dark:bg-black grid place-content-center">
-      <BackButton onClick={() => dispatch(toggleEntrySelector(false))} />
+    <div className="w-screen h-screen fixed top-0 left-0 z-50 backdrop-blur-md bg-white/50 dark:bg-black/50 grid place-content-center">
+      <BackButton onClick={() => dispatch(toggleEntrySelector())} />
       <h1 className="text-4xl font-thin mb-4 text-center dark:text-white">What would you like to log?</h1>
       <ul className="flex flex-wrap place-content-center max-w-2xl gap-4 w-full">
         {EVENTS.map((event, i) => (
