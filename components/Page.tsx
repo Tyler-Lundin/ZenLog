@@ -9,7 +9,7 @@ export interface PageProps extends React.HTMLAttributes<HTMLDivElement> {
   isOffset?: boolean
 }
 
-export default function Page({ children, className, isOffset = true, ...props }: PageProps) {
+export default function Page({ children, className, isOffset, ...props }: PageProps) {
   return (
     <main
       {...props}

@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-transparent flex gap-2 rounded-md transition-all font-thin dark:text-white hover:dark:text-black hover:dark:bg-white hover:bg-black hover:text-white",
         defaultInverted: "bg-white flex gap-2 rounded-md transition-all font-thin text-black dark:text-white bg-white hover:text-white dark:bg-black hover:bg-transparent dark:hover:bg-transparent hover:border-white dark:hover:border-black border",
-        glass: "flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border",
+        glass: "flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border bg-black/50",
         glassGreen: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-green-400",
         glassRed: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-red-400",
         ghost: "bg-transparent text-black hover:bg-black/10 dark:text-white dark:hover:bg-white/10",
@@ -19,7 +19,8 @@ const buttonVariants = cva(
           "bg-red-400 text-destructive-foreground hover:bg-red-400/90",
         event: "font-bold bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 uppercase",
         logEvent: "font-bold border border-green-500 bg-transparent text-green-500 uppercase hover:bg-green-500 hover:text-white hover:border hover:border-white disabled:opacity-50",
-        green: "bg-green-500 flex gap-2 rounded-md transition-all font-thin text-black hover:border-green-500 border-white dark:border-black hover:bg-transparent hover:text-green-500 border focus:border-green-500 focus:text-green-500 focus:bg-transparent",
+        green: "bg-green-500 flex gap-2 rounded-md transition-all font-thin text-black border hover:border-green-500 border-white dark:border-black hover:bg-transparent hover:text-green-500 border focus:border-green-500 focus:text-green-500 focus:bg-transparent",
+        blue: "bg-blue-500 flex gap-2 rounded-md transition-all font-thin text-black hover:border-blue-500 border-white dark:border-black hover:bg-transparent hover:text-blue-500 border focus:border-blue-500 focus:text-blue-500 focus:bg-transparent",
         invertedGreen: "bg-black flex gap-2 transition-all text-green-500 hover:border-white dark:hover:border-black border-green-500 hover:bg-green-500 hover:text-white border focus:border-white focus:text-white focus:bg-transparent",
         red: "bg-red-500 flex gap-2 rounded-md transition-all font-thin text-black hover:border-red-500 border-white dark:border-black hover:bg-transparent hover:text-red-500 border focus:border-red-500 focus:text-red-500 focus:bg-transparent",
         invertedRed: "bg-black flex gap-2 transition-all text-red-500 hover:border-white dark:hover:border-black border-red-500 hover:bg-red-500 hover:text-white border focus:border-white focus:text-white focus:bg-transparent",

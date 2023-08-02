@@ -16,7 +16,7 @@ const inputVariants = cva(
         glass: "bg-transparent border-0 rounded-none dark:text-white text-black outline-none"
       },
       size: {
-        default: "h-10 py-2 px-4 text-md",
+        default: "py-2 px-4 text-md",
         sm: "h-9 px-3 rounded-md text-sm",
         md: "h-10 px-4 rounded-md text-md",
         lg: "h-11 px-8 rounded-md text-lg",

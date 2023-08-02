@@ -7,27 +7,43 @@ export default function StepControls({
   isFirstStep,
   isLastStep,
   handleClose,
-  handleSubmit,
   nextStep,
   prevStep,
-  className = "flex absolute w-full h-full top-0 left-0 items-center justify-between z-20 p-2 pointer-events-none"
+  className = "flex absolute w-full h-full top-0 left-0 items-center justify-between z-20 p-2 pointer-events-none",
+  children,
+  type = "default"
 }: {
   isFirstStep: boolean,
   isLastStep: boolean,
   handleClose: () => void,
-  handleSubmit: () => void,
   nextStep: () => void,
   prevStep: () => void
   className?: string
+  children?: React.ReactNode
+  type?: "default" | "done"
 }) {
+
+  if (type === "done")
+    return (
+      <div className={className}>
+        <Button variant={isFirstStep ? "glassRed" : "glass"} size="xlSquare" className="rounded-full pointer-events-auto" onClick={isFirstStep ? handleClose : prevStep}>
+          {isFirstStep ? <AiOutlineClose /> : <AiOutlineLeft />}
+        </Button>
+        {children}
+        <Button variant={isLastStep ? "glassGreen" : "glass"} size="xlSquare" className="rounded-full pointer-events-auto" onClick={nextStep}>
+          {isLastStep ? <IoCheckmark /> : <AiOutlineRight />}
+        </Button>
+      </div>
+    )
+
   return (
     <div className={className}>
-      <Button variant="red" size="xlSquare" className="rounded-full pointer-events-auto" onClick={isFirstStep ? handleClose : prevStep}>
+      <Button variant={isFirstStep ? "glassRed" : "glass"} size="xlSquare" className="rounded-full pointer-events-auto" onClick={isFirstStep ? handleClose : prevStep}>
         {isFirstStep ? <AiOutlineClose /> : <AiOutlineLeft />}
       </Button>
-
-      <Button variant="green" size="xlSquare" className="rounded-full pointer-events-auto" onClick={isLastStep ? handleSubmit : nextStep}>
-        {isLastStep ? <IoCheckmark /> : <AiOutlineRight />}
+      {children}
+      <Button disabled={isLastStep} variant={"glass"} size="xlSquare" className="rounded-full pointer-events-auto" onClick={nextStep}>
+        <AiOutlineRight />
       </Button>
     </div>
   )
