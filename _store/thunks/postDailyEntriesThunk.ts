@@ -26,7 +26,7 @@ const postDailyEntriesThunk = createAsyncThunk('dailyCheck/postDailyEntries', as
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue({ error: result.message })
     }
-    dispatch(toggleDailyEntry(false))
+    dispatch(toggleDailyEntry())
     dispatch(setDailyEntriesDone())
   } catch (error: any) {
     return thunkAPI.rejectWithValue({ error: error.message || 'Error posting Daily Checkx' })
