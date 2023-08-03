@@ -22,21 +22,25 @@ export default function ListExercisesStep() {
   const filteredData = data?.filter((exercise: Exercise) => exercise.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="w-screen h-screen bg-white dark:bg-black fixed top-0 left-0 pt-20 pb-20 z-10 grid ">
-      <Searcher search={search} setSearch={setSearch} />
-      <div className="h-full w-full overflow-y-auto">
-        {(data && filteredData ? filteredData : data)?.map((exercise: Exercise, index: number) => (
-          <div key={exercise.id} className={`dark:text-white text-black w-full border-b border-black/10 dark:border-white/10 overflow-hidden h-fit shadow`} >
-            <Button variant="ghost" onClick={() => {
-              dispatch(setNewExercise({ id: exercise.id, name: exercise.name }))
-              dispatch(nextExerciseStep())
-            }} className={`flex gap-8 items-center w-full`} >
-              <h2 className={`w-full text-left`}>{exercise.name}</h2>
-            </Button>
-          </div>
-        ))}
+    <>
+      <div className="fixed my-2">
+        <Searcher search={search} setSearch={setSearch} />
+      </div>
+      <div className="w-screen  bg-white dark:bg-black pb-20 z-10 grid pt-12">
+        <div className="h-full w-full overflow-y-auto">
+          {(data && filteredData ? filteredData : data)?.map((exercise: Exercise, index: number) => (
+            <div key={exercise.id} className={`dark:text-white text-black w-full border-b border-black/10 dark:border-white/10 overflow-hidden h-fit shadow`} >
+              <Button variant="ghost" onClick={() => {
+                dispatch(setNewExercise({ exerciseId: exercise.id, exerciseName: exercise.name }))
+                dispatch(nextExerciseStep())
+              }} className={`flex gap-8 items-center w-full py-8 px-4`} >
+                <h2 className={`w-full text-2xl font-thin text-left`}>{exercise.name}</h2>
+              </Button>
+            </div>
+          ))}
+        </div >
       </div >
-    </div >
+    </>
   )
 }
 

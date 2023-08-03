@@ -25,15 +25,15 @@ export default function RepsStep() {
   }
 
   return (
-    <>
-      <label className="text-center text-2xl font-thin dark:text-white mb-4">
+    <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black  grid place-content-center">
+      <label className="text-center text-md sm:text-2xl font-thin dark:text-white mb-4">
         How many reps did you do?
       </label>
-      <div className="relative border-b dark:border-white border-black mx-auto grid justify-center">
+      <div className="relative mx-auto grid justify-center">
         <Input variant="glass" size="8xlFit" className=" text-center" type="number" value={inputValue} onChange={handleChange} />
         <span className="text-2xl absolute right-0 bottom-0 dark:text-white">reps</span>
         <IoRepeat className="absolute left-0 bottom-1 text-2xl dark:text-white" />
       </div>
-    </>
+    </div>
   )
 }

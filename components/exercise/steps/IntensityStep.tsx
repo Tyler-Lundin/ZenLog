@@ -13,19 +13,19 @@ export default function IntensityStep() {
 
 
   return (
-    <>
-      <label className="text-center text-2xl font-thin dark:text-white mb-4">
+    <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black  grid place-content-center">
+      <label className="text-center text-md sm:text-2xl font-thin dark:text-white mb-4">
         How intense was the set?
       </label>
       <div className="relative border-b dark:border-white border-black grid justify-center mx-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-5  justify-center gap-4 mb-10">
+        <div className="grid grid-cols-5   justify-center gap-4 mb-10">
           {INTENSITY.map((rpe) => (
-            <Button key={rpe} variant="default" disabled={intensity === rpe} size="xlSquare" className="p-2" onClick={() => dispatch(setNewIntensity(rpe))}>{rpe}</Button>
+            <Button key={rpe} variant="glass" disabled={intensity === rpe} size="xlSquare" className="p-2 disabled:opacity-100 disabled:bg-blue-400" onClick={() => dispatch(setNewIntensity(rpe))}>{rpe}</Button>
           ))}
         </div>
         <span className="text-2xl absolute right-0 bottom-0 dark:text-white">RPE</span>
         <IoSpeedometerOutline className="absolute left-0 bottom-1 text-2xl dark:text-white" />
       </div>
-    </>
+    </div>
   )
 }

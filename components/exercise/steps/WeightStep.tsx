@@ -24,8 +24,8 @@ export default function WeightStep() {
   // "8xlFit": "h-min px-4 rounded-md text-6xl md:text-8xl py-0",
 
   return (
-    <div className="w-screen h-screen bg-white dark:bg-black fixed top-0 left-0 z-10 grid place-content-center">
-      <label className="text-center text-2xl font-thin dark:text-white mb-4">
+    <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black  grid place-content-center">
+      <label className="text-center text-md sm:text-2xl font-thin dark:text-white mb-4">
         How much weight did you lift?
       </label>
       <div className="relative mx-auto grid justify-center self-center">
