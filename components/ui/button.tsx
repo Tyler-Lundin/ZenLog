@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-transparent flex gap-2 rounded-md transition-all font-thin dark:text-white hover:dark:text-black hover:dark:bg-white hover:bg-black hover:text-white",
         defaultInverted: "bg-white flex gap-2 rounded-md transition-all font-thin text-black dark:text-white bg-white hover:text-white dark:bg-black hover:bg-transparent dark:hover:bg-transparent hover:border-white dark:hover:border-black border",
-        glass: "flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border bg-black/50",
+        glass: "flex gap-2 rounded-md transition-all font-thin text-black dark:text-white hover:opacity-50 hover:border-white dark:hover:border-black border bg-black/10",
         glassGreen: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-green-400",
         glassRed: "flex gap-2 rounded-md transition-all font-thin text-black hover:opacity-50 border-none bg-red-400",
         ghost: "bg-transparent text-black hover:bg-black/10 dark:text-white dark:hover:bg-white/10",
