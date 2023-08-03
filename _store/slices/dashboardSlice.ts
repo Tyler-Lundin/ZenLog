@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { decrementDateReducer, incrementDateReducer, resetDateReducer } from '../reducers/app';
 import { Mood, UserDay } from '@prisma/client';
 
 const TODAYS_MONTH = new Date().getMonth() + 1
@@ -81,9 +80,25 @@ const dashboardSlice = createSlice({
     setMood(state, action: PayloadAction<Mood>) { state.dailyEntries.mood.value = action.payload },
     nextStep(state) { state.dailyEntries.currentStep++ },
     prevStep(state) { state.dailyEntries.currentStep-- },
-    decrementDate: decrementDateReducer,
-    incrementDate: incrementDateReducer,
-    resetDate: resetDateReducer,
+    // decrementDate: decrementDateReducer,
+    decrementDate(state) {
+      let newDate = new Date(state.userDay.year, state.userDay.month - 1, state.userDay.day - 1)
+      state.userDay.month = newDate.getMonth() + 1
+      state.userDay.day = newDate.getDate()
+      state.userDay.year = newDate.getFullYear()
+    },
+
+    incrementDate(state) {
+      let newDate = new Date(state.userDay.year, state.userDay.month - 1, state.userDay.day + 1)
+      state.userDay.month = newDate.getMonth() + 1
+      state.userDay.day = newDate.getDate()
+      state.userDay.year = newDate.getFullYear()
+    },
+    resetDate(state) {
+      state.userDay.month = TODAYS_MONTH
+      state.userDay.day = TODAYS_DAY
+      state.userDay.year = TODAYS_YEAR
+    },
     nextDailyEntryStep(state) { state.dailyEntries.currentStep++ },
     previousDailyEntryStep(state) { state.dailyEntries.currentStep-- },
     setDailyEntriesDone(state) {

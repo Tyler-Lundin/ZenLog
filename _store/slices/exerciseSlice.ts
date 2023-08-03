@@ -1,6 +1,5 @@
 import { ExerciseEntry } from "@prisma/client";
 import { createSlice } from "@reduxjs/toolkit";
-import { removeSetTagReducer } from "../reducers/app";
 import logExerciseThunk from "../thunks/logExerciseThunk";
 
 export type SortKeys = "date" | "exercise" | "reps" | "weight" | "intensity" | "toFailure" | "notes" | "tags" | "createdAt" | "updatedAt";
