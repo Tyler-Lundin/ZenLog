@@ -80,11 +80,9 @@ export default function LogExerciseEntry() {
           </div>
         )
       }
-      <div className="h-[calc(100vh_-_7rem)]">
-        <div className="grid place-content-center relative h-20 bg-white dark:bg-black overflow-x-auto w-screen left-0">
-          <span className="w-1/4" />
+      <div className="h-[calc(100vh_-_8rem)]">
+        <div className="grid relative bg-white dark:bg-black overflow-x-auto w-screen pt-8">
           <Breadcrumbs breadcrumbs={breadcrumbs} currentStep={currentStep} />
-          <span className="w-1/4" />
         </div>
         <div className="overflow-y-auto h-full">
           {STEPS[currentStep].component}
