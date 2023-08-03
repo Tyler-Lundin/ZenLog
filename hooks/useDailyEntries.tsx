@@ -25,7 +25,6 @@ export default function useDailyEntries() {
   const isLastStep = currentStep === STEPS.length - 1;
   const isFirstStep = currentStep === 0;
   const isDone = mood.status === 'COMPLETE' && bodyweight.status === 'COMPLETE' && sleep.status === 'COMPLETE';
-  console.log({ isDone, mood, bodyweight, sleep })
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {

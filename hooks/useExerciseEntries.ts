@@ -18,12 +18,6 @@ const useExerciseEntries = () => {
     }
   }) || [];
 
-  console.log({
-    data,
-    exerciseEntries,
-  })
-
-
   return {
     exerciseEntries,
     isLoading,

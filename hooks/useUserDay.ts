@@ -10,7 +10,6 @@ const useUserDay = () => {
   const { month, day, year } = useSelector((state: RootState) => state.dashboard.userDay)
   const { data, isError } = useQuery(`${month}/${day}/${year}`, () => fetchUserDay({ month, day, year }));
   const dispatch = useDispatch();
-  console.log({ data })
   useEffect(() => {
     if (data?.userDay && data?.userDay?.id) dispatch(setUserDay(data.userDay));
     else return
