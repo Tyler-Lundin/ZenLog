@@ -12,7 +12,7 @@ export type Breadcrumb = {
 export default function Breadcrumbs({ breadcrumbs, currentStep }: { breadcrumbs: Breadcrumb[], currentStep: number }) {
 
   return (
-    <div className="flex gap-1 items-center px-8 justify-center h-screen">
+    <div className="flex gap-1 items-center px-8 justify-center h-fit w-full">
       {breadcrumbs.map((breadcrumb, index) => {
         const isCurrentStep = index === currentStep,
           isLastStep = index === breadcrumbs.length - 1,
