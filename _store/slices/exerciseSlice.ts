@@ -5,13 +5,9 @@ import { removeSetTagReducer } from "../reducers/app";
 export type SortKeys = "date" | "exercise" | "reps" | "weight" | "intensity" | "toFailure" | "notes" | "tags" | "createdAt" | "updatedAt";
 export type SortOrder = "asc" | "desc";
 
-export interface Exercise {
-  id: string;
-  name: string;
-}
-
 export interface EntryFields {
-  exercise: Exercise;
+  exerciseId: string;
+  exerciseName: string;
   reps: number;
   weight: number;
   toFailure: boolean;
@@ -45,7 +41,8 @@ const initialState: ExerciseState = {
   isFiltered: false,
   newEntry: {
     currentStep: 0,
-    exercise: { id: '', name: '' },
+    exerciseId: '',
+    exerciseName: '',
     reps: 0,
     weight: 0,
     toFailure: false,
@@ -64,7 +61,10 @@ const exerciseSlice = createSlice({
     resetNewEntry(state) {
       state.newEntry = initialState.newEntry;
     },
-    setNewExercise(state, action) { state.newEntry.exercise = action.payload },
+    setNewExercise(state, action) {
+      state.newEntry.exerciseId = action.payload.exerciseId
+      state.newEntry.exerciseName = action.payload.exerciseName
+    },
     setNewReps(state, action) { state.newEntry.reps = action.payload },
     setNewWeight(state, action) { state.newEntry.weight = action.payload },
     setNewToFailure(state, action) { state.newEntry.toFailure = action.payload },
