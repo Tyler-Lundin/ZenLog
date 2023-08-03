@@ -1,4 +1,4 @@
-import fetchUserDay from "@/api/fetchUserDay";
+import fetchUserDay from "@/lib/fetchUserDay";
 import { RootState } from "@/_store";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
