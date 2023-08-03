@@ -4,8 +4,6 @@ import { AppDispatch, RootState } from "@/_store"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setBodyweight } from "@/_store/slices/dashboardSlice"
-import { Dosis } from "next/font/google";
-const dosis = Dosis({ subsets: ['latin'] });
 
 
 export default function BodyweightStep() {
@@ -52,9 +50,9 @@ export default function BodyweightStep() {
 
 
   return (
-    <div className="relative grid justify-center h-fit bg-black/50 rounded-lg text-white pt-2 w-screen">
+    <div className="relative grid justify-center h-fit rounded-lg pt-2 w-full">
       <h1 className="text-center text-black dark:text-white text-3xl md:text-6xl font-black">BODYWEIGHT</h1>
-      <Input style={dosis.style} variant="glass" size="8xlFit" className=" text-center text-white" type="number" value={inputValue} onChange={handleChange} />
+      <Input variant="glass" size="8xlFit" className=" text-center dark:text-white" type="number" value={inputValue} onChange={handleChange} />
     </div>
   )
 }

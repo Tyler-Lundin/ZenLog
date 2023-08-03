@@ -9,16 +9,18 @@ import IntensityStep from './steps/IntensityStep';
 import FailureStep from './steps/FailureStep';
 import ExerciseOverviewStep from './steps/ExerciseOverviewStep';
 import StepControls from '../StepControls';
-import { nextExerciseStep, prevExerciseStep, resetNewExercise, setExerciseStep } from '@/_store/slices/exerciseSlice';
+import { nextExerciseStep, prevExerciseStep, resetNewExercise, setExerciseStep, toggleIsNewEntrySubmitting } from '@/_store/slices/exerciseSlice';
 import logExerciseThunk from '@/_store/thunks/logExerciseThunk';
 import Breadcrumbs, { Breadcrumb } from '../Breadcrumbs';
-import { toggleAddExercise } from '@/_store/slices/uiSlice';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
+import NotesStep from './steps/NotesStep';
+import TagsStep from './steps/TagsStep';
+import { Spinner } from '../ui/Spinner';
 
 
 export default function LogExerciseEntry() {
-  const { currentStep, exerciseName, weight, reps, intensity, toFailure, notes, tags } = useSelector((state: RootState) => state.exercise.newEntry)
+  const { currentStep, exerciseName, weight, reps, intensity, toFailure, notes, tags, isSubmitting, isSubmitted } = useSelector((state: RootState) => state.exercise.newEntry)
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const STEPS = [
@@ -27,6 +29,8 @@ export default function LogExerciseEntry() {
     { name: "RepsStep", component: <RepsStep /> },
     { name: "IntensityStep", component: <IntensityStep /> },
     { name: "FailureStep", component: <FailureStep /> },
+    { name: "NotesStep", component: <NotesStep /> },
+    { name: "TagsStep", component: <TagsStep /> },
     { name: "ExerciseOverviewStep", component: <ExerciseOverviewStep /> },
   ]
 
@@ -39,7 +43,10 @@ export default function LogExerciseEntry() {
     dispatch(resetNewExercise())
     router.push("/dashboard/exercise");
   }
-  const handleSubmit = () => dispatch(logExerciseThunk());
+  const handleSubmit = () => {
+    dispatch(logExerciseThunk());
+    dispatch(toggleIsNewEntrySubmitting());
+  }
 
   const stepControlsProps = {
     isLastStep,
@@ -56,21 +63,37 @@ export default function LogExerciseEntry() {
     { title: reps ? `${reps.toString()} reps` : 'reps?', onClick: () => dispatch(setExerciseStep(2)) },
     { title: intensity ? `${intensity.toString()} RPE` : 'intensity?', onClick: () => dispatch(setExerciseStep(3)) },
     { title: toFailure ? 'to failure' : 'failed?', onClick: () => dispatch(setExerciseStep(4)) },
-    { title: "overview", onClick: () => dispatch(setExerciseStep(5)) }
+    { title: notes ? 'notes' : 'notes?', onClick: () => dispatch(setExerciseStep(5)) },
+    { title: tags ? 'tags' : 'tags?', onClick: () => dispatch(setExerciseStep(6)) },
+    { title: "overview", onClick: () => dispatch(setExerciseStep(7)) }
   ];
 
+  const isDone = (isSubmitted && !isSubmitting)
+  if (isDone) handleClose();
+
   return (
-    <div className="h-[calc(100vh_-_7rem)]">
-      <div className="grid place-content-center relative h-20 bg-white dark:bg-black overflow-hidden">
-        <Breadcrumbs breadcrumbs={breadcrumbs} currentStep={currentStep} />
+    <>
+      {
+        isSubmitting && (
+          <div className="fixed top-0 left-0 w-screen h-screen bg-white dark:bg-black bg-opacity-50 z-50 grid place-content-center">
+            <Spinner size="xl" />
+          </div>
+        )
+      }
+      <div className="h-[calc(100vh_-_7rem)]">
+        <div className="grid place-content-center relative h-20 bg-white dark:bg-black overflow-x-auto w-screen left-0">
+          <span className="w-1/4" />
+          <Breadcrumbs breadcrumbs={breadcrumbs} currentStep={currentStep} />
+          <span className="w-1/4" />
+        </div>
+        <div className="overflow-y-auto h-full">
+          {STEPS[currentStep].component}
+        </div>
+        <div className="fixed bottom-0 left-0 w-screen bg-white dark:bg-black py-4 grid place-content-center">
+          <StepControls {...stepControlsProps} />
+          <Button disabled={!isReady} variant={!isReady ? "glassRed" : "glassGreen"} onClick={handleSubmit}>Log Exercise</Button>
+        </div>
       </div>
-      <div className="overflow-y-auto h-full">
-        {STEPS[currentStep].component}
-      </div>
-      <div className="fixed bottom-0 left-0 w-screen bg-white dark:bg-black py-4 grid place-content-center">
-        <StepControls {...stepControlsProps} />
-        <Button disabled={!isReady} variant={!isReady ? "glassRed" : "glassGreen"} onClick={handleSubmit}>Log Exercise</Button>
-      </div>
-    </div>
+    </>
   );
 }

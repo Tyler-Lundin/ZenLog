@@ -19,13 +19,9 @@ export default function DailyEntrySteps() {
       </Button>
     )
   return (
-    <div className="py-8 w-screen rounded-lg grid gap-4 relative  ">
-      <div className="px-2 lg:px-16 grid gap-4 w-full">
-        <div>
-          <StepControls type="done" {...stepControlsProps} />
-          {STEPS[currentStep]}
-        </div>
-      </div>
+    <div className="py-8 w-screen relative">
+      <StepControls type="done" {...stepControlsProps} />
+      {STEPS[currentStep]}
     </div>
   )
 }

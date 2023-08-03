@@ -10,13 +10,13 @@ function ExerciseEntries() {
   if (isLoading) return <div className="flex justify-center"><Spinner /></div>
   if (exerciseEntries.length === 0 && !isLoading) return <div className="text-center font-black uppercase dark:text-white">No exercises yet</div>
   return (
-    <ul className='flex flex-wrap w-full gap-4 '>
+    <>
       {Array.isArray(exerciseEntries) &&
         exerciseEntries.map((exercise: IExerciseEntry) => (
           <ExerciseEntry key={exercise.id} exercise={exercise} />
         ))}
       <div className="h-8" />
-    </ul>
+    </>
   )
 }
 

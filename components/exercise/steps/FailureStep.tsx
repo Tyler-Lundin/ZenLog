@@ -17,10 +17,10 @@ export default function WeightStep() {
       </label>
       <div className="relative place-content-center grid gap-4 py-8 ">
         <div className="relative">
-          <Button className={"disabled:opacity-100 opacity-50 w-full"} variant="glass" size="5xl" disabled={toFailure} onClick={() => handleChange(true)}>Yes</Button>
+          <Button className={"disabled:opacity-100 dark:disabled:bg-white dark:disabled:text-black disabled:text-white disabled:bg-black opacity-50 w-full"} variant="glass" size="5xl" disabled={toFailure} onClick={() => handleChange(true)}>Yes</Button>
         </div>
         <div className="relative">
-          <Button className={"disabled:opacity-100 opacity-50 w-full"} variant="glass" size="5xl" disabled={!toFailure} onClick={() => handleChange(false)}>No</Button>
+          <Button className={"disabled:opacity-100 dark:disabled:bg-white dark:disabled:text-black disabled:text-white disabled:bg-black opacity-50 w-full"} variant="glass" size="5xl" disabled={!toFailure} onClick={() => handleChange(false)}>No</Button>
         </div>
       </div>
     </div>

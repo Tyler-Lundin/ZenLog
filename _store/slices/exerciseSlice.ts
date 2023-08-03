@@ -1,11 +1,13 @@
 import { ExerciseEntry } from "@prisma/client";
 import { createSlice } from "@reduxjs/toolkit";
 import { removeSetTagReducer } from "../reducers/app";
+import logExerciseThunk from "../thunks/logExerciseThunk";
 
 export type SortKeys = "date" | "exercise" | "reps" | "weight" | "intensity" | "toFailure" | "notes" | "tags" | "createdAt" | "updatedAt";
 export type SortOrder = "asc" | "desc";
 
-export interface EntryFields {
+export interface NewEntry {
+  currentStep: number;
   exerciseId: string;
   exerciseName: string;
   reps: number;
@@ -14,10 +16,8 @@ export interface EntryFields {
   intensity: number;
   notes: string;
   tags: string[];
-}
-
-export interface NewEntry extends EntryFields {
-  currentStep: number;
+  isSubmitting: boolean;
+  isSubmitted: boolean;
 }
 
 export interface ExerciseState {
@@ -49,6 +49,8 @@ const initialState: ExerciseState = {
     intensity: 5,
     notes: '',
     tags: [],
+    isSubmitting: false,
+    isSubmitted: false,
   }
 }
 
@@ -82,8 +84,15 @@ const exerciseSlice = createSlice({
     },
     removeTag(state, action) {
       state.newEntry.tags = state.newEntry.tags.filter(tag => tag !== action.payload)
-    }
+    },
+    toggleIsNewEntrySubmitting(state) { state.newEntry.isSubmitting = !state.newEntry.isSubmitting },
+    toggleIsNewEntrySubmitted(state) { state.newEntry.isSubmitted = !state.newEntry.isSubmitted },
   },
+  extraReducers: (builder) => {
+    builder.addCase(logExerciseThunk.fulfilled, (state) => { state.newEntry.isSubmitting = false; state.newEntry.isSubmitted = true; });
+    builder.addCase(logExerciseThunk.rejected, (state) => { state.newEntry.isSubmitting = false });
+    builder.addDefaultCase((state) => { return state });
+  }
 });
 
 export const {
@@ -103,6 +112,8 @@ export const {
   setExerciseEntries,
   toggleSortOrder,
   removeTag,
+  toggleIsNewEntrySubmitting,
+  toggleIsNewEntrySubmitted,
 } = exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

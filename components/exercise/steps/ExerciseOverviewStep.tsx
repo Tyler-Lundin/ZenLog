@@ -18,10 +18,10 @@ export default function ExerciseOverviewStep() {
 
   return (
     <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black  grid place-content-center">
-      <div className="grid bg-white dark:bg-black dark:text-white items-center border w-full border-black/50 dark:border-white/50 p-3 md:p-4 lg:p-8 md:rounded-xl relative">
+      <div className="grid bg-white dark:bg-black dark:text-white items-center border w-full border-black/50 dark:border-white/50 p-3 md:p-4 lg:p-8 relative">
         <div className="grid grid-cols-10 justify-between items-center w-full">
           {exerciseName && <h1 className="text-xl col-span-8  font-bold uppercase  ">{exerciseName}</h1>}
-          {currentTime && <h2 className="text-md col-span-2 dark:text-black text-white whitespace-nowrap bg-gray-300 px-1 rounded-lg border border-black dark:border-white font-bold justify-self-end">{currentTime}</h2>}
+          {currentTime && <h2 className="text-md col-span-2 dark:text-black text-white whitespace-nowrap dark:bg-gray-300 bg-black px-1 rounded-md border border-black dark:border-white font-bold justify-self-end">{currentTime}</h2>}
         </div>
         <span className="my-1" />
         <hr className="my-1 border-zinc-600" />
