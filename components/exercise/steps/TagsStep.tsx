@@ -36,24 +36,22 @@ export default function TagsStep() {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black  grid place-content-center">
       <div className="grid text-center ">
         <label className=" text-2xl font-thin dark:text-white">
           Add Tags
         </label>
-        <small className="text-sm text-gray-400"> (optional, comma separated)</small>
+        <small className="text-sm text-gray-400"> (comma separated or hit enter)</small>
       </div>
-      <div className="relative border-b dark:border-white border-black mx-auto grid justify-center">
-        <div className="gap-1 flex">
+      <div className="relative mx-auto grid justify-center">
+        <Input onKeyUp={handleEnterPress} variant={"glass"} className="text-center text-2xl font-thin" placeholder="Personal Record" type="text" value={tagInput} onChange={handleChange} />
+        <div className="gap-1 flex flex-wrap">
           {tags.length > 0 && (
             tags.map((tag, i) => (
               <Badge variant={"default"} key={i} onClick={() => dispatch(removeTag(i))}>{tag}</Badge>
             ))
           )}
         </div>
-        <Input onKeyUp={handleEnterPress} variant={"glass"} className="text-center text-2xl font-thin" placeholder="Tags" type="text" value={tagInput} onChange={handleChange} />
-        <span className="text-xl absolute right-0 bottom-0 dark:text-white">Tags</span>
-        <IoJournalOutline className="absolute left-0 bottom-1 text-2xl dark:text-white" />
       </div>
     </div>
   )

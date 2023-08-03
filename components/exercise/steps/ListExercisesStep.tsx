@@ -23,7 +23,7 @@ export default function ListExercisesStep() {
 
   return (
     <>
-      <div className="fixed py-2 backdrop-blur-sm bg-gradient-to-b from-white to-white/25 dark:from-black dark:to-black/25">
+      <div className="fixed py-2 backdrop-blur-sm bg-gradient-to-b from-white to-white/25 dark:from-black dark:to-black/25 ">
         <Searcher search={search} setSearch={setSearch} />
       </div>
       <div className="w-screen  bg-white dark:bg-black pb-20 z-10 grid pt-12">

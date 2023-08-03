@@ -18,15 +18,14 @@ export default function NotesStep() {
   }
 
   return (
-    <>
+    <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black  grid place-content-center">
       <label className="text-center text-2xl font-thin dark:text-white mb-4">
-        Any notes?
+        notes?
       </label>
-      <div className="relative border-b dark:border-white border-black mx-auto  justify-center">
-        <Textarea variant={"ghost"} className="text-center text-2xl font-thin mb-10" placeholder="Notes" value={notes} onChange={handleChange} />
-        <IoPencil className="absolute left-0 bottom-1 text-2xl dark:text-white" />
+      <div className="relative mx-auto  justify-center">
+        <Textarea variant={"ghost"} className="text-left text-2xl font-thin mb-10" placeholder="Notes" value={notes} onChange={handleChange} />
       </div>
-    </>
+    </div>
   )
 }
 
