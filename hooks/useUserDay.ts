@@ -3,7 +3,7 @@ import { RootState } from "@/_store";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setDailyEntries, setDailyEntriesDone, setUserDay } from "@/_store/slices/dashboardSlice";
+import { setVitals, setVitalsDone, setUserDay } from "@/_store/slices/dashboardSlice";
 
 
 const useUserDay = () => {
@@ -13,8 +13,8 @@ const useUserDay = () => {
   useEffect(() => {
     if (data?.userDay && data?.userDay?.id) dispatch(setUserDay(data.userDay));
     else return
-    if (data?.dailyEntries?.bodyweight?.isDone && data?.dailyEntries?.mood?.isDone && data?.dailyEntries?.sleep?.isDone) dispatch(setDailyEntriesDone())
-    if (data?.dailyEntries) dispatch(setDailyEntries(data.dailyEntries));
+    if (data?.dailyEntries?.bodyweight?.isDone && data?.dailyEntries?.mood?.isDone && data?.dailyEntries?.sleep?.isDone) dispatch(setVitalsDone())
+    if (data?.dailyEntries) dispatch(setVitals(data.dailyEntries));
   }, [data, dispatch])
   if (isError) return { month, day, year }
   return { userDay: data?.userDay || { month, day, year, id: '' } }

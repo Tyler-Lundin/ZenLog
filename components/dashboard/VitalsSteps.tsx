@@ -1,15 +1,15 @@
 'use client';
-import useDailyEntries from "@/hooks/useDailyEntries";
+import useVitals from "@/hooks/useVitals";
 import StepControls from "../StepControls";
 import { Button } from "../ui/button";
 
 
-export default function DailyEntrySteps() {
-  const { STEPS, currentStep, isDone, isLastStep, isFirstStep, isDailyEntryOpen, nextStep, prevStep, handleClose, handleSubmit, handleOpen } = useDailyEntries();
+export default function VitalsSteps() {
+  const { STEPS, currentStep, isDone, isLastStep, isFirstStep, isVitalsOpen, nextStep, prevStep, handleClose, handleSubmit, handleOpen } = useVitals();
   const stepControlsProps = { isLastStep, isFirstStep, nextStep, prevStep, handleClose, handleSubmit, }
 
 
-  if (!isDailyEntryOpen)
+  if (!isVitalsOpen)
     return (
       <Button
         variant="blue"

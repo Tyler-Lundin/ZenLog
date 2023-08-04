@@ -4,7 +4,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isNavOpen: false,
   isEntrySelectorOpen: false,
-  isDailyEntryOpen: false,
+  isVitalsOpen: false,
   isAddExerciseOpen: false,
 }
 
@@ -14,7 +14,7 @@ const uiSlice = createSlice({
   reducers: {
     toggleNav: (state) => { state.isNavOpen = !state.isNavOpen },
     toggleEntrySelector: (state) => { state.isEntrySelectorOpen = !state.isEntrySelectorOpen },
-    toggleDailyEntry: (state) => { state.isDailyEntryOpen = !state.isDailyEntryOpen },
+    toggleVitals: (state) => { state.isVitalsOpen = !state.isVitalsOpen },
     toggleAddExercise: (state) => { state.isAddExerciseOpen = !state.isAddExerciseOpen },
   }
 });
@@ -23,7 +23,7 @@ const uiSlice = createSlice({
 export const {
   toggleNav,
   toggleEntrySelector,
-  toggleDailyEntry,
+  toggleVitals,
   toggleAddExercise,
 } = uiSlice.actions;
 

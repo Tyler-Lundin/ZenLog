@@ -46,19 +46,19 @@ model VerificationToken {
 }
 
 model User {
-  id               String       @id @default(auto()) @map("_id") @db.ObjectId
-  name             String?
-  email            String?      @unique
-  emailVerified    DateTime?
-  image            String?
-  role             String       @default("user")
-  accounts         Account[]
-  sessions         Session[]
-  days             UserDay[]
-  goals            Goals[]
-  createdExercises String[]
-  friendships1     Friendship[] @relation("Friendship_User1")
-  friendships2     Friendship[] @relation("Friendship_User2")
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  name               String?
+  email              String?   @unique
+  emailVerified      DateTime?
+  image              String?
+  role               String    @default("user")
+  accounts           Account[]
+  sessions           Session[]
+  days               UserDay[]
+  goals              Goals[]
+  createdExercises   String[]
+  createdFood        String[]
+  createdIngredients String[]
 }
 
 model Goals {
@@ -79,13 +79,170 @@ model Goals {
   User User @relation(fields: [userId], references: [id])
 }
 
-enum GoalType {
-  WEIGHT
-  SLEEP
-  EXERCISE
-  MEDITATE
-  WATER
+model Relationship {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  relationshipType RelationshipType
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  userId           String           @db.ObjectId
+  friendId         String           @db.ObjectId
+  friendNickname   String?
 }
+
+model UserDay {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  day             Int
+  month           Int
+  year            Int
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String   @db.ObjectId
+  WeightEntries   String[] @db.ObjectId
+  SleepEntries    String[] @db.ObjectId
+  MoodEntries     String[] @db.ObjectId
+  ExerciseEntries String[] @db.ObjectId
+  FoodEntries     String[] @db.ObjectId
+  WaterEntries    String[] @db.ObjectId
+  JournalEntries  String[] @db.ObjectId
+  MeditateEntries String[] @db.ObjectId
+}
+
+type WeightEntry {
+  weight     Int
+  weightUnit WeightUnit
+}
+
+model ExerciseEntry {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String      @db.ObjectId
+  exerciseName String
+  exerciseId   String      @db.ObjectId
+  set          ExerciseSet
+  userDayId    String      @db.ObjectId
+  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime    @default(now())
+}
+
+type ExerciseSet {
+  reps       Int
+  weight     Int
+  weightUnit WeightUnit
+  intensity  Int
+  toFailure  Boolean
+  notes      String
+  tags       String[]
+}
+
+model VitalsEntry {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String      @db.ObjectId
+  userDayId    String      @db.ObjectId
+  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime    @default(now())
+  bodyweight   WeightEntry
+  sleep        SleepEntry  @relation(fields: [sleepEntryId], references: [id])
+  mood         MoodEntry   @relation(fields: [moodEntryId], references: [id])
+  water        WaterEntry  @relation(fields: [waterEntryId], references: [id])
+  food         FoodEntry   @relation(fields: [foodEntryId], references: [id])
+  sleepEntryId String      @db.ObjectId
+  moodEntryId  String      @db.ObjectId
+  waterEntryId String      @db.ObjectId
+  foodEntryId  String      @db.ObjectId
+}
+
+model Ingredient {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  calories      Int
+  servingSizeG  Int
+  fatTotalG     Int
+  fatSaturatedG Int
+  proteinG      Int
+  sodiumMG      Int
+  potassiumMG   Int
+  cholesterolMG Int
+  carbsG        Int
+  fiberG        Int
+  sugarsG       Int
+  foodEntry     FoodEntry @relation(fields: [foodEntryId], references: [id])
+  foodEntryId   String    @db.ObjectId
+}
+
+model FoodEntry {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  ingredients Ingredient[]
+  rating      Int
+  VitalsEntry VitalsEntry[]
+}
+
+model SleepEntry {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String        @db.ObjectId
+  userDayId   String        @db.ObjectId
+  hours       Int
+  updatedAt   DateTime      @updatedAt
+  createdAt   DateTime      @default(now())
+  VitalsEntry VitalsEntry[]
+}
+
+model JournalEntry {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  body  String
+}
+
+model MoodEntry {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String        @db.ObjectId
+  userDayId   String        @db.ObjectId
+  mood        Mood
+  updatedAt   DateTime      @updatedAt
+  createdAt   DateTime      @default(now())
+  VitalsEntry VitalsEntry[]
+}
+
+model WaterEntry {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  amount      Int
+  unit        VolumeUnit
+  VitalsEntry VitalsEntry[]
+}
+
+model MeditateEntry {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  minutes Int
+}
+
+// Exercise Models // // // // // // // // // // // // // // // // // // // // // //
+// ________  ____  ____  ________  _______      ______  _____   ______   ________  
+// |_   __  ||_  _||_  _||_   __  ||_   __ \   .' ___  ||_   _|.' ____ \ |_   __  | 
+//   | |_ \_|  \ \  / /    | |_ \_|  | |__) | / .'   \_|  | |  | (___ \_|  | |_ \_| 
+//   |  _| _    > `' <     |  _| _   |  __ /  | |         | |   _.____`.   |  _| _  
+//  _| |__/ | _/ /'`\ \_  _| |__/ | _| |  \ \_\ `.___.'\ _| |_ | \____) | _| |__/ | 
+// |________||____||____||________||____| |___|`.____ .'|_____| \______.'|________| 
+
+model Exercise {
+  id               String      @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  aliases          String[]
+  primaryMuscles   Muscle[]
+  secondaryMuscles Muscle[]
+  force            Force
+  skillLevel       SkillLevel
+  mechanic         Mechanic
+  equipment        Equipment[]
+  category         Category[]
+  instructions     String[]
+  description      String
+  tips             String[]
+}
+
+//  _________  ____  ____  _______  ________   ______   
+// |  _   _  ||_  _||_  _||_   __ \|_   __  |.' ____ \  
+// |_/ | | \_|  \ \  / /    | |__) | | |_ \_|| (___ \_| 
+//     | |       \ \/ /     |  ___/  |  _| _  _.____`.  
+//    _| |_      _|  |_    _| |_    _| |__/ || \____) | 
+//   |_____|    |______|  |_____|  |________| \______.' 
 
 type WeightGoal {
   target Int
@@ -112,178 +269,12 @@ type WaterGoal {
   totalGallons Int
 }
 
-model Friendship {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user1Id   String   @db.ObjectId
-  user2Id   String   @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user1 User @relation("Friendship_User1", fields: [user1Id], references: [id])
-  user2 User @relation("Friendship_User2", fields: [user2Id], references: [id])
-
-  @@unique([user1Id, user2Id])
-}
-
-model UserDay {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  day             Int
-  month           Int
-  year            Int
-  user            User     @relation(fields: [userId], references: [id])
-  userId          String   @db.ObjectId
-  WeightEntries   String[] @db.ObjectId
-  SleepEntries    String[] @db.ObjectId
-  MoodEntries     String[] @db.ObjectId
-  ExerciseEntries String[] @db.ObjectId
-  FoodEntries     String[] @db.ObjectId
-  WaterEntries    String[] @db.ObjectId
-  JournalEntries  String[] @db.ObjectId
-  MeditateEntries String[] @db.ObjectId
-}
-
-model WeightEntry {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String     @db.ObjectId
-  userDayId  String     @db.ObjectId
-  weight     Int
-  weightUnit WeightUnit
-  createdAt  DateTime   @default(now())
-}
-
-model ExerciseEntry {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String      @db.ObjectId
-  exerciseName String
-  exerciseId   String      @db.ObjectId
-  set          ExerciseSet
-  userDayId    String      @db.ObjectId
-  updatedAt    DateTime    @updatedAt
-  createdAt    DateTime    @default(now())
-}
-
-type ExerciseSet {
-  reps       Int
-  weight     Int
-  weightUnit WeightUnit
-  intensity  Int
-  toFailure  Boolean
-  notes      String
-  tags       String[]
-}
-
-model Ingredient {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  calories      Int
-  servingSizeG  Int
-  fatTotalG     Int
-  fatSaturatedG Int
-  proteinG      Int
-  sodiumMG      Int
-  potassiumMG   Int
-  cholesterolMG Int
-  carbsG        Int
-  fiberG        Int
-  sugarsG       Int
-  foodEntry     FoodEntry @relation(fields: [foodEntryId], references: [id])
-  foodEntryId   String    @db.ObjectId
-}
-
-model FoodEntry {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  ingredients Ingredient[]
-  rating      Int
-}
-
-model SleepEntry {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  userDayId String   @db.ObjectId
-  hours     Int
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-}
-
-model JournalEntry {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  text String
-}
-
-model MoodEntry {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  userDayId String   @db.ObjectId
-  mood      Mood
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-}
-
-model WaterEntry {
-  id     String     @id @default(auto()) @map("_id") @db.ObjectId
-  amount Int
-  unit   VolumeUnit
-}
-
-model MeditateEntry {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  minutes Int
-}
-
-enum Mood {
-  HAPPY
-  SAD
-  ANGRY
-  ANXIOUS
-  EXCITED
-  NEUTRAL
-  // Add more moods as necessary
-}
-
-enum LengthUnit {
-  METER
-  CENTIMETER
-  INCH
-  FOOT
-}
-
-enum VolumeUnit {
-  MILLILITER
-  LITER
-  FLUID_OUNCE
-  CUP
-  GALLON
-}
-
-enum TimeUnit {
-  SECOND
-  MINUTE
-  HOUR
-}
-
-enum WeightUnit {
-  GRAM
-  KILOGRAM
-  POUND
-  OUNCE
-}
-
-model Exercise {
-  id               String      @id @default(auto()) @map("_id") @db.ObjectId
-  name             String
-  aliases          String[]
-  primaryMuscles   Muscle[]
-  secondaryMuscles Muscle[]
-  force            Force
-  level            Level
-  mechanic         Mechanic
-  equipment        Equipment[]
-  category         Category[]
-  instructions     String[]
-  description      String
-  tips             String[]
-}
+//  ________  ____  _____  _____  _____  ____    ____   ______   
+// |_   __  ||_   \|_   _||_   _||_   _||_   \  /   _|.' ____ \  
+//   | |_ \_|  |   \ | |    | |    | |    |   \/   |  | (___ \_| 
+//   |  _| _   | |\ \| |    | '    ' |    | |\  /| |   _.____`.  
+//  _| |__/ | _| |_\   |_    \ \__/ /    _| |_\/_| |_ | \____) | 
+// |________||_____|\____|    `.__.'    |_____||_____| \______.' 
 
 enum Muscle {
   ABS
@@ -343,7 +334,7 @@ enum Force {
   ROTATION
 }
 
-enum Level {
+enum SkillLevel {
   BEGINNER
   INTERMEDIATE
   EXPERT
@@ -434,4 +425,74 @@ enum Category {
   STRONGMAN
   WEIGHTED_BODYWEIGHT
   YOGA
+}
+
+enum Mood {
+  ANGER
+  SADNESS
+  FEAR
+  EXCITEMENT
+  DISGUST
+  ANXIETY
+  SURPRISE
+  SATISFACTION
+  DEPRESSION
+  BOREDOM
+  AMUSEMENT
+  EMBARRASSMENT
+  PRIDE
+  GUILT
+  SHAME
+  AWE
+  CONTEMPT
+  INTEREST
+  ENVY
+  HATRED
+  LONELINESS
+  AFFECTION
+  ANNOYANCE
+  CALM
+}
+
+enum LengthUnit {
+  METER
+  CENTIMETER
+  INCH
+  FOOT
+}
+
+enum VolumeUnit {
+  MILLILITER
+  LITER
+  FLUID_OUNCE
+  CUP
+  GALLON
+}
+
+enum TimeUnit {
+  SECOND
+  MINUTE
+  HOUR
+}
+
+enum WeightUnit {
+  GRAM
+  KILOGRAM
+  POUND
+  OUNCE
+}
+
+enum GoalType {
+  WEIGHT
+  SLEEP
+  EXERCISE
+  MEDITATE
+  WATER
+}
+
+enum RelationshipType {
+  FRIEND
+  FOLLOWER
+  FOLLOWING
+  BLOCKED
 }

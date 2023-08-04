@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AppDispatch, RootState } from '..'
-import { toggleDailyEntry } from '../slices/uiSlice';
-import { setDailyEntriesDone } from '../slices/dashboardSlice';
+import { toggleVitals } from '../slices/uiSlice';
+import { setVitalsDone } from '../slices/dashboardSlice';
 
-const postDailyEntriesThunk = createAsyncThunk('dailyCheck/postDailyEntries', async (_, thunkAPI) => {
+const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState() as RootState
     const dispatch = thunkAPI.dispatch as AppDispatch
@@ -26,11 +26,11 @@ const postDailyEntriesThunk = createAsyncThunk('dailyCheck/postDailyEntries', as
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue({ error: result.message })
     }
-    dispatch(toggleDailyEntry())
-    dispatch(setDailyEntriesDone())
+    dispatch(toggleVitals())
+    dispatch(setVitalsDone())
   } catch (error: any) {
     return thunkAPI.rejectWithValue({ error: error.message || 'Error posting Daily Checkx' })
   }
 })
 
-export default postDailyEntriesThunk; 
+export default postVitalsThunk; 

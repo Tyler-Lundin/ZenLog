@@ -6,15 +6,15 @@ import { RootState } from "@/_store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Entry, nextStep, prevStep } from "@/_store/slices/dashboardSlice";
-import postDailyEntriesThunk from "@/_store/thunks/postDailyEntriesThunk";
-import { toggleDailyEntry } from "@/_store/slices/uiSlice";
+import postVitalsThunk from "@/_store/thunks/postVitalsThunk";
+import { toggleVitals } from "@/_store/slices/uiSlice";
 import { Mood } from "@prisma/client";
 
 const isComplete = (o: Entry<number | Mood>) => o.status === 'COMPLETE';
 
-export default function useDailyEntries() {
+export default function useVitals() {
   const { currentStep, mood, bodyweight, sleep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
-  const { isDailyEntryOpen } = useSelector((state: RootState) => state.ui)
+  const { isVitalsOpen } = useSelector((state: RootState) => state.ui)
   const dispatch = useDispatch<AppDispatch>();
   const STEPS = [
     <BodyweightStep key={`step-0`} />,
@@ -46,12 +46,12 @@ export default function useDailyEntries() {
     currentStep,
     nextStep: () => dispatch(nextStep()),
     prevStep: () => dispatch(prevStep()),
-    handleClose: () => dispatch(toggleDailyEntry()),
-    handleSubmit: () => dispatch(postDailyEntriesThunk()),
-    handleOpen: () => dispatch(toggleDailyEntry()),
+    handleClose: () => dispatch(toggleVitals()),
+    handleSubmit: () => dispatch(postVitalsThunk()),
+    handleOpen: () => dispatch(toggleVitals()),
     isLastStep,
     isFirstStep,
     isDone,
-    isDailyEntryOpen,
+    isVitalsOpen,
   }
 }

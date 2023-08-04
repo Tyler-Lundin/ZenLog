@@ -8,7 +8,7 @@ const TODAYS_YEAR = new Date().getFullYear()
 type Status = 'INCOMPLETE' | 'COMPLETE' | 'SKIPPED'
 export type Entry<T> = { value: T, status: Status }
 
-export interface DailyEntries {
+export interface Vitals {
   currentStep: number,
   bodyweight: Entry<number>,
   sleep: Entry<number>,
@@ -24,7 +24,7 @@ export interface UserDayState {
 
 export interface DashboardState {
   userDay: UserDayState,
-  dailyEntries: DailyEntries,
+  dailyEntries: Vitals,
 }
 
 const initialState: DashboardState = {
@@ -58,7 +58,7 @@ const dashboardSlice = createSlice({
   initialState,
   reducers: {
     setUserDay(state, action: PayloadAction<UserDay>) { state.userDay = action.payload },
-    setDailyEntries(state, action: PayloadAction<DailyEntries>) {
+    setVitals(state, action: PayloadAction<Vitals>) {
       state.dailyEntries = {
         currentStep: state.dailyEntries.currentStep,
         bodyweight: {
@@ -99,9 +99,9 @@ const dashboardSlice = createSlice({
       state.userDay.day = TODAYS_DAY
       state.userDay.year = TODAYS_YEAR
     },
-    nextDailyEntryStep(state) { state.dailyEntries.currentStep++ },
-    previousDailyEntryStep(state) { state.dailyEntries.currentStep-- },
-    setDailyEntriesDone(state) {
+    nextVitalsStep(state) { state.dailyEntries.currentStep++ },
+    previousVitalsStep(state) { state.dailyEntries.currentStep-- },
+    setVitalsDone(state) {
       state.dailyEntries.mood.status = 'COMPLETE'
       state.dailyEntries.sleep.status = 'COMPLETE'
       state.dailyEntries.bodyweight.status = 'COMPLETE'
@@ -111,7 +111,7 @@ const dashboardSlice = createSlice({
 
 export const {
   setUserDay,
-  setDailyEntries,
+  setVitals,
   setBodyweight,
   setSleep,
   setMood,
@@ -120,9 +120,9 @@ export const {
   decrementDate,
   incrementDate,
   resetDate,
-  nextDailyEntryStep,
-  previousDailyEntryStep,
-  setDailyEntriesDone
+  nextVitalsStep,
+  previousVitalsStep,
+  setVitalsDone
 } = dashboardSlice.actions
 
 
