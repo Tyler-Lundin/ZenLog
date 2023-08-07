@@ -1,7 +1,7 @@
 'use client';
 import useVitals from "@/hooks/useVitals";
 import StepControls from "../StepControls";
-import { Button } from "../ui/button";
+import VitalsButton from "./VitalsButton";
 
 
 export default function VitalsSteps() {
@@ -9,17 +9,9 @@ export default function VitalsSteps() {
   const stepControlsProps = { isLastStep, isFirstStep, nextStep, prevStep, handleClose, handleSubmit, }
 
 
-  if (!isVitalsOpen)
-    return (
-      <Button
-        variant="blue"
-        className="font-bold uppercase rounded-md w-fit m-4 px-4 py-1 dark:text-white"
-        onClick={handleOpen}>
-        Vitals
-      </Button>
-    )
+  if (!isVitalsOpen) return <VitalsButton onClick={handleOpen} />
   return (
-    <div className="py-8 w-screen relative">
+    <div className="fixed top-0 left-0 z-50 h-screen py-20 w-screen bg-white/80 dark:bg-black/80 backdrop-blur-sm grid place-content-center">
       <StepControls type="done" {...stepControlsProps} />
       {STEPS[currentStep]}
     </div>
