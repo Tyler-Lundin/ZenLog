@@ -51,11 +51,13 @@ export default function NumberProgressBar({
   return (
     <CircularProgressbarWithChildren
       value={value}
+      maxValue={goal}
       strokeWidth={strokeWidth}
       styles={buildStyles({
-        strokeLinecap: "butt",
+        strokeLinecap: "round",
         pathColor,
-        trailColor
+        trailColor,
+        pathTransitionDuration: 1,
       })}
     >
       <div className="flex justify-between text-sm">

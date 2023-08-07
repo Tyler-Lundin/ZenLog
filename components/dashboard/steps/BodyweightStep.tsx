@@ -9,7 +9,7 @@ import { setBodyweight } from "@/_store/slices/dashboardSlice"
 export default function BodyweightStep() {
   const { bodyweight } = useSelector((state: RootState) => state.dashboard.dailyEntries)
   const dispatch = useDispatch<AppDispatch>();
-  const [inputValue, setInputValue] = useState<string>(bodyweight.value.toString() ? '000' : bodyweight.value.toString())
+  const [inputValue, setInputValue] = useState<string>(bodyweight.value.toString() ? '0' : bodyweight.value.toString())
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let W = formatLeadingZero(e.target.value) as string;

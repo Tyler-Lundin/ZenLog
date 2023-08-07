@@ -37,7 +37,7 @@ export function useUserGoals() {
   const exerciseGoal: ExerciseGoal = {
     totalReps: 100,
     totalEntries: 10,
-    totalVolume: 1000,
+    totalVolume: 10000,
     totalWeight: 1000
   }
   const meditateGoal: MeditateGoal = {
