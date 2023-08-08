@@ -62,19 +62,19 @@ model User {
 }
 
 model Goals {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String        @db.ObjectId
-  userDayId    String        @db.ObjectId
-  type         GoalType
-  value        Int
-  updatedAt    DateTime      @updatedAt
-  createdAt    DateTime      @default(now())
-  deadline     DateTime?
-  weightGoal   WeightGoal?
-  sleepGoal    SleepGoal?
-  exerciseGoal ExerciseGoal?
-  meditateGoal MeditateGoal?
-  waterGoal    WaterGoal?
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String          @db.ObjectId
+  userDayId      String          @db.ObjectId
+  type           GoalType
+  value          Int
+  updatedAt      DateTime        @updatedAt
+  createdAt      DateTime        @default(now())
+  deadline       DateTime?
+  bodyweightGoal BodyweightGoal?
+  sleepGoal      SleepGoal?
+  exerciseGoal   ExerciseGoal?
+  meditateGoal   MeditateGoal?
+  waterGoal      WaterGoal?
 
   User User @relation(fields: [userId], references: [id])
 }
@@ -232,7 +232,7 @@ model Exercise {
 //    _| |_      _|  |_    _| |_    _| |__/ || \____) | 
 //   |_____|    |______|  |_____|  |________| \______.' 
 
-type WeightGoal {
+type BodyweightGoal {
   target Int
 }
 
