@@ -17,3 +17,8 @@ export function formatLeadingZero(num: string | number): string {
   return String(num).replace(/^0+(?=\d)/, '');
 }
 
+
+export const dateToTime = (date: string) => {
+  const D = new Date(date)
+  return D.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+}
