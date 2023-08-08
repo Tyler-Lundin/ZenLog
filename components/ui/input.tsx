@@ -5,7 +5,7 @@ import { forwardRef } from "react"
 
 
 const inputVariants = cva(
-  "flex h-10 rounded-md border border-input px-3 py-2 text-sm",
+  "flex h-10 rounded-md border border-input p-1 text-sm",
   {
     variants: {
       variant: {
@@ -29,7 +29,7 @@ const inputVariants = cva(
         "7xl": "h-32 px-28 rounded-md text-7xl",
         "8xl": "h-36 px-32 rounded-md text-8xl",
         "8xlFit": "h-min px-4 rounded-md text-6xl md:text-8xl py-0",
-        search: "h-14 px-4 text-xl font-thin",
+        search: "p-1 text-xl font-thin",
       },
     },
     defaultVariants: {
