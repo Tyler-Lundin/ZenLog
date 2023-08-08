@@ -16,6 +16,9 @@ function ExerciseEntries() {
           <ExerciseEntry key={exercise.id} exercise={exercise} />
         ))}
       <div className="h-8" />
+      <div className="h-32 opacity-50">
+        <h3 className="text-center text-2xl font-bold dark:text-white"> No more exercises to show </h3>
+      </div>
     </>
   )
 }

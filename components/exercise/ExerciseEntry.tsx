@@ -1,12 +1,8 @@
 import { ExerciseEntry as IExerciseEntry, } from "@prisma/client"
 import { Badge } from "../ui/badge"
-import { formatRepsWeightAndUnit } from "@/lib/utils"
+import { dateToTime, formatRepsWeightAndUnit } from "@/lib/utils"
 
 
-const dateToTime = (date: string) => {
-  const D = new Date(date)
-  return D.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-}
 
 export default function ExerciseEntry({ exercise }: { exercise: IExerciseEntry }) {
   const exerciseName = exercise?.exerciseName;

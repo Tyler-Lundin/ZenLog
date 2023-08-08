@@ -3,7 +3,6 @@ import { formatRepsWeightAndUnit } from "@/lib/utils";
 import { RootState } from "@/_store"
 import { useState } from "react";
 import { useSelector } from "react-redux"
-import ExerciseEntry from "../ExerciseEntry";
 
 
 export default function ExerciseOverviewStep() {
