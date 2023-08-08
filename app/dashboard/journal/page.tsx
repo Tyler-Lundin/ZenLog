@@ -5,7 +5,7 @@ import { dateToTime } from "@/lib/utils";
 import { JournalEntry } from "@prisma/client";
 
 
-const JournalEntryCard = ({ id, title, body, createdAt }: Omit<JournalEntry, "updatedAt">) => (
+const JournalEntryCard = ({ id, title, body, createdAt }: Omit<JournalEntry, "updatedAt" | "userId" | "userDayId">) => (
   <div className="flex flex-col gap-2 p-4 bg-white rounded shadow" key={id}>
     <div className="flex flex-row justify-between">
       <div className="flex flex-col">

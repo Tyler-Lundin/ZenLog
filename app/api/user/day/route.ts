@@ -37,24 +37,24 @@ export async function POST(req: Request, res: Response) {
     )
   }
 
-  const isBodyweightDone = Array.isArray(userDay.WeightEntries) && userDay.WeightEntries.length > 0
+  const isBodyweightDone = Array.isArray(userDay.BodyweightEntries) && userDay.BodyweightEntries.length > 0
   const isMoodDone = Array.isArray(userDay.MoodEntries) && userDay.MoodEntries.length > 0
   const isSleepDone = Array.isArray(userDay.SleepEntries) && userDay.SleepEntries.length > 0
 
   let bodyweight = { value: 0, isDone: false }
-  let mood = { value: Mood.NEUTRAL as Mood, isDone: false }
+  let mood = { value: Mood.CALM as Mood, isDone: false }
   let sleep = { value: 0, isDone: false }
 
   if (isBodyweightDone) {
-    const prevBodyweightEntry = await prisma.weightEntry.findUnique({
-      where: { id: userDay.WeightEntries[userDay.WeightEntries.length - 1] },
+    const prevBodyweightEntry = await prisma.bodyweightEntry.findUnique({
+      where: { id: userDay.BodyweightEntries.at(-1) },
     })
     if (prevBodyweightEntry) bodyweight = { value: prevBodyweightEntry.weight, isDone: true }
   }
 
   if (isMoodDone) {
     const prevMoodEntry = await prisma.moodEntry.findUnique({
-      where: { id: userDay.MoodEntries[userDay.MoodEntries.length - 1] },
+      where: { id: userDay.MoodEntries.at(-1) },
     })
     if (prevMoodEntry) mood = { value: prevMoodEntry.mood, isDone: true }
   }

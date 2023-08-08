@@ -1,9 +1,8 @@
-// Daily Check In
-
+// VITALS ROUTES
 import { Entry } from '@/_store/slices/dashboardSlice'
 import { authOptions } from '@/server/authOptions'
 import { prisma } from '@/server/db'
-import { Mood, MoodEntry, SleepEntry, WeightEntry } from '@prisma/client'
+import { Mood, MoodEntry, SleepEntry, BodyweightEntry } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
@@ -33,12 +32,12 @@ export async function POST(req: Request, res: Response) {
       userDayId: string
     }
 
-    let weightEntry: WeightEntry | undefined = undefined
+    let bodyweightEntry: BodyweightEntry | undefined = undefined
     let moodEntry: MoodEntry | undefined = undefined
     let sleepEntry: SleepEntry | undefined = undefined
 
     if (bodyweight !== undefined || bodyweight > 0 || bodyweight < 999) {
-      weightEntry = await prisma.weightEntry.create({
+      bodyweightEntry = await prisma.bodyweightEntry.create({
         data: {
           weight: bodyweight.value,
           weightUnit: 'POUND',
@@ -68,12 +67,12 @@ export async function POST(req: Request, res: Response) {
       })
     }
 
-    if (!weightEntry && !moodEntry && !sleepEntry)
+    if (!bodyweightEntry && !moodEntry && !sleepEntry)
       return NextResponse.json({ status: 'error', message: 'Could not create entry' })
 
     const formatData = () => {
       let D = {} as { [key: string]: any }
-      if (weightEntry) D.WeightEntries = { push: weightEntry.id }
+      if (bodyweightEntry) D.WeightEntries = { push: bodyweightEntry.id }
       if (moodEntry) D.MoodEntries = { push: moodEntry.id }
       if (sleepEntry) D.SleepEntries = { push: sleepEntry.id }
       return D
