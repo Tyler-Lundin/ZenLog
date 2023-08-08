@@ -48,12 +48,8 @@ import { Badge } from "@/components/ui/badge";
 
 export default function LearnPage() {
 
-  const TECH_TAGS = ["Next.js", "React", "Typescript", "Prisma", "MongoDB", "Redux", "React Query", "React Hook Form", "React Toastify", "React Icons", "React Use"];
-  const BODY = [
-    "ZenLog is a web application designed to help you keep track of your daily activities and habits.",
-    "It was created for the purpose of learning and practicing web development, and is still a work in progress.",
-    "The application is built with Next.js, React, Typescript, and Prisma.",
-  ]
+  const TECH_TAGS = ["Next.js", "React", "Typescript", "Tailwind", "Prisma", "MongoDB", "Redux", "React Query", "React Hook Form", "React Toastify", "React Icons", ""];
+  const BODY = "ZenLog tracks and calculates your next step";
 
   const ESSENTIALS = [
     { category: "EXERCISE", description: "Monitor and evaluate your physical activity patterns and regimen for better health outcomes." },
@@ -65,20 +61,20 @@ export default function LearnPage() {
   ]
 
   return (
-    <Page isOffset={false}>
-      <span className="grid justify-center items-center bg-black  h-16">
+    <Page isOffset={false} className="bg-black">
+      <span className="grid justify-center items-center bg-black h-16">
         <Logo isCollapsible={false} />
       </span>
       <div className="p-4 dark:text-white">
+        <p className="text-2xl font-bold">{BODY}</p>
         <ul className="flex flex-col gap-2 list-none">
           {ESSENTIALS.map((item, i) => (
-            <li key={`overview-item-${i}`} className="text-lg font-light bg-yellow-400 rounded-md p-4">
+            <li key={`overview-item-${i}`} className="text-lg font-light rounded-md p-4">
               <h3 className="text-4xl font-bold">{item.category}</h3>
-              <span className="text-lg font-light"> {item.description}</span>
             </li>
           ))}
         </ul>
-        <ul className="flex flex-wrap gap-2 justify-center mb-4">
+        <ul className="flex flex-wrap gap-2 justify-center my-4">
           {TECH_TAGS.map((tag, i) => (
             <Badge variant={"default"} key={`overview-tag-${i}`}>{tag}</Badge>
           ))}
