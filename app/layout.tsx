@@ -2,6 +2,7 @@ import Providers from '@/components/Providers'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Analytics } from "@vercel/analytics/react";
+import Background from '@/components/Background';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({
         <Analytics />
         <Providers>
           <div className=" min-h-screen w-screen overflow-hidden">
+            <Background />
             {children}
           </div>
         </Providers>

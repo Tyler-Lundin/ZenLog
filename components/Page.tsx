@@ -15,7 +15,6 @@ export default function Page({ children, className, isOffset, ...props }: PagePr
       {...props}
       className={`min-h-screen w-screen relative ${className} `}>
       {isOffset && <div className="h-16" />}
-      <Background />
       {children}
     </main>
   )
