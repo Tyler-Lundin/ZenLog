@@ -25,7 +25,7 @@ export async function GET(req: Request, res: Response) {
     }
   });
 
-  const weight = await prisma.weightEntry.findMany({
+  const bodyweight = await prisma.bodyweightEntry.findMany({
     where: {
       userId: id,
       userDayId: dayId,
@@ -55,12 +55,12 @@ export async function GET(req: Request, res: Response) {
   const totalReps = exercises.reduce((acc, curr) => acc + curr.set.reps, 0);
   const totalWeight = exercises.reduce((acc, curr) => acc + curr.set.weight, 0);
   const totalHours = sleep.reduce((acc, curr) => acc + curr.hours, 0);
-  const averageWeight = weight.reduce((acc, curr) => acc + curr.weight, 0) / weight.length;
+  const averageBodyweight = bodyweight.reduce((acc, curr) => acc + curr.weight, 0) / bodyweight.length;
 
 
   return NextResponse.json({
     sleep: { totalHours, sleepEntries: sleep.length },
-    weight: { averageWeight, weightEntries: weight.length },
+    weight: { averageBodyweight, bodyweightEntries: bodyweight.length },
     mood: { mostRecentMood: mood[mood.length - 1]?.mood, moodEntries: mood.length },
     exercise: { totalReps, totalWeight, totalExercises: exercises.length, totalVolume: totalReps * totalWeight },
   })
