@@ -1,39 +1,7 @@
-import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
-import React, { StyleHTMLAttributes } from "react";
-import _ from "lodash";
+import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
+import React from "react";
 
 const strokeWidth = 6;
-
-function Separator(props: { turns: number, style: any }) {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        height: "100%",
-        transform: `rotate(${props.turns}turn)`
-      }}
-    >
-      <div style={props.style} />
-    </div>
-  );
-}
-
-function RadialSeparators(props: { count: number }) {
-  const turns = 1 / props.count;
-  return (
-    <>
-      {_.range(props.count).map((i: number, index: number) => (
-        <Separator key={index} turns={i * turns}
-          style={{
-            background: "#fff",
-            width: "3px",
-            height: `${strokeWidth}%`
-          }}
-        />
-      ))}
-    </>
-  );
-}
 
 export default function NumberProgressBar({
   value,
