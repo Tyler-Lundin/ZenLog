@@ -9,6 +9,7 @@ import { Entry, nextStep, prevStep } from "@/_store/slices/dashboardSlice";
 import postVitalsThunk from "@/_store/thunks/postVitalsThunk";
 import { toggleVitals } from "@/_store/slices/uiSlice";
 import { Mood } from "@prisma/client";
+import VitalsOverview from "@/components/vitals/VitalsOverview";
 
 const isComplete = (o: Entry<number | Mood>) => o.status === 'COMPLETE';
 
@@ -20,6 +21,7 @@ export default function useVitals() {
     <BodyweightStep key={`step-0`} />,
     <MoodStep key={`step-1`} />,
     <SleepStep key={`step-2`} />,
+    <VitalsOverview key={`step-3`} />,
   ]
 
   const isLastStep = currentStep === STEPS.length - 1;
