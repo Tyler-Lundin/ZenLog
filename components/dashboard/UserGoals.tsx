@@ -1,4 +1,4 @@
-import { WeightGoal, SleepGoal, ExerciseGoal, MeditateGoal } from "@prisma/client"
+import { BodyweightGoal, SleepGoal, ExerciseGoal, MeditateGoal } from "@prisma/client"
 
 
 // type WeightGoal {
@@ -28,7 +28,7 @@ import { WeightGoal, SleepGoal, ExerciseGoal, MeditateGoal } from "@prisma/clien
 
 export function useUserGoals() {
 
-  const weightGoal: WeightGoal = {
+  const bodyweightGoal: BodyweightGoal = {
     target: 185
   }
   const sleepGoal: SleepGoal = {
@@ -45,7 +45,7 @@ export function useUserGoals() {
   }
 
   return {
-    weightGoal,
+    bodyweightGoal,
     sleepGoal,
     exerciseGoal,
     meditateGoal,

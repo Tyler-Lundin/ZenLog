@@ -34,7 +34,7 @@ export default function SleepStep() {
   return (
     <div className="relative grid justify-center h-fit rounded-lg text-white pt-2 w-full justify-items-center">
       <h1 className="text-center text-black dark:text-white text-3xl md:text-6xl font-black">SLEEP</h1>
-      <Input variant="glass" size="8xlFit" className=" text-center text-white" type="number" value={inputValue} onChange={handleChange} />
+      <Input variant="glass" size="8xlFit" className=" text-center dark:text-white" type="number" value={inputValue} onChange={handleChange} />
     </div>
   )
 }
