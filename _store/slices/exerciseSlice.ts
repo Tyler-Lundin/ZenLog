@@ -82,7 +82,8 @@ const exerciseSlice = createSlice({
       state.sortOrder = state.sortOrder === "asc" ? "desc" : "asc";
     },
     removeTag(state, action) {
-      state.newEntry.tags = state.newEntry.tags.filter(tag => tag !== action.payload)
+      state.newEntry.tags = state.newEntry.tags.filter((_, index) => index !== action.payload);
+
     },
     toggleIsNewEntrySubmitting(state) { state.newEntry.isSubmitting = !state.newEntry.isSubmitting },
     toggleIsNewEntrySubmitted(state) { state.newEntry.isSubmitted = !state.newEntry.isSubmitted },

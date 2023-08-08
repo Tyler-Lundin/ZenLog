@@ -45,7 +45,7 @@ const initialState: DashboardState = {
       status: 'COMPLETE',
     },
     mood: {
-      value: Mood.NEUTRAL,
+      value: Mood.CALM,
       status: 'COMPLETE',
     }
   }

@@ -90,36 +90,20 @@ model Relationship {
 }
 
 model UserDay {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  day             Int
-  month           Int
-  year            Int
-  user            User     @relation(fields: [userId], references: [id])
-  userId          String   @db.ObjectId
-  WeightEntries   String[] @db.ObjectId
-  SleepEntries    String[] @db.ObjectId
-  MoodEntries     String[] @db.ObjectId
-  ExerciseEntries String[] @db.ObjectId
-  FoodEntries     String[] @db.ObjectId
-  WaterEntries    String[] @db.ObjectId
-  JournalEntries  String[] @db.ObjectId
-  MeditateEntries String[] @db.ObjectId
-}
-
-type WeightEntry {
-  weight     Int
-  weightUnit WeightUnit
-}
-
-model ExerciseEntry {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String      @db.ObjectId
-  exerciseName String
-  exerciseId   String      @db.ObjectId
-  set          ExerciseSet
-  userDayId    String      @db.ObjectId
-  updatedAt    DateTime    @updatedAt
-  createdAt    DateTime    @default(now())
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  day               Int
+  month             Int
+  year              Int
+  user              User     @relation(fields: [userId], references: [id])
+  userId            String   @db.ObjectId
+  BodyweightEntries String[] @db.ObjectId
+  SleepEntries      String[] @db.ObjectId
+  MoodEntries       String[] @db.ObjectId
+  ExerciseEntries   String[] @db.ObjectId
+  FoodEntries       String[] @db.ObjectId
+  WaterEntries      String[] @db.ObjectId
+  JournalEntries    String[] @db.ObjectId
+  MeditateEntries   String[] @db.ObjectId
 }
 
 type ExerciseSet {
@@ -130,23 +114,6 @@ type ExerciseSet {
   toFailure  Boolean
   notes      String
   tags       String[]
-}
-
-model VitalsEntry {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String      @db.ObjectId
-  userDayId    String      @db.ObjectId
-  updatedAt    DateTime    @updatedAt
-  createdAt    DateTime    @default(now())
-  bodyweight   WeightEntry
-  sleep        SleepEntry  @relation(fields: [sleepEntryId], references: [id])
-  mood         MoodEntry   @relation(fields: [moodEntryId], references: [id])
-  water        WaterEntry  @relation(fields: [waterEntryId], references: [id])
-  food         FoodEntry   @relation(fields: [foodEntryId], references: [id])
-  sleepEntryId String      @db.ObjectId
-  moodEntryId  String      @db.ObjectId
-  waterEntryId String      @db.ObjectId
-  foodEntryId  String      @db.ObjectId
 }
 
 model Ingredient {
@@ -168,25 +135,25 @@ model Ingredient {
 }
 
 model FoodEntry {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   ingredients Ingredient[]
   rating      Int
-  VitalsEntry VitalsEntry[]
 }
 
 model SleepEntry {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String        @db.ObjectId
-  userDayId   String        @db.ObjectId
-  hours       Int
-  updatedAt   DateTime      @updatedAt
-  createdAt   DateTime      @default(now())
-  VitalsEntry VitalsEntry[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  userDayId String   @db.ObjectId
+  hours     Int
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 
 model JournalEntry {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  userDayId String   @db.ObjectId
   title     String
   body      String
   createdAt DateTime @default(now())
@@ -194,25 +161,33 @@ model JournalEntry {
 }
 
 model MoodEntry {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String        @db.ObjectId
-  userDayId   String        @db.ObjectId
-  mood        Mood
-  updatedAt   DateTime      @updatedAt
-  createdAt   DateTime      @default(now())
-  VitalsEntry VitalsEntry[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  userDayId String   @db.ObjectId
+  mood      Mood
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 
 model WaterEntry {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  amount      Int
-  unit        VolumeUnit
-  VitalsEntry VitalsEntry[]
+  id     String     @id @default(auto()) @map("_id") @db.ObjectId
+  amount Int
+  unit   VolumeUnit
 }
 
 model MeditateEntry {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   minutes Int
+}
+
+model BodyweightEntry {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String     @db.ObjectId
+  userDayId  String     @db.ObjectId
+  weight     Int
+  weightUnit WeightUnit
+  updatedAt  DateTime   @updatedAt
+  createdAt  DateTime   @default(now())
 }
 
 // Exercise Models // // // // // // // // // // // // // // // // // // // // // //
@@ -222,6 +197,17 @@ model MeditateEntry {
 //   |  _| _    > `' <     |  _| _   |  __ /  | |         | |   _.____`.   |  _| _  
 //  _| |__/ | _/ /'`\ \_  _| |__/ | _| |  \ \_\ `.___.'\ _| |_ | \____) | _| |__/ | 
 // |________||____||____||________||____| |___|`.____ .'|_____| \______.'|________| 
+
+model ExerciseEntry {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String      @db.ObjectId
+  exerciseName String
+  exerciseId   String      @db.ObjectId
+  set          ExerciseSet
+  userDayId    String      @db.ObjectId
+  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime    @default(now())
+}
 
 model Exercise {
   id               String      @id @default(auto()) @map("_id") @db.ObjectId
@@ -430,30 +416,66 @@ enum Category {
 }
 
 enum Mood {
-  ANGER
-  SADNESS
-  FEAR
-  EXCITEMENT
-  DISGUST
-  ANXIETY
-  SURPRISE
-  SATISFACTION
-  DEPRESSION
-  BOREDOM
-  AMUSEMENT
-  EMBARRASSMENT
-  PRIDE
-  GUILT
-  SHAME
-  AWE
-  CONTEMPT
-  INTEREST
-  ENVY
-  HATRED
-  LONELINESS
   AFFECTION
+  AGITATION
+  AMUSEMENT
+  ANGER
   ANNOYANCE
+  ANXIETY
+  APATHY
+  AWE
+  BOREDOM
   CALM
+  CONFUSION
+  CONTEMPT
+  CURIOSITY
+  DEPRESSION
+  DESIRE
+  DESPAIR
+  DISAPPOINTMENT
+  DISGUST
+  DOUBT
+  EAGERNESS
+  EMBARRASSMENT
+  ENVY
+  EXCITEMENT
+  FEAR
+  FRUSTRATION
+  GRATITUDE
+  GRIEF
+  GUILT
+  HAPPINESS
+  HATRED
+  HOPE
+  HOSTILITY
+  HUMILIATION
+  INTEREST
+  JEALOUSY
+  JOY
+  LONELINESS
+  LOVE
+  NERVOUSNESS
+  OPTIMISM
+  OUTRAGE
+  PANIC
+  PASSION
+  PITY
+  PRIDE
+  RELIEF
+  REMORSE
+  RESIGNATION
+  SADNESS
+  SATISFACTION
+  SHAME
+  SHOCK
+  SORROW
+  SURPRISE
+  SYMPATHY
+  TERROR
+  TRUST
+  WONDER
+  WORRY
+  ZEAL
 }
 
 enum LengthUnit {
