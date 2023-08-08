@@ -84,11 +84,13 @@ export default function LogExerciseEntry() {
         <div className="grid relative bg-white dark:bg-black overflow-x-auto w-screen pt-8">
           <Breadcrumbs breadcrumbs={breadcrumbs} currentStep={currentStep} />
         </div>
+        <div className="fixed w-screen top-1/2 left-0 -translate-y-1/2 z-50">
+          <StepControls {...stepControlsProps} />
+        </div>
         <div className="overflow-y-auto h-full">
           {STEPS[currentStep].component}
         </div>
         <div className="fixed bottom-0 left-0 w-screen bg-white dark:bg-black py-4 grid place-content-center">
-          <StepControls {...stepControlsProps} />
           <Button disabled={!isReady} variant={!isReady ? "glassRed" : "glassGreen"} onClick={handleSubmit}>Log Exercise</Button>
         </div>
       </div>

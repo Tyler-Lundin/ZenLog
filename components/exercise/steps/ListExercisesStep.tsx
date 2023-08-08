@@ -36,7 +36,7 @@ export default function ListExercisesStep() {
                 dispatch(setNewExercise({ exerciseId: exercise.id, exerciseName: exercise.name }))
                 dispatch(nextExerciseStep())
               }} className={`flex gap-8 items-center w-full py-8 px-4`} >
-                <h2 className={`w-full text-2xl font-thin text-left`}>{exercise.name}</h2>
+                <h2 className={`w-full text-2xl font-thin text-center`}>{exercise.name}</h2>
               </Button>
             </div>
           ))}

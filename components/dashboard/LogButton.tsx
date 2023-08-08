@@ -13,7 +13,7 @@ const dispatches = {
 }
 
 export default function LogButton({
-  className = "fixed bottom-4 right-4 z-40",
+  className = "fixed bottom-4 right-2 z-40",
   dispatchName = 'toggleEntrySelector'
 }: {
   className?: string
@@ -23,10 +23,10 @@ export default function LogButton({
 
 
   return (
-    <Button variant="green" onClick={() => router.push('/dashboard/exercise')} className={`${className} aspect-square rounded-full outline-black  grid  place-items-center font-bold w-40 h-16`}>
-      <div className="flex">
-        <IoBarbell size="30" />
-        <h2 className="uppercase font-bold">Exercise</h2>
+    <Button variant="green" onClick={() => router.push('/dashboard/exercise')} className={`${className} aspect-square rounded-full outline-black  grid  place-items-center font-bold h-12`}>
+      <div className="flex gap-2">
+        <IoBarbell size="20" className="text-white dark:text-black" />
+        <h2 className="uppercase font-bold text-white dark:text-black text-sm md:text-xl">Exercise</h2>
       </div>
     </Button>
   )
