@@ -1,16 +1,17 @@
+"use client"
+import useIsDarkMode from "@/hooks/useIsDarkmode";
 import { useEffect, useState } from "react";
 
 
 export default function Background() {
-  const numLayers = 3
-  const layerMultiplier = 20
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const size = 50
   const [angle, setAngle] = useState(0);  // Initial angle
+  const isDarkMode = useIsDarkMode();
+  const numLayers = 2;
   const speed = 0.01; // Speed of rotation, adjust as needed
   useEffect(() => {
     const circleSteps = () => {
-      const radius = 100;
+      const radius = 150;
       const center = { x: 0, y: 0 };
       const nextX = center.x + radius * Math.cos(angle);
       const nextY = center.y + radius * Math.sin(angle);
@@ -25,6 +26,8 @@ export default function Background() {
     return () => clearInterval(interval);
   }, [angle]);
 
+  const SZ = 80
+
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-hidden" >
       {
@@ -35,9 +38,9 @@ export default function Background() {
               style={{
                 width: "250vw", height: "250vh",
                 transform: `translate(${pos.x / (i + 1)}px, ${pos.y / (i + 1)}px)`,
-                opacity: `50%`,
-                backgroundImage: ` radial-gradient(rgb(100,100,100) ${numLayers - (i)}px, transparent 1px)`,
-                backgroundSize: `${size + i * 10 + (i + 1 * layerMultiplier)}px ${size + i * 10 + (i + 1 * layerMultiplier)}px`,
+                opacity: 0.6,
+                backgroundImage: ` radial-gradient(${isDarkMode ? "rgb(200,200,200)" : "rgb(0,0,0)"} ${i}px, transparent 1px)`,
+                backgroundSize: `${SZ + i * 2}px ${SZ + i * 2}px`,
                 backgroundPosition: '0 0, 14px 14px'
               }}
               key={`layer-${i}`}>
