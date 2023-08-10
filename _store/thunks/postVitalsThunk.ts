@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AppDispatch, RootState } from '..'
 import { toggleVitals } from '../slices/uiSlice';
 import { setVitalsDone } from '../slices/dashboardSlice';
-import { PostVitalsRequestBody } from '@/app/api/log/vitals/route';
+import { PostVitalsRequestBody } from '@/types/global';
 
 const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thunkAPI) => {
   try {

@@ -5,11 +5,12 @@ import SleepStep from "@/components/dashboard/steps/SleepStep";
 import { RootState } from "@/_store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Entry, nextStep, prevStep } from "@/_store/slices/dashboardSlice";
+import { nextStep, prevStep } from "@/_store/slices/dashboardSlice";
 import postVitalsThunk from "@/_store/thunks/postVitalsThunk";
 import { toggleVitals } from "@/_store/slices/uiSlice";
 import { Mood } from "@prisma/client";
 import VitalsOverview from "@/components/vitals/VitalsOverview";
+import { Entry } from "@/types/global";
 
 const isComplete = (o: Entry<number | Mood>) => o.status === 'COMPLETE';
 

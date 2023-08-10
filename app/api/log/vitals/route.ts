@@ -1,22 +1,12 @@
 // VITALS ROUTES
 import { authOptions } from '@/server/authOptions'
 import { prisma } from '@/server/db'
-import { Entry } from '@/types/global'
-import { Mood, MoodEntry, SleepEntry, BodyweightEntry } from '@prisma/client'
+import { PostVitalsRequestBody } from '@/types/global'
+import { MoodEntry, SleepEntry, BodyweightEntry } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
 
-export interface PostVitalsRequestBody {
-  bodyweight: Entry<number>
-  mood: Entry<Mood>
-  sleep: Entry<number>
-  userDayId: string
-}
-
-interface Request extends NextApiRequest {
-  json: () => Promise<PostVitalsRequestBody>
-}
 
 export async function POST(req: Request, res: Response) {
   try {
@@ -36,7 +26,7 @@ export async function POST(req: Request, res: Response) {
       user: { id: userId },
     } = session
 
-    const { bodyweight, mood, sleep, userDayId } = await req.json()
+    const { bodyweight, mood, sleep, userDayId } = await req.json() as PostVitalsRequestBody
 
     let bodyweightEntry: BodyweightEntry | undefined = undefined
     let moodEntry: MoodEntry | undefined = undefined
