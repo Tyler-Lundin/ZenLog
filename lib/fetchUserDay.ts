@@ -1,10 +1,5 @@
-interface IFetchDate {
-  month: number
-  day: number
-  year: number
-}
 
-const fetchUserDay = ({ month, day, year }: IFetchDate) =>
+const fetchUserDay = ({ month, day, year }: { month: number, day: number, year: number }) =>
   fetch('/api/user/day', {
     headers: {
       'Content-Type': 'application/json',

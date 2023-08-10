@@ -30,7 +30,7 @@ export default function MoodStep() {
           {moods.map(M => (
             <Button
               size="xl"
-              className={`w-full px-4 py-2 grid grid-cols-4 justify-start text-black hover:text-white dark:text-white dark:hover:text-black transition-all rounded-full group overflow-hidden border border-gray-500 ${mood.value === M.value && "dark:bg-white dark:text-black bg-black text-white font-bold"}`}
+              className={`w-full px-4 py-2 grid grid-cols-4 justify-start text-black hover:text-white dark:text-white dark:hover:text-black transition-all rounded-full group overflow-hidden border border-gray-500 bg-white dark:bg-black ${mood.value === M.value && "dark:bg-white dark:text-black bg-black text-white font-bold"}`}
               key={M.value}
               onClick={() => dispatch(setMood(M.value as Mood))}
             >

@@ -18,9 +18,6 @@ export default async function DashboardPage() {
         <hr className="dark:border-zinc-900 border-zinc-100" />
         <DashboardStats />
         <LogEntryMenu />
-        <footer className="h-20 grid place-content-center ">
-          <a href="https://tylerlundin.me" target="_blank" rel="noopener noreferrer" className="text-gray-500 whitespace-nowrap">Created by Tyler</a>
-        </footer>
       </div>
     </div>
   )

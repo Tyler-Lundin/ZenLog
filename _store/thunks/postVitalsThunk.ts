@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AppDispatch, RootState } from '..'
 import { toggleVitals } from '../slices/uiSlice';
 import { setVitalsDone } from '../slices/dashboardSlice';
+import { PostVitalsRequestBody } from '@/app/api/log/vitals/route';
 
 const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thunkAPI) => {
   try {
@@ -20,7 +21,7 @@ const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thun
         sleep,
         mood,
         userDayId,
-      }),
+      } satisfies PostVitalsRequestBody),
     })
     const result = await response.json()
     if (response.status !== 200) {

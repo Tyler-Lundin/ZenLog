@@ -6,7 +6,7 @@ import VitalsButton from "./VitalsButton";
 
 export default function VitalsSteps() {
   const { STEPS, currentStep, isDone, isLastStep, isFirstStep, isVitalsOpen, nextStep, prevStep, handleClose, handleSubmit, handleOpen } = useVitals();
-  const stepControlsProps = { isLastStep, isFirstStep, nextStep, prevStep, handleClose, handleSubmit, }
+  const stepControlsProps = { isLastStep, isFirstStep, nextStep, prevStep, handleClose, handleSubmit }
 
 
   if (!isVitalsOpen) return <VitalsButton onClick={handleOpen} />

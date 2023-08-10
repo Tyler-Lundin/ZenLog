@@ -66,10 +66,6 @@ export async function POST(req: Request, res: Response) {
     if (prevSleepEntry) sleep = { value: prevSleepEntry.hours, isDone: true }
   }
 
-  console.log("USER DAY ROUTE # # # # # # # # # # # \n\n");
-  console.log({ bodyweight, mood, sleep });
-  console.log({ isBodyweightDone, isMoodDone, isSleepDone });
-  console.log("\n\n # # # # # # # # # # # #");
 
   return NextResponse.json({
     userDay,

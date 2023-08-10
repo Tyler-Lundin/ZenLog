@@ -19,7 +19,7 @@ import TagsStep from './steps/TagsStep';
 import { Spinner } from '../ui/Spinner';
 
 
-export default function LogExerciseEntry() {
+export default function LogExerciseSteps() {
   const { currentStep, exerciseName, weight, reps, intensity, toFailure, notes, tags, isSubmitting, isSubmitted } = useSelector((state: RootState) => state.exercise.newEntry)
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
@@ -81,17 +81,17 @@ export default function LogExerciseEntry() {
         )
       }
       <div className="h-[calc(100vh_-_8rem)]">
-        <div className="grid relative bg-white dark:bg-black overflow-x-auto w-screen pt-8">
+        <div className="grid relative bg-white dark:bg-black overflow-x-auto w-screen pt-4 place-content-center gap-4">
+          <div className="w-full relative px-20 grid place-content-center h-20">
+            <Button className={`w-60`} disabled={!isReady} variant={!isReady ? "glassRed" : "glassGreen"} onClick={handleSubmit}>Log Exercise</Button>
+            <StepControls {...stepControlsProps} />
+          </div>
           <Breadcrumbs breadcrumbs={breadcrumbs} currentStep={currentStep} />
         </div>
         <div className="fixed w-screen top-1/2 left-0 -translate-y-1/2 z-50">
-          <StepControls {...stepControlsProps} />
         </div>
         <div className="overflow-y-auto h-full">
           {STEPS[currentStep].component}
-        </div>
-        <div className="fixed bottom-0 left-0 w-screen bg-white dark:bg-black py-4 grid place-content-center">
-          <Button disabled={!isReady} variant={!isReady ? "glassRed" : "glassGreen"} onClick={handleSubmit}>Log Exercise</Button>
         </div>
       </div>
     </>

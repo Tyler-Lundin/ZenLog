@@ -20,8 +20,8 @@ export default function Breadcrumbs({ breadcrumbs, currentStep }: { breadcrumbs:
 
         return (
           <div key={`breadcrumb-${index}`} className="flex z-10">
-            <Button onClick={breadcrumb.onClick} className={`${isCurrentStep ? "-translate-y-1/2" : "opacity-60"} flex items-center gap-1 z-40 transition-all dark:bg-white dark:text-black text-white bg-black px-1 rounded-md text-xs whitespace-nowrap h-min py-1`}>
-              <small >{breadcrumb.title}</small>
+            <Button onClick={breadcrumb.onClick} className={`${isCurrentStep ? "-translate-y-1/2" : "opacity-60"} flex items-center gap-1 z-40 transition-all dark:bg-black dark:text-white text-black bg-white px-1 rounded-md text-xs whitespace-nowrap h-min py-1`}>
+              <small className="font-bold text-lg">{breadcrumb.title}</small>
             </Button>
             {!isLastStep && <small key={`breadcrumb-arrow-${index}`} className={`${isCurrentStep && "-translate-y-1/3 rotate-45"} ${!isCurrentStep && isPreviousStep && "-translate-y-1/3 -rotate-45"} transition-all text-md font-thin text-black dark:text-white self-center ml-1`}>→</small>}
           </div>

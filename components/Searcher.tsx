@@ -18,7 +18,7 @@ export const Searcher = ({
   }
 
   return (
-    <div className="relative bg-white border border-gray-500 rounded-lg  mx-auto grid w-64">
+    <div className="relative bg-white dark:bg-black border border-gray-500 rounded-lg  mx-auto grid w-full max-w-3xl">
       <Input variant="glass" size="search" placeholder={placeholder} className="text-left h-fit w-full" type="search" value={search} onChange={handleSearchChange} />
       <SearchIcon size="18" className="absolute top-1/2 right-2 transform  -translate-y-1/2 text-gray-500 dark:text-white" />
     </div>

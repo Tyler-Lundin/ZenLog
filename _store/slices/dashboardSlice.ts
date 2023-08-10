@@ -1,12 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Mood, UserDay } from '@prisma/client';
+import { DateObject, Entry } from '@/types/global';
 
 const TODAYS_MONTH = new Date().getMonth() + 1
 const TODAYS_DAY = new Date().getDate()
 const TODAYS_YEAR = new Date().getFullYear()
 
-type Status = 'INCOMPLETE' | 'COMPLETE' | 'SKIPPED'
-export type Entry<T> = { value: T, status: Status }
 
 export interface Vitals {
   currentStep: number,
@@ -99,6 +98,11 @@ const dashboardSlice = createSlice({
       state.userDay.day = TODAYS_DAY
       state.userDay.year = TODAYS_YEAR
     },
+    setDate(state, action: PayloadAction<DateObject>) {
+      state.userDay.month = action.payload.month
+      state.userDay.day = action.payload.day
+      state.userDay.year = action.payload.year
+    },
     nextVitalsStep(state) { state.dailyEntries.currentStep++ },
     previousVitalsStep(state) { state.dailyEntries.currentStep-- },
     setVitalsDone(state) {
@@ -120,6 +124,7 @@ export const {
   decrementDate,
   incrementDate,
   resetDate,
+  setDate,
   nextVitalsStep,
   previousVitalsStep,
   setVitalsDone

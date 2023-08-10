@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ExerciseStats from "../exercise/ExerciseStats";
 import BodyweightStats from "../bodyweight/BodyweightStats";
 

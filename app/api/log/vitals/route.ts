@@ -1,11 +1,22 @@
 // VITALS ROUTES
-import { Entry } from '@/_store/slices/dashboardSlice'
 import { authOptions } from '@/server/authOptions'
 import { prisma } from '@/server/db'
+import { Entry } from '@/types/global'
 import { Mood, MoodEntry, SleepEntry, BodyweightEntry } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
+
+export interface PostVitalsRequestBody {
+  bodyweight: Entry<number>
+  mood: Entry<Mood>
+  sleep: Entry<number>
+  userDayId: string
+}
+
+interface Request extends NextApiRequest {
+  json: () => Promise<PostVitalsRequestBody>
+}
 
 export async function POST(req: Request, res: Response) {
   try {
@@ -25,12 +36,7 @@ export async function POST(req: Request, res: Response) {
       user: { id: userId },
     } = session
 
-    const { bodyweight, mood, sleep, userDayId } = await req.json() as {
-      bodyweight: Entry<number>
-      mood: Entry<Mood>
-      sleep: Entry<number>
-      userDayId: string
-    }
+    const { bodyweight, mood, sleep, userDayId } = await req.json()
 
     let bodyweightEntry: BodyweightEntry | undefined = undefined
     let moodEntry: MoodEntry | undefined = undefined
@@ -72,7 +78,7 @@ export async function POST(req: Request, res: Response) {
 
     const formatData = () => {
       let D = {} as { [key: string]: any }
-      if (bodyweightEntry) D.WeightEntries = { push: bodyweightEntry.id }
+      if (bodyweightEntry) D.BodyweightEntries = { push: bodyweightEntry.id }
       if (moodEntry) D.MoodEntries = { push: moodEntry.id }
       if (sleepEntry) D.SleepEntries = { push: sleepEntry.id }
       return D

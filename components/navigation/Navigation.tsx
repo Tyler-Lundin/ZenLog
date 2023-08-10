@@ -2,6 +2,7 @@
 import Logo from "../Logo"
 import NavigationLinks from "./NavigationLinks"
 import DateSelector from "../dashboard/DateSelector";
+import WeekActivity from "../dashboard/WeekActivity";
 
 export default function Navigation() {
   return (
@@ -9,6 +10,9 @@ export default function Navigation() {
       <Logo isCollapsible />
       <div className="absolute left-1/2 top-3 -translate-x-1/2">
         <DateSelector />
+      </div>
+      <div className="absolute left-0 top-16 w-screen px-4">
+        <WeekActivity />
       </div>
       <div className="justify-center items-center h-full">
         <NavigationLinks />
