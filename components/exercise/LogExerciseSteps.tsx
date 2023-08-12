@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/_store';
 import ListExercisesStep from './steps/ListExercisesStep';
@@ -9,7 +9,7 @@ import IntensityStep from './steps/IntensityStep';
 import FailureStep from './steps/FailureStep';
 import ExerciseOverviewStep from './steps/ExerciseOverviewStep';
 import StepControls from '../StepControls';
-import { nextExerciseStep, prevExerciseStep, resetNewExercise, setExerciseStep, toggleIsNewEntrySubmitting } from '@/_store/slices/exerciseSlice';
+import { nextExerciseStep, prevExerciseStep, resetNewExercise, setExerciseStep, startNewExercise, toggleIsNewEntrySubmitting } from '@/_store/slices/exerciseSlice';
 import logExerciseThunk from '@/_store/thunks/logExerciseThunk';
 import Breadcrumbs, { Breadcrumb } from '../Breadcrumbs';
 import { Button } from '../ui/button';
@@ -71,6 +71,10 @@ export default function LogExerciseSteps() {
 
   const isDone = (isSubmitted && !isSubmitting)
   if (isDone) handleClose();
+
+  useEffect(() => {
+    dispatch(startNewExercise())
+  }, [dispatch])
 
   return (
     <>

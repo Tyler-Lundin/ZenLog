@@ -7,14 +7,16 @@ export type SortOrder = "asc" | "desc";
 
 export interface NewEntry {
   currentStep: number;
-  exerciseId: string | undefined;
-  exerciseName: string | undefined;
-  reps: number | undefined;
-  weight: number | undefined;
-  toFailure: boolean | undefined;
-  intensity: number | undefined;
-  notes: string | undefined;
+  exerciseId?: string;
+  exerciseName?: string;
+  reps?: number;
+  weight?: number;
+  toFailure?: boolean;
+  intensity?: number;
+  notes?: string;
   tags: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
   isSubmitting: boolean;
   isSubmitted: boolean;
 }
@@ -48,6 +50,8 @@ const initialState: ExerciseState = {
     intensity: undefined,
     notes: undefined,
     tags: [],
+    createdAt: undefined,
+    updatedAt: undefined,
     isSubmitting: false,
     isSubmitted: false,
   }
@@ -76,6 +80,7 @@ const exerciseSlice = createSlice({
     nextExerciseStep(state) { state.newEntry.currentStep++ },
     prevExerciseStep(state) { state.newEntry.currentStep-- },
     setExerciseStep(state, action) { state.newEntry.currentStep = action.payload },
+    startNewExercise(state) { state.newEntry.currentStep = 0; state.newEntry.createdAt = new Date(); },
     resetNewExercise(state) { state.newEntry = initialState.newEntry },
     setExerciseEntries(state, action) { state.allEntries = action.payload },
     toggleSortOrder(state) {
@@ -108,6 +113,7 @@ export const {
   nextExerciseStep,
   prevExerciseStep,
   setExerciseStep,
+  startNewExercise,
   resetNewExercise,
   setExerciseEntries,
   toggleSortOrder,

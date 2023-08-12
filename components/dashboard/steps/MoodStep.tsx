@@ -16,12 +16,12 @@ export default function MoodStep() {
   const dispatch = useDispatch<AppDispatch>();
   const [search, setSearch] = useState("");
 
-  const searcher = new FuzzySearch(MOODS, ["name"], { caseSensitive: false, sort: true });
+  const searcher = new FuzzySearch(MOODS, ["name", "tags"], { caseSensitive: false, sort: true });
   const moods = searcher.search(search)
 
   return (
     <>
-      <div className="fixed w-screen top-0 left-0 z-40 h-24">
+      <div className="fixed w-screen top-0 left-0 z-40 h-24 grid place-content-center ">
         <h1 className="text-center text-black dark:text-white text-3xl md:text-6xl font-black">MOOD</h1>
         <Searcher search={search} setSearch={setSearch} placeholder="Spaghetti Upsetti" />
       </div>

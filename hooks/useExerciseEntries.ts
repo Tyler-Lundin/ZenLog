@@ -21,6 +21,9 @@ const useExerciseEntries = () => {
   return {
     exerciseEntries,
     isLoading,
+  } as {
+    exerciseEntries: ExerciseEntry[];
+    isLoading: boolean;
   }
 }
 

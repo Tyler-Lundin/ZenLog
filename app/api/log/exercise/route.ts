@@ -11,7 +11,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const { user: { id } } = session
     const data = await req.json()
     const { newExercise, userDayId } = data
-    const { exerciseId, exerciseName, weight, reps, toFailure, intensity, notes, tags } = newExercise as NewEntry
+    const { exerciseId, exerciseName, weight, reps, toFailure, intensity, notes, tags, createdAt, updatedAt } = newExercise as NewEntry
 
     if ((!exerciseId || exerciseId === undefined) || (!exerciseName || exerciseName === undefined))
       return NextResponse.json({ error: 'Missing Exercise' })
@@ -48,6 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
         userDayId,
         userId: id,
+        createdAt: createdAt || new Date(),
       },
     })
 
