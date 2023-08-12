@@ -55,8 +55,10 @@ export default function WeekActivity() {
     return foundDay || defaultDay;
   });
 
+  const DAYS_OF_THE_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
   return (
-    <div className="grid grid-cols-7 h-20 justify-content-center gap-1 dark:text-white content-start">
+    <div className="grid grid-cols-7  justify-content-center gap-1 dark:text-white content-start">
       {fullWeek.map((day: UserDay | DateObject) => {
         const isUserDay = 'id' in day;
         const isActive = isActiveDay(day);
@@ -65,22 +67,21 @@ export default function WeekActivity() {
           return (
             <button onClick={() => dispatch(setDate(day))}
               className={cn("rounded-b-md h-4 transition-all grid place-content-center bg-zinc-300 dark:bg-zinc-800 dark:text-white", {
-                "h-6 bg-black text-white dark:bg-white dark:text-black ": isActive,
-                "bg-orange-300 text-black": isToday
-              })} key={`${day.day}-${day.month}-${day.year}`}>
+                "bg-yellow-400 dark:bg-yellow-500 text-black dark:text-black": isToday,
+                "h-6": isActive,
+              })}
+              key={`${day.day}-${day.month}-${day.year}`}>
               <div className="text-center text-xs">{getWeekday(day).slice(0, 3)}</div>
             </button>
           );
         }
         const Activity = dayHasActivity(day);
-
-        // {`${isActive ? "rounded-b-md h-8 bg-black text-white dark:bg-white dark:text-black" : "bg-zinc-300 dark:bg-zinc-800"} rounded-b-md place-content-center transition-all h-4 relative grid`}
         return (
           <button onClick={() => dispatch(setDate(day))}
             className={cn("rounded-b-md h-4 transition-all grid place-content-center bg-zinc-300 dark:bg-zinc-800 dark:text-white", {
-              "h-6 bg-black text-white dark:bg-white dark:text-black ": isActive,
-              "bg-green-400 text-black": Activity.exercise && !isActive,
-              "bg-yellow-400 text-black": isToday
+              "bg-yellow-400 dark:bg-yellow-500 text-black dark:text-black": isToday,
+              "h-6": isActive,
+              "bg-green-400 dark:bg-green-400 text-black dark:text-black": Activity.exercise,
             })}
             key={day.id}>
             <div className="text-center text-xs">{getWeekday(day).slice(0, 3)}</div>
@@ -91,5 +92,5 @@ export default function WeekActivity() {
   )
 }
 
-// 
+
 

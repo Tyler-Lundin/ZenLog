@@ -8,11 +8,20 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-export function formatRepsWeightAndUnit({ reps, weight, weightUnit = 'lbs' }: { reps: number, weight: number, weightUnit?: string }) {
-  if (reps > 0 && weight !== 0) return `${reps} x ${weight} ${weightUnit}`
-  if (reps > 0 && weight === 0) return `${reps} reps`
-  if (reps === 0 && weight !== 0) return `${weight} ${weightUnit}`
-  return 'Missing Weight and Reps'
+function getWeightUnit(weightUnit: string) {
+  switch (weightUnit) {
+    case 'POUND': return 'lbs'
+    case 'KILOGRAM': return 'kg'
+    default: return ''
+  }
+}
+
+export function formatRepsWeightAndUnit({ reps, weight, weightUnit = 'lbs' }: { reps: number | undefined, weight: number | undefined, weightUnit?: string }) {
+  if (reps === undefined && weight === undefined) return 'Missing Weight and Reps'
+  if (reps === undefined && weight !== undefined) return `${weight} ${getWeightUnit(weightUnit)}`
+  if (reps !== undefined && weight === undefined) return `${reps} reps`
+  if (reps !== undefined && weight !== undefined) return `${reps} x ${weight} ${getWeightUnit(weightUnit)}`
+  return ''
 }
 
 export function formatLeadingZero(num: string | number): string {

@@ -11,7 +11,7 @@ const useUserWeek = () => {
   const weekOfYear = getWeekOfYear(day, month, year)
   console.log({ weekOfYear })
   const { data, isError, isLoading, } = useQuery(`/week/${weekOfYear}/${year}`, () => fetchUserWeek({ month, day, year }));
-  if (isError) return { month, day, year }
+  // const { data, isError, isLoading, } = useQuery(`/week/${month}/${day}/${year}`, () => fetchUserWeek({ month, day, year }));
   return {
     userWeek: data?.userWeek || [] as UserDay[],
     month, day, year,

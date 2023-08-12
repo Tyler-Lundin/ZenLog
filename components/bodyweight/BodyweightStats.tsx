@@ -8,7 +8,7 @@ export default function BodyweightStats() {
   const { bodyweight } = useDashboardData();
   const { bodyweightGoal } = useUserGoals();
 
-
+  console.log(bodyweight);
 
   return (
     <div className="grid gap-8 py-4">

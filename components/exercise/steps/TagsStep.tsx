@@ -4,7 +4,8 @@ import { AppDispatch, RootState } from "@/_store";
 import { useState } from "react";
 import { IoClose, IoJournalOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { pushNewTag, removeTag } from "@/_store/slices/exerciseSlice";
+import { pushNewTag, removeTag, setNewTags } from "@/_store/slices/exerciseSlice";
+import { Button } from "@/components/ui/button";
 
 
 export default function TagsStep() {
@@ -29,6 +30,10 @@ export default function TagsStep() {
     setTagInput('');
   };
 
+  const handleClear = () => {
+    dispatch(setNewTags([]));
+  };
+
   const handleEnterPress = (key: React.KeyboardEvent<HTMLInputElement>) => {
     if (key.key !== 'Enter') return;
     const newTag = tagInput.trim();
@@ -48,15 +53,18 @@ export default function TagsStep() {
         </label>
         <small className="text-sm text-gray-400"> (comma separated or hit enter)</small>
       </div>
-      <div className="relative mx-auto grid justify-center my-4 px-4">
-        <Input onKeyUp={handleEnterPress} variant={"glass"} className="text-center text-2xl font-thin border" placeholder="Personal Record" type="text" value={tagInput} onChange={handleChange} />
-      </div>
-      <div className="gap-1 flex flex-wrap w-full  px-4">
-        {tags.length > 0 && (
-          tags.map((tag, i) => (
-            <Badge variant={"deletable"} key={i} onClick={() => dispatch(removeTag(i))}>{tag}<IoClose /></Badge>
-          ))
-        )}
+      <div className="relative">
+        <div className="gap-1 flex flex-wrap w-full  px-4">
+          {tags.length > 0 && (
+            tags.map((tag, i) => (
+              <Badge variant={"deletable"} key={i} onClick={() => dispatch(removeTag(i))}>{tag}<IoClose /></Badge>
+            ))
+          )}
+        </div>
+        <div className="relative mx-auto grid justify-center my-4 px-4">
+          <Input onKeyUp={handleEnterPress} variant={"glass"} className="text-center text-2xl font-thin border border-black/25 dark:border-white/25 rounded-md" placeholder="Personal Record" type="text" value={tagInput} onChange={handleChange} />
+        </div>
+        <Button variant="glass" size="xl" className="mx-auto mb-4" onClick={handleClear}>Clear</Button>
       </div>
     </div>
   )

@@ -110,9 +110,9 @@ type ExerciseSet {
   reps       Int
   weight     Int
   weightUnit WeightUnit
-  intensity  Int
-  toFailure  Boolean
-  notes      String
+  intensity  Int?
+  toFailure  Boolean?
+  notes      String?
   tags       String[]
 }
 

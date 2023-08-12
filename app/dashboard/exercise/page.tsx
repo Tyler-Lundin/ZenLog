@@ -7,7 +7,7 @@ export default function ExercisePage() {
   return (
     <Page className="pt-16">
       <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black pt-28">
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-6 z-40">
           <Link className={buttonVariants({ variant: 'glassGreen', size: 'lg' })} href="/dashboard/exercise/log"> Log Exercise </Link>
         </div>
         <div className="h-full overflow-y-auto">

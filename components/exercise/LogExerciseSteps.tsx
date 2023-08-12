@@ -21,6 +21,7 @@ import { Spinner } from '../ui/Spinner';
 
 export default function LogExerciseSteps() {
   const { currentStep, exerciseName, weight, reps, intensity, toFailure, notes, tags, isSubmitting, isSubmitted } = useSelector((state: RootState) => state.exercise.newEntry)
+  const scrollRef = React.useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const STEPS = [
@@ -36,7 +37,7 @@ export default function LogExerciseSteps() {
 
   const isLastStep = currentStep === STEPS.length - 1;
   const isFirstStep = currentStep === 0;
-  const isReady = exerciseName && weight && reps && intensity;
+  const isReady = exerciseName && weight && reps;
   const nextStep = () => dispatch(nextExerciseStep());
   const prevStep = () => dispatch(prevExerciseStep());
   const handleClose = () => {
@@ -58,13 +59,13 @@ export default function LogExerciseSteps() {
   }
 
   const breadcrumbs: Breadcrumb[] = [
-    { title: exerciseName ? exerciseName : 'exercise', onClick: () => dispatch(setExerciseStep(0)) },
-    { title: weight ? `${weight.toString()} lbs` : 'weight?', onClick: () => dispatch(setExerciseStep(1)) },
-    { title: reps ? `${reps.toString()} reps` : 'reps?', onClick: () => dispatch(setExerciseStep(2)) },
-    { title: intensity ? `${intensity.toString()} RPE` : 'intensity?', onClick: () => dispatch(setExerciseStep(3)) },
-    { title: toFailure ? 'to failure' : 'failed?', onClick: () => dispatch(setExerciseStep(4)) },
-    { title: notes ? 'notes' : 'notes?', onClick: () => dispatch(setExerciseStep(5)) },
-    { title: tags ? 'tags' : 'tags?', onClick: () => dispatch(setExerciseStep(6)) },
+    { title: exerciseName ? exerciseName : 'exercise', onClick: () => dispatch(setExerciseStep(0)), isDone: exerciseName !== undefined },
+    { title: weight ? `${weight.toString()} lbs` : 'weight?', onClick: () => dispatch(setExerciseStep(1)), isDone: weight !== undefined },
+    { title: reps ? `${reps.toString()} reps` : 'reps?', onClick: () => dispatch(setExerciseStep(2)), isDone: reps !== undefined },
+    { title: intensity ? `${intensity.toString()} RPE` : 'intensity?', onClick: () => dispatch(setExerciseStep(3)), isDone: intensity !== undefined },
+    { title: toFailure === undefined ? "failed?" : toFailure ? "failed" : "not failed", onClick: () => dispatch(setExerciseStep(4)), isDone: toFailure !== undefined },
+    { title: notes ? 'notes' : 'notes?', onClick: () => dispatch(setExerciseStep(5)), isDone: notes !== undefined },
+    { title: tags ? 'tags' : 'tags?', onClick: () => dispatch(setExerciseStep(6)), isDone: tags.length > 0 },
     { title: "overview", onClick: () => dispatch(setExerciseStep(7)) }
   ];
 
@@ -81,14 +82,14 @@ export default function LogExerciseSteps() {
         )
       }
       <div className="h-[calc(100vh_-_8rem)]">
-        <div className="grid relative bg-white dark:bg-black overflow-x-auto w-screen pt-4 place-content-center gap-4">
-          <div className="w-full relative px-20 grid place-content-center h-20">
-            <Button className={`w-60`} disabled={!isReady} variant={!isReady ? "glassRed" : "glassGreen"} onClick={handleSubmit}>Log Exercise</Button>
+        <div className="grid relative bg-white dark:bg-black overflow-x-auto w-screen place-content-center ">
+          <div className="w-screen overflow-x-auto grid pt-12 z-40 " ref={scrollRef}>
+            <Breadcrumbs breadcrumbs={breadcrumbs} currentStep={currentStep} scrollRef={scrollRef} />
+          </div>
+          <div className="w-screen relative grid justify-center z-40 ">
+            <Button className={`md:w-60`} disabled={!isReady} variant={!isReady ? "glassRed" : "glassGreen"} onClick={handleSubmit}>Log Exercise</Button>
             <StepControls {...stepControlsProps} />
           </div>
-          <Breadcrumbs breadcrumbs={breadcrumbs} currentStep={currentStep} />
-        </div>
-        <div className="fixed w-screen top-1/2 left-0 -translate-y-1/2 z-50">
         </div>
         <div className="overflow-y-auto h-full">
           {STEPS[currentStep].component}

@@ -1,48 +1,7 @@
 import { NewEntry } from '@/_store/slices/exerciseSlice'
 import useServerSession from '@/hooks/useServerSession'
-import { ExerciseEntry } from '@prisma/client'
 import { prisma } from '@server/db'
 import { NextRequest, NextResponse } from 'next/server'
-
-export type ExerciseSet = {
-  reps: number | string
-  weight: number | string
-  intensity: number | string
-  toFailure: boolean
-  notes: string
-  tags: string[]
-}
-
-type ExerciseNumericField = 'reps' | 'weight' | 'intensity'
-
-const isNumeric = (n: string | number): n is string => {
-  return typeof n === 'string' && !isNaN(Number(n))
-}
-
-const convertToNumber = (set: ExerciseSet, field: ExerciseNumericField) => {
-  const value = set[field]
-  if (isNumeric(value)) {
-    set[field] = Number(value)
-  } else if (typeof value !== 'number') {
-    throw new Error(`Invalid ${field} - must be a number`)
-  }
-}
-
-const validateRequestData = (
-  data: { newExercise: NewEntry, userDayId: string }
-) => {
-  const { newExercise, userDayId } = data
-  const { exerciseId, exerciseName, weight, reps, intensity, toFailure } = newExercise
-
-  // Basic field validation
-  if (!exerciseId) throw new Error('Missing exerciseId')
-  if (!exerciseName) throw new Error('Missing exerciseName')
-  if (!weight) throw new Error('Missing weight')
-  if (!reps) throw new Error('Missing reps')
-  if (!userDayId) throw new Error('Missing userDayId')
-  if (typeof exerciseId !== 'string') throw new Error('Invalid exerciseId')
-  if (typeof exerciseName !== 'string') throw new Error('Invalid exerciseName')
-}
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -54,7 +13,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const { newExercise, userDayId } = data
     const { exerciseId, exerciseName, weight, reps, toFailure, intensity, notes, tags } = newExercise as NewEntry
 
-    validateRequestData(data)
+    if ((!exerciseId || exerciseId === undefined) || (!exerciseName || exerciseName === undefined))
+      return NextResponse.json({ error: 'Missing Exercise' })
+    if (!weight || weight === undefined)
+      return NextResponse.json({ error: 'Missing weight' })
+    if (!reps || reps === undefined)
+      return NextResponse.json({ error: 'Missing reps' })
+
+    if (!userDayId)
+      return NextResponse.json({ error: 'Missing userDayId' })
 
     const validateDate = await prisma.userDay.findUnique({
       where: {
@@ -74,10 +41,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
           reps: reps,
           weight: weight,
           weightUnit: 'POUND',
-          intensity: intensity,
-          toFailure: toFailure,
+          intensity: intensity !== undefined ? intensity : undefined,
+          toFailure: toFailure !== undefined ? toFailure : undefined,
           notes: notes || '',
-          tags: tags || [],
+          tags: Array.isArray(tags) ? tags : [],
         },
         userDayId,
         userId: id,

@@ -11,7 +11,7 @@ export default function Navigation() {
       <div className="absolute left-1/2 top-3 -translate-x-1/2">
         <DateSelector />
       </div>
-      <div className="absolute left-0 top-16 w-screen px-4">
+      <div className="absolute left-0 top-16 w-screen px-4 h-6">
         <WeekActivity />
       </div>
       <div className="justify-center items-center h-full">

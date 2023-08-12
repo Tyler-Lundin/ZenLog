@@ -7,13 +7,13 @@ export type SortOrder = "asc" | "desc";
 
 export interface NewEntry {
   currentStep: number;
-  exerciseId: string;
-  exerciseName: string;
-  reps: number;
-  weight: number;
-  toFailure: boolean;
-  intensity: number;
-  notes: string;
+  exerciseId: string | undefined;
+  exerciseName: string | undefined;
+  reps: number | undefined;
+  weight: number | undefined;
+  toFailure: boolean | undefined;
+  intensity: number | undefined;
+  notes: string | undefined;
   tags: string[];
   isSubmitting: boolean;
   isSubmitted: boolean;
@@ -40,13 +40,13 @@ const initialState: ExerciseState = {
   isFiltered: false,
   newEntry: {
     currentStep: 0,
-    exerciseId: '',
-    exerciseName: '',
-    reps: 0,
-    weight: 0,
-    toFailure: false,
-    intensity: 5,
-    notes: '',
+    exerciseId: undefined,
+    exerciseName: undefined,
+    reps: undefined,
+    weight: undefined,
+    toFailure: undefined,
+    intensity: undefined,
+    notes: undefined,
     tags: [],
     isSubmitting: false,
     isSubmitted: false,
