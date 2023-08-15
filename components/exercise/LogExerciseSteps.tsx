@@ -16,7 +16,7 @@ import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
 import NotesStep from './steps/NotesStep';
 import TagsStep from './steps/TagsStep';
-import { Spinner } from '../ui/Spinner';
+import SavingScreen from '../ui/SavingScreen';
 
 
 export default function LogExerciseSteps() {
@@ -80,9 +80,7 @@ export default function LogExerciseSteps() {
     <>
       {
         isSubmitting && (
-          <div className="fixed top-0 left-0 w-screen h-screen bg-white dark:bg-black bg-opacity-50 z-50 grid place-content-center">
-            <Spinner size="xl" />
-          </div>
+          <SavingScreen />
         )
       }
       <div className="h-[calc(100vh_-_8rem)]">

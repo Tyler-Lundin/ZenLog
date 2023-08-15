@@ -1,4 +1,8 @@
-
+"use client"
+import { setLoading } from "@/_store/slices/uiSlice";
+import Link from "next/link";
+import { GiYinYang } from "react-icons/gi"
+import { useDispatch } from "react-redux";
 
 const Collapsible = () => (
   <>
@@ -14,15 +18,23 @@ const NotCollapsible = () => (
   </>
 )
 
-import Link from "next/link";
-import { GiYinYang } from "react-icons/gi"
-const Logo = ({ isCollapsible, href = "/dashboard" }: { isCollapsible: boolean, href?: string }) => (
-  <Link href={href} className={`flex items-center dark:text-white text-black '}`}>
-    <h6 className=" text-xl md:text-2xl font-black">
-      <GiYinYang className={`inline-block mb-1 text-xl md:text-2xl`} />
-      {isCollapsible ? <Collapsible /> : <NotCollapsible />}
-    </h6>
-  </Link>
-)
+const Logo = ({ isCollapsible, href = "/dashboard" }: { isCollapsible: boolean, href?: string }) => {
+  const dispatch = useDispatch()
+  const handleClick = () => {
+    dispatch(setLoading(true))
+    setTimeout(() => {
+      dispatch(setLoading(false))
+    }, 1000)
+  }
+
+  return (
+    <Link onClick={handleClick} href={href} className={`flex items-center dark:text-white text-black '}`}>
+      <h6 className=" text-xl md:text-2xl font-black">
+        <GiYinYang className={`inline-block mb-1 text-xl md:text-2xl`} />
+        {isCollapsible ? <Collapsible /> : <NotCollapsible />}
+      </h6>
+    </Link>
+  )
+}
 
 export default Logo;

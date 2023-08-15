@@ -1,6 +1,6 @@
 
 
-const fetchUserWeek = ({ month, day, year }: { month: number, day: number, year: number }) =>
+const fetchUserWeek = (month: number, day: number, year: number) =>
   fetch(`/api/week`, {
     headers: {
       'Content-Type': 'application/json',

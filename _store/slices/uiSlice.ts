@@ -6,6 +6,8 @@ const initialState = {
   isEntrySelectorOpen: false,
   isVitalsOpen: false,
   isAddExerciseOpen: false,
+  isLoading: false,
+  isSaving: false,
 }
 
 const uiSlice = createSlice({
@@ -16,6 +18,8 @@ const uiSlice = createSlice({
     toggleEntrySelector: (state) => { state.isEntrySelectorOpen = !state.isEntrySelectorOpen },
     toggleVitals: (state) => { state.isVitalsOpen = !state.isVitalsOpen },
     toggleAddExercise: (state) => { state.isAddExerciseOpen = !state.isAddExerciseOpen },
+    setLoading: (state, action: PayloadAction<boolean>) => { state.isLoading = action.payload },
+    setSaving: (state, action: PayloadAction<boolean>) => { state.isSaving = action.payload },
   }
 });
 
@@ -25,6 +29,8 @@ export const {
   toggleEntrySelector,
   toggleVitals,
   toggleAddExercise,
+  setLoading,
+  setSaving,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
