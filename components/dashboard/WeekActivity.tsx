@@ -41,7 +41,7 @@ export default function WeekActivity() {
           return (
             <button onClick={() => dispatch(setDate(day))}
               className={cn("h-4 transition-all grid place-content-center bg-zinc-300 dark:bg-zinc-800 dark:text-white", {
-                "bg-yellow-400 dark:bg-yellow-500 text-black dark:text-black": isToday,
+                "border-b-2 border-yellow-500 dark:border-yellow-500": isToday,
                 "h-6": isActive,
               })}
               key={`${day.day}-${day.month}-${day.year}`}>
@@ -53,9 +53,9 @@ export default function WeekActivity() {
         return (
           <button onClick={() => dispatch(setDate(day))}
             className={cn("h-4 transition-all grid place-content-center bg-zinc-300 dark:bg-zinc-800 dark:text-white", {
-              "outline-2 outline-blue-500 dark:outline-red-500": isToday,
+              "border-b-2 border-yellow-500 dark:border-yellow-500": isToday,
               "h-6": isActive,
-              "bg-green-400 dark:bg-green-400 text-black dark:text-black": Activity.exercise,
+              "border-b-2 border-green-400 dark:border-green-400 ": Activity.exercise,
             })}
             key={day.id}>
             <div className="text-center text-xs">{getWeekday(day).slice(0, 3)}</div>
