@@ -9,6 +9,7 @@ const useExerciseEntries = () => {
   const { userDay: { id } } = useUserDay();
   const { sortBy, sortOrder, isFiltered } = useSelector((state: RootState) => state.exercise)
   const { data, isLoading } = useQuery(`exercise-entries-${id}`, async () => {
+    console.log("fetching exercise entries")
     return fetch(`/api/entries/exercise?userDayId=${id}`).then((res) => res.json());
   }, { enabled: !!id });
 

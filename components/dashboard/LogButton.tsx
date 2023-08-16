@@ -24,9 +24,6 @@ export default function LogButton({
     setTimeout(() => {
       router.push("/dashboard/exercise")
     }, 1000)
-    setTimeout(() => {
-      dispatch(setLoading(false))
-    }, 1000)
   }
 
   return (

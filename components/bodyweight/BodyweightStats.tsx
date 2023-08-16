@@ -7,9 +7,6 @@ import useIsDarkMode from "@/hooks/useIsDarkmode";
 export default function BodyweightStats() {
   const { bodyweight } = useDashboardData();
   const { bodyweightGoal } = useUserGoals();
-
-  console.log(bodyweight);
-
   return (
     <div className="grid gap-8 py-4">
       <h2 className="text-2xl font-semibold  ">Bodyweight</h2>

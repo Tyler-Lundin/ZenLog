@@ -6,6 +6,7 @@ import { PostVitalsRequestBody } from '@/types/global';
 
 const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thunkAPI) => {
   try {
+    console.log('postVitalsThunk')
     const state = thunkAPI.getState() as RootState
     const dispatch = thunkAPI.dispatch as AppDispatch
     const { bodyweight, sleep, mood } = state.dashboard.dailyEntries;
@@ -24,12 +25,14 @@ const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thun
       } satisfies PostVitalsRequestBody),
     })
     const result = await response.json()
+    console.log('result', result)
     if (response.status !== 200) {
       return thunkAPI.rejectWithValue({ error: result.message })
     }
     dispatch(toggleVitals())
     dispatch(setVitalsDone())
   } catch (error: any) {
+    console.log('error', error)
     return thunkAPI.rejectWithValue({ error: error.message || 'Error posting Daily Checkx' })
   }
 })

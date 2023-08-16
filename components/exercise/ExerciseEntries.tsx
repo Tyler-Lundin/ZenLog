@@ -10,7 +10,7 @@ function ExerciseEntries() {
   const { exerciseEntries, isLoading } = useExerciseEntries();
   const dispatch = useDispatch<AppDispatch>();
   if (isLoading) dispatch(setLoading(true));
-  else setTimeout(() => dispatch(setLoading(false)), 500);
+  else dispatch(setLoading(false));
 
   return (
     <>

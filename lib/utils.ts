@@ -49,7 +49,7 @@ export function getWeekOfYear(day: number, month: number, year: number): number 
 
 export const getWeekday = (day: UserDay | DateObject | Date) => {
   if (day instanceof Date) {
-    const weekday = day.toLocaleDateString('en-US', { weekday: 'short' })
+    const weekday = day.toLocaleDateString('en-US', { weekday: 'long' })
     return weekday
   }
   const date = new Date(day.year, day.month - 1, day.day)

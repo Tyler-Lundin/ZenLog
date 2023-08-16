@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function ExercisePage() {
   return (
     <Page className="pt-16">
-      <div className="w-screen h-screen fixed top-0 left-0 bg-white dark:bg-black pt-28">
+      <div className="w-screen h-screen fixed top-0 left-0  pt-32">
         <div className="flex justify-center mb-6 z-40">
           <Link className={buttonVariants({ variant: 'green', size: 'lg' })} href="/dashboard/exercise/log"> Log Exercise </Link>
         </div>

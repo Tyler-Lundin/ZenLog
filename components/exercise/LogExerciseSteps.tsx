@@ -16,7 +16,6 @@ import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
 import NotesStep from './steps/NotesStep';
 import TagsStep from './steps/TagsStep';
-import SavingScreen from '../ui/SavingScreen';
 
 
 export default function LogExerciseSteps() {
@@ -78,11 +77,6 @@ export default function LogExerciseSteps() {
 
   return (
     <>
-      {
-        isSubmitting && (
-          <SavingScreen />
-        )
-      }
       <div className="h-[calc(100vh_-_8rem)]">
         <div className="grid relative bg-white dark:bg-black overflow-x-auto w-screen place-content-center ">
           <div className="w-screen overflow-x-auto grid pt-12 z-40 " ref={scrollRef}>

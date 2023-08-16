@@ -21,6 +21,7 @@ export default function DashboardLayout({
       <VitalsSteps />
       <LoadingScreen />
       <SavingScreen />
+      <div className=" bg-gradient-to-t from-white via-white to-white/50 dark:from-black dark:via-black dark:to-black/10 w-screen h-20 absolute bottom-0 left-0 z-30" />
       {children}
     </>
   )

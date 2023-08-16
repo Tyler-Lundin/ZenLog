@@ -1,11 +1,12 @@
 import fetchUserWeek from "@/lib/fetchUserWeek";
 import { RootState } from "@/_store";
 import { useQuery } from "react-query";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { UserDay } from "@prisma/client";
 import { getWeekOfYear, getWeekday } from "@/lib/utils";
 import { DateObject } from "@/types/global";
 import { useMemo } from "react";
+import { setLoading } from "@/_store/slices/uiSlice";
 
 
 type UserDayLookup = Record<string, UserDay>;
@@ -15,6 +16,7 @@ const useUserWeek = () => {
   const weekOfYear = getWeekOfYear(day, month, year)
   const { data, isError, isLoading, } = useQuery(['userWeek', weekOfYear, year], fetchUserWeek.bind(null, month, day, year));
   const { userWeek = [] as UserDay[], } = data || {};
+  const dispatch = useDispatch();
 
   const selectedDates: DateObject[] = useMemo(() => {
     const computeDateMinusX = (x: number) => {
@@ -43,6 +45,16 @@ const useUserWeek = () => {
     const foundDay = userWeekLookup[`${defaultDay.year}-${defaultDay.month}-${defaultDay.day}`];
     return foundDay || defaultDay;
   });
+
+
+  if (isError) {
+    console.log('error', isError)
+  }
+
+  if (isLoading) {
+    dispatch(setLoading(true))
+  }
+  else dispatch(setLoading(false))
 
   return {
     week,

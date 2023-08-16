@@ -12,8 +12,10 @@ export default function useDashboardData() {
   const { userDay } = useUserDay();
   const { id } = userDay;
   const { data } = useQuery<DashboardData>(`dashboard-${id}`, async () => {
+    console.log("fetching dashboard data")
     return fetch(`/api/dashboard?dayId=${id}`).then((res) => res.json());
   }, { enabled: !!id });
+
 
   return {
     sleep: data?.sleep || { totalHours: 0, sleepEntries: 0 },
