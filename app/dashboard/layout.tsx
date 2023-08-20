@@ -3,15 +3,20 @@ import VitalsSteps from "@/components/dashboard/VitalsSteps";
 import Navigation from "@/components/navigation/Navigation"
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import SavingScreen from "@/components/ui/SavingScreen";
+import { authOptions } from "@/server/authOptions";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children
 }: {
   children: React.ReactNode
 }) {
+  const session = await getServerSession(authOptions)
+  if (!session) { redirect('/auth/signin') }
 
   return (
     <>
