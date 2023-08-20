@@ -5,49 +5,27 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setBodyweight } from "@/_store/slices/dashboardSlice"
 
-
 export default function BodyweightStep() {
-  const { bodyweight } = useSelector((state: RootState) => state.dashboard.dailyEntries)
+  const { bodyweight } = useSelector((state: RootState) => state.dashboard.vitals)
   const dispatch = useDispatch<AppDispatch>();
   const [inputValue, setInputValue] = useState<string>(bodyweight.value.toString() ? '0' : bodyweight.value.toString())
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let W = formatLeadingZero(e.target.value) as string;
-    if (W.length === 1) {
-      W = `00${W}`
-      setInputValue(W);
-      dispatch(setBodyweight(parseInt(W)))
-      return
-    }
-    if (W.length === 2) {
-      W = `0${W}`
-      setInputValue(W);
-      dispatch(setBodyweight(parseInt(W)))
-      return
-    }
-    if (W.length === 3) {
-      setInputValue(W);
-      dispatch(setBodyweight(parseInt(W)))
-      return
-    }
+    if (W.length === 1) W = `00${W}`
+    if (W.length === 2) W = `0${W}`
+    setInputValue(W);
+    dispatch(setBodyweight({ weight: parseInt(W), weightUnit: "POUND" }))
+    return
   }
 
   useEffect(() => {
-    if (bodyweight.value.toString().length === 1) {
-      setInputValue(`00${bodyweight.value}`)
-      return
-    }
-    if (bodyweight.value.toString().length === 2) {
-      setInputValue(`0${bodyweight.value}`)
-      return
-    }
-    if (bodyweight.value.toString().length === 3) {
-      setInputValue(`${bodyweight.value}`)
-      return
+    switch (bodyweight.value.toString().length) {
+      case 1: setInputValue(`00${bodyweight.value}`); break;
+      case 2: setInputValue(`0${bodyweight.value}`); break;
+      case 3: setInputValue(`${bodyweight.value}`); break;
     }
   }, [bodyweight.value])
-
-
 
   return (
     <div className="relative grid justify-center h-fit rounded-lg pt-2 w-full ">

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 
 export default function MoodStep() {
-  const { mood } = useSelector((state: RootState) => state.dashboard.dailyEntries);
+  const { mood } = useSelector((state: RootState) => state.dashboard.vitals);
   const dispatch = useDispatch<AppDispatch>();
   const [search, setSearch] = useState("");
 
@@ -30,12 +30,12 @@ export default function MoodStep() {
           {moods.map(M => (
             <Button
               size="xl"
-              className={`w-full px-4 py-2 grid grid-cols-4 justify-start text-black hover:text-white dark:text-white dark:hover:text-black transition-all rounded-full group overflow-hidden border border-gray-500 bg-white dark:bg-black ${mood.value === M.value && "dark:bg-white dark:text-black bg-black text-white font-bold"}`}
+              className={`w-full px-4 py-2 grid grid-cols-4 justify-start text-black hover:text-white dark:text-white dark:hover:text-black transition-all rounded-full group overflow-hidden border border-gray-500 bg-white dark:bg-black ${mood.value.mood === M.value && "dark:bg-white dark:text-black bg-black text-white font-bold"}`}
               key={M.value}
-              onClick={() => dispatch(setMood(M.value as Mood))}
+              onClick={() => dispatch(setMood({ mood: M.value as Mood }))}
             >
               <p className="text-sm lg:text-xl uppercase col-span-3">{M.name}</p>
-              <p className={`text-2xl px-2 transition-all group-hover:-translate-y-1/4  ${M.value === mood.value && 'animate-bounce'}`}>{M.icon}</p>
+              <p className={`text-2xl px-2 transition-all group-hover:-translate-y-1/4  ${M.value === mood.value.mood && 'animate-bounce'}`}>{M.icon}</p>
             </Button>
           ))}
         </div>

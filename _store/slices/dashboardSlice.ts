@@ -42,7 +42,7 @@ const initialState: DashboardState = {
     bodyweight: {
       value: {
         weight: 0,
-        weightUnit: "lbs"
+        weightUnit: "POUND"
       },
     },
     sleep: {

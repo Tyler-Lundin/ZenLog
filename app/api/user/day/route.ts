@@ -27,7 +27,7 @@ export async function POST(req: Request, res: Response) {
     return NextResponse.json(
       {
         userDay: createduserDay,
-        dailyEntriesStatus: {
+        vitals: {
           bodyweight: false,
           mood: false,
           sleep: false,
@@ -69,7 +69,7 @@ export async function POST(req: Request, res: Response) {
 
   return NextResponse.json({
     userDay,
-    dailyEntries: {
+    vitals: {
       bodyweight,
       sleep,
       mood,

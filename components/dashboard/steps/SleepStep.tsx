@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 export default function SleepStep() {
-  const { sleep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
+  const { sleep } = useSelector((state: RootState) => state.dashboard.vitals)
   const dispatch = useDispatch<AppDispatch>();
   const [inputValue, setInputValue] = useState<string>(sleep.value.toString() ? '00' : sleep.value.toString())
 
@@ -15,18 +15,10 @@ export default function SleepStep() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     let S = formatLeadingZero((e.target.value));
-    if (S.length === 1) {
-      S = `0${S}`
+    if (S.length === 1) S = `0${S}`
+    if (S.length === 2 && parseInt(S) < 25) {
       setInputValue(S);
-      dispatch(setSleep(parseInt(S)))
-      return
-    }
-    if (S.length === 2) {
-      if (parseInt(S) > 24) {
-        S = '24'
-      }
-      setInputValue(S);
-      dispatch(setSleep(parseInt(S)))
+      dispatch(setSleep({ hours: parseInt(S), minutes: 0, rating: 5 }))
       return
     }
   }

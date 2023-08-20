@@ -7,10 +7,10 @@ import postVitalsThunk from "@/_store/thunks/postVitalsThunk";
 import { Activity } from "lucide-react";
 
 export default function VitalsOverview() {
-  const { currentStep, mood, bodyweight, sleep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
+  const { currentStep, mood, bodyweight, sleep } = useSelector((state: RootState) => state.dashboard.vitals)
   const dispatch = useDispatch<AppDispatch>()
 
-  const currentMood = MOODS.find(m => m.value === mood.value);
+  const currentMood = MOODS.find(m => m.value === mood.value.mood);
   const handleSubmit = () => dispatch(postVitalsThunk())
 
   return (
@@ -27,18 +27,22 @@ export default function VitalsOverview() {
           </div>
         </div>
 
-        {bodyweight.value !== 0 && (
+        {bodyweight.value.weight !== 0 && (
           <div className="place-self-center grid grid-cols-2 items-center gap-2">
             <h1 className="text-md sm:text-lg justify-self-end">Bodyweight</h1>
-            <h1 className="text-xl font-thin">{bodyweight.value} <span className="text-sm self-center"> lbs </span></h1>
+            <h1 className="text-xl font-thin">{bodyweight.value.weight} <span className="text-sm self-center"> lbs </span></h1>
           </div>
         )}
 
 
-        {sleep.value !== 0 && (
+        {sleep.value.hours !== 0 && (
           <div className="place-self-center grid grid-cols-2 items-center gap-2">
             <h1 className="text-md sm:text-lg justify-self-end">Sleep</h1>
-            <h1 className="text-xl font-thin">{sleep.value} <span className="text-sm self-center"> hrs </span></h1>
+            <h1 className="text-xl font-thin">{sleep.value.hours} <span className="text-sm self-center"> hrs </span></h1>
+            <h1 className="text-xl font-thin">{sleep.value.minutes} <span className="text-sm self-center"> mins </span></h1>
+            <h3 className="text-md sm:text-lg justify-self-end">Quality</h3>
+            <h3 className="text-xl font-thin">{sleep.value.rating} <span className="text-sm self-center"> / 10 </span></h3>
+
           </div>
         )}
 

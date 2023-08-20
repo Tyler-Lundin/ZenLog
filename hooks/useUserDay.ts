@@ -13,8 +13,8 @@ const useUserDay = () => {
   useEffect(() => {
     if (data?.userDay && data?.userDay?.id) dispatch(setUserDay(data.userDay));
     else return
-    if (data?.dailyEntries?.bodyweight?.isDone && data?.dailyEntries?.mood?.isDone && data?.dailyEntries?.sleep?.isDone) dispatch(setVitalsDone())
-    if (data?.dailyEntries) dispatch(setVitals(data.dailyEntries));
+    if (data?.vitals?.bodyweight?.isDone && data?.vitals?.mood?.isDone && data?.vitals?.sleep?.isDone) dispatch(setVitalsDone())
+    if (data?.vitals) dispatch(setVitals(data.vitals));
   }, [data, dispatch])
   if (isError) return { month, day, year }
   return { userDay: data?.userDay || { month, day, year, id: '' } }

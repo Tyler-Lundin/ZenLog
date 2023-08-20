@@ -7,7 +7,7 @@ import { toggleVitals } from "@/_store/slices/uiSlice";
 
 
 export default function useVitals() {
-  const { currentStep, mood, bodyweight, sleep } = useSelector((state: RootState) => state.dashboard.dailyEntries)
+  const { currentStep, mood, bodyweight, sleep } = useSelector((state: RootState) => state.dashboard.vitals)
   const { isVitalsOpen } = useSelector((state: RootState) => state.ui)
   const dispatch = useDispatch<AppDispatch>();
   const isFirstStep = currentStep === 0;
