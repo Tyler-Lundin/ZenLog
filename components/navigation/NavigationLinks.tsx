@@ -21,6 +21,7 @@ const LINKS = [
   { href: '/dashboard', label: 'DASHBOARD', icon: <MdDashboard /> },
   { href: '/dashboard/profile', label: 'PROFILE', icon: <BsPerson /> },
   { href: '/dashboard/settings', label: 'SETTINGS', icon: <BsGear /> },
+  { href: '/api/auth/signout', label: 'SIGN OUT', icon: <SignOut /> },
 ]
 
 export default function NavigationLinks() {
@@ -40,9 +41,6 @@ export default function NavigationLinks() {
             <Link href={href} className={`${buttonVariants({ variant: 'default', size: "3xl" })} font-black flex gap-1 w-full transition-all duration-300`}>{icon}{label} </Link>
           </li>
         ))}
-        <li className="text-center text-sm">
-          <SignOut />
-        </li>
       </ul>
     </div>
   )
