@@ -50,9 +50,13 @@ export default function BodyweightStep() {
 
 
   return (
-    <div className="relative grid justify-center h-fit rounded-lg pt-2 w-full">
+    <div className="relative grid justify-center h-fit rounded-lg pt-2 w-full ">
       <h1 className="text-center text-black dark:text-white text-3xl md:text-6xl font-black">BODYWEIGHT</h1>
       <Input variant="glass" size="8xlFit" className=" text-center dark:text-white" type="number" value={inputValue} onChange={handleChange} />
+      <div className="">
+        <p className="text-center text-black dark:text-white text-2xl md:text-4xl font-black">KG</p>
+        <p className="text-center text-black dark:text-white text-2xl md:text-4xl font-black">LBS</p>
+      </div>
     </div>
   )
 }

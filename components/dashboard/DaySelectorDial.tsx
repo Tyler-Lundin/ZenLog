@@ -1,15 +1,15 @@
 "use client"
 import { setDate } from "@/_store/slices/dashboardSlice"
-import useUserWeek from "@/hooks/useUserWeek"
 import { getWeekday } from "@/lib/utils"
 import { DateObject } from "@/types/global"
 import { UserDay } from "@prisma/client"
 import { useDispatch } from "react-redux"
 import { cn } from "@/lib/utils"
 import { BsTriangle } from "react-icons/bs"
+import useDayDial from "@/hooks/useDayDial"
 
-export default function WeekActivity() {
-  const { week, month: activeMonth, day: activeDay, year: activeYear, isLoading, isError } = useUserWeek()
+export default function DaySelectorDial() {
+  const { week, month: activeMonth, day: activeDay, year: activeYear, isLoading, isError } = useDayDial()
   const isActiveDay = (day: UserDay | DateObject) => day.day === activeDay && day.month === activeMonth && day.year === activeYear
   const doesItHaveActivity = (day: UserDay | DateObject) => {
     if (!('id' in day)) return {
@@ -23,7 +23,7 @@ export default function WeekActivity() {
       bodyweight: false,
       hasActivity: false
     }
-    const hasActivity = day.BodyweightEntries.length > 0 || day.SleepEntries.length > 0 || day.MoodEntries.length > 0 || day.ExerciseEntries.length > 0 || day.FoodEntries.length > 0 || day.WaterEntries.length > 0 || day.JournalEntries.length > 0 || day.MeditateEntries.length > 0
+    const hasActivity = false
     return {
       exercise: day.ExerciseEntries.length > 0,
       food: day.FoodEntries.length > 0,
@@ -41,8 +41,24 @@ export default function WeekActivity() {
 
   if (isError) return <p className="text-red-400">Failed to load</p>
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    const target = e.target as HTMLDivElement
+    const scrollLeft = target.scrollLeft
+    const scrollWidth = target.scrollWidth
+    const offsetWidth = target.offsetWidth
+    const scrollPercentage = (scrollLeft / (scrollWidth - offsetWidth)) * 100
+    console.log((scrollPercentage / 21) + 3) // 3 is the offset 
+    // console.log(week[buttonIndex].day);
+
+    if (scrollPercentage < 10) {
+    } else if (scrollPercentage > 90) {
+    }
+  }
+
+
+
   return (
-    <div className="grid grid-cols-7 justify-content-center dark:text-white content-start px-1 bg-gradient-to-b from-white via-white to-white/0 dark:from-black dark:via-black dark:to-black/0  py-2">
+    <div onScroll={handleScroll} className="grid grid-flow-col w-screen overflow-x-auto justify-content-center dark:text-white content-start px-1 bg-gradient-to-b from-white via-white to-white/0 dark:from-black dark:via-black dark:to-black/0  py-2 self-end absolute top-0 left-0 snap-x snap-mandatory h-20">
       {week.map((day: UserDay | DateObject, index) => {
         const isUserDay = 'id' in day;
         const isActive = isActiveDay(day);
@@ -61,8 +77,9 @@ export default function WeekActivity() {
           <>
             <button
               onClick={() => dispatch(setDate(day))}
+              autoFocus={isActive}
               className={cn(
-                " transition-all grid place-content-center  bg-white dark:bg-black  dark:text-white relative py-1",
+                "snap-x snap-center shrink-0 transition-all grid place-content-center w-[14.28vw] bg-white dark:bg-black  dark:text-white relative py-1 ",
                 {
                   "bg-white dark:bg-black": pastDay,
                   "border-b border-black dark:border-white": isActive,
@@ -81,12 +98,12 @@ export default function WeekActivity() {
               {isActive ? (
                 <div className="grid sm:flex items-center">
                   <h2 className=" text-sm sm:text-lg font-thin lowercase">{getWeekday(day)}</h2>
-                  <span className="text-xs sm:ml-1">{day.day}</span>
+                  <span className="text-xs sm:ml-1">{day.month}/{day.day}</span>
                 </div>
               ) : (
                 <div className="grid sm:flex items-center">
                   <h2 className=" text-sm sm:text-lg font-thin lowercase">{getWeekday(day)}</h2>
-                  <span className="text-xs sm:ml-1">{day.day}</span>
+                  <span className="text-xs sm:ml-1">{day.month}/{day.day}</span>
                 </div>
               )}
             </button>

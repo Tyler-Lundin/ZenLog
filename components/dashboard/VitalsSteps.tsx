@@ -22,7 +22,7 @@ export default function VitalsSteps() {
   const stepControlsProps = { isLastStep, isFirstStep, nextStep, prevStep, handleClose, handleSubmit }
   if (!isVitalsOpen) return <VitalsButton onClick={handleOpen} />
   return (
-    <div className="fixed top-0 left-0 z-50 h-screen py-20 w-screen bg-white/80 dark:bg-black/80 backdrop-blur-sm grid place-content-center">
+    <div className="fixed top-0 left-0 z-50 h-screen py-20 w-screen bg-white/80 dark:bg-black/80 backdrop-blur-sm grid justify-center">
       <StepControls {...stepControlsProps} />
       {STEPS[currentStep]}
     </div>
