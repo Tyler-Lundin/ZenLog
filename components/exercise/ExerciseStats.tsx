@@ -1,23 +1,18 @@
 "use client"
 import useDashboardData from "@/hooks/useDashboardData";
 import NumberProgressBar from "../NumberProgressBar";
-import { useUserGoals } from "../dashboard/UserGoals";
+// import { useUserGoals } from "../dashboard/UserGoals";
 import useIsDarkMode from "@/hooks/useIsDarkmode";
 
 export default function ExerciseStats() {
   const { exercise } = useDashboardData();
-  const { exerciseGoal } = useUserGoals();
-
+  console.log(exercise)
 
 
   return (
     <div className="grid gap-8 py-4">
       <h2 className="text-2xl font-semibold  ">Exercise</h2>
       <div className="flex flex-wrap gap-4">
-        <RepsCircle totalReps={exercise.totalReps} totalRepsGoal={exerciseGoal.totalReps} />
-        <WeightCircle totalWeight={exercise.totalWeight} totalWeightGoal={exerciseGoal.totalWeight} />
-        <VolumeCircle totalVolume={exercise.totalVolume} totalVolumeGoal={exerciseGoal.totalVolume} />
-        <EntriesCircle totalEntries={exercise.totalExercises} totalEntriesGoal={exerciseGoal.totalEntries} />
       </div>
     </div>
   )

@@ -3,7 +3,7 @@ import useSwr from 'swr';
 import { Button } from '@/components/ui/button';
 import { Exercise } from '@prisma/client';
 import DashboardBlock from '@/components/dashboard/DashboardBlock';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, } from 'react-redux';
 import { Searcher } from '@/components/Searcher';
 import { AppDispatch } from '@/_store';
@@ -18,11 +18,15 @@ export default function ListExercisesStep() {
   const isLoading = !data && !error;
   const [search, setSearch] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
-  if (isLoading) dispatch(setLoading(true))
-  else setTimeout(() => dispatch(setLoading(false)), 500);
-  if (error) return <DashboardBlock> <p className="text-uppercase text-red-400">Failed to load</p> </DashboardBlock>;
+  useEffect(() => {
+    if (isLoading) dispatch(setLoading(true))
+    else setTimeout(() => dispatch(setLoading(false)), 500);
+  }, [dispatch, isLoading])
   const searcher = new FuzzySearch(data, ['name'], { caseSensitive: false });
   const exercises = searcher.search(search) as Exercise[];
+
+  if (error)
+    return <DashboardBlock> <p className="text-uppercase text-red-400">Failed to load</p> </DashboardBlock>;
 
   return (
     <>
