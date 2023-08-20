@@ -11,7 +11,8 @@ export interface DateObject {
   year: number
 }
 
-export type Entry<T> = { value: T, status: Status }
+// TODO: DEPRECATED STATUS, REMOVE IF NOTHING BREAKS
+export type Entry<T> = { value: T, status?: Status }
 type Status = 'INCOMPLETE' | 'COMPLETE' | 'SKIPPED'
 
 

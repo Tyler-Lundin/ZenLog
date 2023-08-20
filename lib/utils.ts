@@ -56,3 +56,15 @@ export const getWeekday = (day: UserDay | DateObject | Date) => {
   const weekday = date.toLocaleDateString('en-US', { weekday: 'short' })
   return weekday
 }
+
+
+export const computeDateMinusX = (x: number, year: number, month: number, day: number) => {
+  const date = new Date(+year, +month - 1, +day)
+  date.setDate(date.getDate() - x)
+  return { month: date.getMonth() + 1, day: date.getDate(), year: date.getFullYear(), weekday: getWeekday(date) }
+}
+export const computeDatePlusX = (x: number, year: number, month: number, day: number) => {
+  const date = new Date(+year, +month - 1, +day)
+  date.setDate(date.getDate() + x)
+  return { month: date.getMonth() + 1, day: date.getDate(), year: date.getFullYear(), weekday: getWeekday(date) }
+}
