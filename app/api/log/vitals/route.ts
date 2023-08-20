@@ -35,8 +35,8 @@ export async function POST(req: Request, res: Response) {
     if (bodyweight !== undefined || bodyweight > 0 || bodyweight < 999) {
       bodyweightEntry = await prisma.bodyweightEntry.create({
         data: {
-          weight: bodyweight.value,
-          weightUnit: 'POUND',
+          weight: bodyweight.value.weight,
+          weightUnit: bodyweight.value.weightUnit,
           userDayId,
           userId,
         },
@@ -46,7 +46,7 @@ export async function POST(req: Request, res: Response) {
     if (mood !== undefined || mood !== '') {
       moodEntry = await prisma.moodEntry.create({
         data: {
-          mood: mood.value,
+          mood: mood.value.mood,
           userDayId,
           userId,
         },
@@ -56,7 +56,8 @@ export async function POST(req: Request, res: Response) {
     if (sleep !== undefined || sleep > 0) {
       sleepEntry = await prisma.sleepEntry.create({
         data: {
-          hours: sleep.value,
+          hours: sleep.value.hours,
+          minutes: sleep.value.minutes,
           userDayId,
           userId,
         },

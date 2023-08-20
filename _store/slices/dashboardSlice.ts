@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Mood, UserDay } from '@prisma/client';
+import { Mood, UserDay, WeightUnit } from '@prisma/client';
 import { DateObject, Entry } from '@/types/global';
 
 const TODAYS_MONTH = new Date().getMonth() + 1
@@ -7,9 +7,9 @@ const TODAYS_DAY = new Date().getDate()
 const TODAYS_YEAR = new Date().getFullYear()
 
 
-type BodyweightState = Entry<{ weight: number, weightUnit: "lbs" | "kg" }>
-type SleepState = Entry<{ hours: number, minutes: number, rating: number }>
-type MoodState = Entry<{ mood: Mood }>
+export type BodyweightState = Entry<{ weight: number, weightUnit: WeightUnit }>
+export type SleepState = Entry<{ hours: number, minutes: number, rating: number }>
+export type MoodState = Entry<{ mood: Mood }>
 
 export interface Vitals {
   currentStep: number,

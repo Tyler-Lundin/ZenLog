@@ -1,3 +1,4 @@
+import { BodyweightState, MoodState, SleepState } from "@/_store/slices/dashboardSlice"
 import { Mood } from "@prisma/client"
 
 export interface Payload {
@@ -17,8 +18,8 @@ type Status = 'INCOMPLETE' | 'COMPLETE' | 'SKIPPED'
 
 
 export interface PostVitalsRequestBody {
-  bodyweight: Entry<number>
-  mood: Entry<Mood>
-  sleep: Entry<number>
+  bodyweight: BodyweightState
+  mood: MoodState
+  sleep: SleepState
   userDayId: string
 }

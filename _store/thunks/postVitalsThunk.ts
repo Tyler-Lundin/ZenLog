@@ -9,7 +9,7 @@ const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thun
     console.log('postVitalsThunk')
     const state = thunkAPI.getState() as RootState
     const dispatch = thunkAPI.dispatch as AppDispatch
-    const { bodyweight, sleep, mood } = state.dashboard.dailyEntries;
+    const { bodyweight, sleep, mood } = state.dashboard.vitals;
     const userDayId = state.dashboard.userDay.id
     if (!userDayId) return thunkAPI.rejectWithValue({ error: 'missing date id' })
     const response = await fetch('/api/log/vitals', {
@@ -22,7 +22,7 @@ const postVitalsThunk = createAsyncThunk('dailyCheck/postVitals', async (_, thun
         sleep,
         mood,
         userDayId,
-      } satisfies PostVitalsRequestBody),
+      }),
     })
     const result = await response.json()
     console.log('result', result)
