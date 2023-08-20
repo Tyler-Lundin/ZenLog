@@ -146,6 +146,7 @@ model SleepEntry {
   userId    String   @db.ObjectId
   userDayId String   @db.ObjectId
   hours     Int
+  minutes   Int
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
