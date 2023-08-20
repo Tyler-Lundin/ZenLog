@@ -22,15 +22,12 @@ const Logo = ({ isCollapsible, href = "/dashboard" }: { isCollapsible: boolean, 
   const dispatch = useDispatch()
   const handleClick = () => {
     dispatch(setLoading(true))
-    setTimeout(() => {
-      dispatch(setLoading(false))
-    }, 1000)
   }
 
   return (
-    <Link onClick={handleClick} href={href} className={`flex items-center dark:text-white text-black '}`}>
+    <Link onClick={handleClick} href={href} className={`flex items-center dark:text-white text-black `}>
       <h6 className=" text-xl md:text-2xl font-black">
-        <GiYinYang className={`inline-block mb-1 text-xl md:text-2xl`} />
+        <GiYinYang className={`inline-block mb-1 text-xl md:text-2xl `} />
         {isCollapsible ? <Collapsible /> : <NotCollapsible />}
       </h6>
     </Link>
