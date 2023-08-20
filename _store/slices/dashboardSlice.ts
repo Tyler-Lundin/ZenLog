@@ -7,11 +7,15 @@ const TODAYS_DAY = new Date().getDate()
 const TODAYS_YEAR = new Date().getFullYear()
 
 
+type BodyweightState = Entry<{ weight: number, weightUnit: "lbs" | "kg" }>
+type SleepState = Entry<{ hours: number, minutes: number, rating: number }>
+type MoodState = Entry<{ mood: Mood }>
+
 export interface Vitals {
   currentStep: number,
-  bodyweight: Entry<number>,
-  sleep: Entry<number>,
-  mood: Entry<Mood>,
+  bodyweight: BodyweightState,
+  sleep: SleepState,
+  mood: MoodState,
 }
 
 export interface UserDayState {
@@ -23,7 +27,7 @@ export interface UserDayState {
 
 export interface DashboardState {
   userDay: UserDayState,
-  dailyEntries: Vitals,
+  vitals: Vitals,
 }
 
 const initialState: DashboardState = {
@@ -33,19 +37,25 @@ const initialState: DashboardState = {
     day: TODAYS_DAY,
     year: TODAYS_YEAR,
   },
-  dailyEntries: {
+  vitals: {
     currentStep: 0,
     bodyweight: {
-      value: 0,
-      status: 'COMPLETE',
+      value: {
+        weight: 0,
+        weightUnit: "lbs"
+      },
     },
     sleep: {
-      value: 0,
-      status: 'COMPLETE',
+      value: {
+        hours: 0,
+        minutes: 0,
+        rating: 0,
+      },
     },
     mood: {
-      value: Mood.CALM,
-      status: 'COMPLETE',
+      value: {
+        mood: Mood.CALM,
+      },
     }
   }
 }
@@ -58,8 +68,8 @@ const dashboardSlice = createSlice({
   reducers: {
     setUserDay(state, action: PayloadAction<UserDay>) { state.userDay = action.payload },
     setVitals(state, action: PayloadAction<Vitals>) {
-      state.dailyEntries = {
-        currentStep: state.dailyEntries.currentStep,
+      state.vitals = {
+        currentStep: state.vitals.currentStep,
         bodyweight: {
           status: "COMPLETE",
           value: action.payload.bodyweight.value
@@ -74,12 +84,11 @@ const dashboardSlice = createSlice({
         }
       }
     },
-    setBodyweight(state, action: PayloadAction<number>) { state.dailyEntries.bodyweight.value = action.payload },
-    setSleep(state, action: PayloadAction<number>) { state.dailyEntries.sleep.value = action.payload },
-    setMood(state, action: PayloadAction<Mood>) { state.dailyEntries.mood.value = action.payload },
-    nextStep(state) { state.dailyEntries.currentStep++ },
-    prevStep(state) { state.dailyEntries.currentStep-- },
-    // decrementDate: decrementDateReducer,
+    setBodyweight(state, action: PayloadAction<BodyweightState["value"]>) { state.vitals.bodyweight.value = action.payload },
+    setSleep(state, action: PayloadAction<SleepState["value"]>) { state.vitals.sleep.value = action.payload },
+    setMood(state, action: PayloadAction<MoodState["value"]>) { state.vitals.mood.value = action.payload },
+    nextStep(state) { state.vitals.currentStep++ },
+    prevStep(state) { state.vitals.currentStep-- },
     decrementDate(state) {
       let newDate = new Date(state.userDay.year, state.userDay.month - 1, state.userDay.day - 1)
       state.userDay.month = newDate.getMonth() + 1
@@ -103,12 +112,12 @@ const dashboardSlice = createSlice({
       state.userDay.day = action.payload.day
       state.userDay.year = action.payload.year
     },
-    nextVitalsStep(state) { state.dailyEntries.currentStep++ },
-    previousVitalsStep(state) { state.dailyEntries.currentStep-- },
+    nextVitalsStep(state) { state.vitals.currentStep++ },
+    previousVitalsStep(state) { state.vitals.currentStep-- },
     setVitalsDone(state) {
-      state.dailyEntries.mood.status = 'COMPLETE'
-      state.dailyEntries.sleep.status = 'COMPLETE'
-      state.dailyEntries.bodyweight.status = 'COMPLETE'
+      state.vitals.mood.status = 'COMPLETE'
+      state.vitals.sleep.status = 'COMPLETE'
+      state.vitals.bodyweight.status = 'COMPLETE'
     }
   }
 })
