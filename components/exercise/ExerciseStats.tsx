@@ -10,8 +10,7 @@ export default function ExerciseStats() {
 
 
   return (
-    <div className="grid gap-8 py-4">
-      <h2 className="text-2xl font-semibold  ">Exercise</h2>
+    <div className="grid gap-8 py-8">
       <div className="flex flex-wrap gap-4">
       </div>
     </div>
